@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9065058748615389911}
   - component: {fileID: 9065058748615389909}
-  - component: {fileID: 9065058748615389908}
+  - component: {fileID: 1325974861893668843}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -148,7 +148,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9065058748615389908
+--- !u!114 &1325974861893668843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

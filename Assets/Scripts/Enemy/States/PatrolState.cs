@@ -6,7 +6,7 @@ public class PatrolState : State
 {
     GameObject room;
     GameObject[] doors;
-    GameObject[10] waypoints;
+    //GameObject[10] waypoints;
     int selectedDoor;
     // Start is called before the first frame update
     void Start()
@@ -29,8 +29,8 @@ public class PatrolState : State
             int count = 0;
             foreach (GameObject waypoint in room.gameObject.transform.parent.parent.GetComponentInChildren<Transform>().parent)
             {
-                if (waypoint.layer == 10{
-                    waypoints[count];
+                if (waypoint.layer == 10){
+                    //waypoints[count];
                     count++;
                 }
             }
