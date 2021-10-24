@@ -3,29 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+namespace EnemyAI
 {
-    //adding using the 'new' keyword means that it doesn't call the start functio
-    PatrolState patrolState;
-    ChaseState chaseState;
-    State currentState;
-    GameObject room;
 
-    public NavMeshAgent enemyAgent;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Enemy : MonoBehaviour
     {
-        patrolState = gameObject.AddComponent<PatrolState>();
-        chaseState = gameObject.AddComponent<ChaseState>();
-        currentState = chaseState;
-    }
+        //adding using the 'new' keyword means that it doesn't call the start functio
+        PatrolState patrolState;
+        ChaseState chaseState;
+        State currentState;
+        GameObject room;
 
-    // Update is called once per frame
-    void Update()
-    {
-        currentState = patrolState;
-        enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
-    }
+        public NavMeshAgent enemyAgent;
 
+        // Start is called before the first frame update
+        void Start()
+        {
+            patrolState = gameObject.AddComponent<PatrolState>();
+            chaseState = gameObject.AddComponent<ChaseState>();
+            currentState = chaseState;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            currentState = patrolState;
+            enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
+        }
+
+    }
 }
