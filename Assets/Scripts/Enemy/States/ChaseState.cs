@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : State
+namespace EnemyAI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ChaseState : State
     {
-        
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    // Update is called once per frame
-    public override Vector3 UpdateAgent(Vector3 enemyPosition)
-    {
-        return Vector3.zero;
+        }
+
+        // Update is called once per frame
+        public override Vector3 UpdateAgent(Vector3 enemyPosition)
+        {
+            return Vector3.zero;
+        }
     }
 }

@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : State
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    public override Vector3 UpdateAgent(Vector3 enemyPosition)
+namespace EnemyA
+{
+    public class AttackState : State
     {
-        return Vector3.zero;
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        public override Vector3 UpdateAgent(Vector3 enemyPosition)
+        {
+            return Vector3.zero;
+        }
     }
 }
