@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public List<Transform> hidingSpots;
+    public List<HideySpot> hidingSpots;
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Transform hideySpot in this.gameObject.transform.GetComponentInChildren<Transform>().GetComponentInChildren<HideySpot>().transform)
+        foreach(Transform hideySpotParent in this.gameObject.transform.GetComponentInChildren<Transform>())
         {
-            hidingSpots.Add(hideySpot);
+            foreach(HideySpot hideySpot in hideySpotParent.GetComponent<HideySpot>())
+            {
+                hidingSpots.Add(hideySpot);
+            }
 
         }
     }
