@@ -31,5 +31,10 @@ namespace EnemyAI
             enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
         }
 
+        public void SeenPlayer()
+        {
+            currentState = chaseState;
+        }
+
     }
 }
