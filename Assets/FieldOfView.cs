@@ -3,12 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using EnemyAI;
 
-public class FieldOfView : MonoBehaviour
+namespace EnemyAI
 {
-    private void OnTriggerEnter(Collider other)
+    public class FieldOfView : MonoBehaviour
     {
-        if (other.gameObject.tag == "Player")
-            GameObject.FindObjectOfType<Enemy>().SeenPlayer();
+        public Enemy enemy;
 
+        private void Start()
+        {
+            enemy = GameObject.FindObjectOfType<Enemy>();
+        }
+
+        private void OnTriggerStay(Collider other)
+        { 
+            if (other.gameObject.tag == "Player")
+                enemy.SeenPlayer(other.gameObject.transform);
+
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+                enemy.SeenPlayer(other.gameObject.transform);
+
+        }
     }
 }

@@ -15,25 +15,55 @@ namespace EnemyAI
         GameObject room;
 
         public NavMeshAgent enemyAgent;
-
+        LayerMask ignoreLayer;
         // Start is called before the first frame update
         void Start()
         {
             patrolState = gameObject.AddComponent<PatrolState>();
             chaseState = gameObject.AddComponent<ChaseState>();
-            currentState = chaseState;
+            currentState = patrolState;
+            ignoreLayer = Physics.IgnoreRaycastLayer;
         }
 
         // Update is called once per frame
+        Vector3 direction;
+
+        Transform playerPosition;
         void Update()
         {
-            currentState = patrolState;
+            direction = (this.transform.position - playerPosition.position);
+            //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
+
+            //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
+
             enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
         }
 
-        public void SeenPlayer()
+        public Vector3 eyesOffset;
+
+        public void SeenPlayer(Transform playerPosition)
         {
-            currentState = chaseState;
+            bool seenPlayer = false;
+            this.playerPosition = playerPosition;
+
+            RaycastHit hit;
+            Debug.DrawRay(this.transform.position + eyesOffset, -direction, Color.red, 1f);
+
+            Ray ray = new Ray(this.transform.position + eyesOffset, -direction);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
+            {
+                //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red);
+                if (hit.collider.tag == "Player")
+                {
+                    currentState = chaseState;
+                    Debug.Log("Chasing player");
+                }
+                else
+                {
+                    currentState = patrolState;
+                    Debug.Log("Patrolling");
+                }
+            }
         }
 
     }
