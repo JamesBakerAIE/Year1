@@ -820,6 +820,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117967201}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1134472348 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 797076124, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+  m_PrefabInstance: {fileID: 2019087379}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1239651989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,6 +1581,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: crouchSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: playerCollider
+      value: 
+      objectReference: {fileID: 1134472348}
     - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_Name
       value: Player
