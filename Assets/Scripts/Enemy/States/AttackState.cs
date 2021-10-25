@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace EnemyA
+namespace EnemyAI
 {
     public class AttackState : State
     {
