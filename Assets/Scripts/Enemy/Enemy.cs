@@ -11,6 +11,7 @@ namespace EnemyAI
         //adding using the 'new' keyword means that it doesn't call the start functio
         PatrolState patrolState;
         ChaseState chaseState;
+        AttackState attackState;
         State currentState;
         GameObject room;
 
@@ -21,6 +22,7 @@ namespace EnemyAI
         {
             patrolState = gameObject.AddComponent<PatrolState>();
             chaseState = gameObject.AddComponent<ChaseState>();
+            attackState = gameObject.AddComponent<AttackState>();
             currentState = patrolState;
             ignoreLayer = Physics.IgnoreRaycastLayer;
         }
@@ -43,7 +45,9 @@ namespace EnemyAI
 
         public void SeenPlayer(Transform playerPosition)
         {
-            bool seenPlayer = false;
+            if (currentState == attackState)
+                return;
+
             this.playerPosition = playerPosition;
 
             RaycastHit hit;
@@ -56,14 +60,18 @@ namespace EnemyAI
                 if (hit.collider.tag == "Player")
                 {
                     currentState = chaseState;
-                    Debug.Log("Chasing player");
                 }
                 else
                 {
                     currentState = patrolState;
-                    Debug.Log("Patrolling");
                 }
             }
+        }
+
+        public void AttackPlayer()
+        {
+            currentState = attackState;
+            Debug.Log("Attacking player");
         }
 
     }
