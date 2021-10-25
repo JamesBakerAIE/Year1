@@ -466,13 +466,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915624419}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.010616957, y: -0.00811637, z: -0.0032978593, w: 0.9999053}
   m_LocalPosition: {x: 4.0157814, y: 2.912363, z: -1.9306493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 797206373}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.214, y: -0.934, z: -0.388}
 --- !u!65 &915624421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1580,6 +1580,26 @@ PrefabInstance:
     - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: mouseSensitivity
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: movementStateMachine
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: sprintSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: walkSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: gravityMultiplier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_Name

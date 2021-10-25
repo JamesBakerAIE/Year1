@@ -10,11 +10,12 @@ public class Room : MonoBehaviour
     {
         foreach(Transform hideySpotParent in this.gameObject.transform.GetComponentInChildren<Transform>())
         {
+            /*
             foreach(HideySpot hideySpot in hideySpotParent.GetComponent<HideySpot>())
             {
                 hidingSpots.Add(hideySpot);
             }
-
+            */
         }
     }
 
