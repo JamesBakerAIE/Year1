@@ -16,9 +16,22 @@ namespace Player
         public CharacterController controller = null;
         public float walkSpeed = 0f;
         public float sprintSpeed = 0f;
+        public float crouchSpeed = 0f;
         public float gravityMultiplier = 0f;
-        [SerializeField] private Animator playerAnimator = null;
+        public float cameraCrouchDistance = 1.0f;
+        public float cameraCrouchSpeed = 0.7f;
+        private float collisionOverlapRadius = 0.1f;
+
+
+        [HideInInspector] public Vector3 normalCameraPos;
+        [HideInInspector] public float crouchCameraHeight;
         [HideInInspector] public Vector3 velocity = Vector3.zero;
+        [HideInInspector] public float playerCrouchColliderHeight = 0f;
+        [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
+        public BoxCollider playerCollider = null;
+        [SerializeField] private Animator playerAnimator = null;
+        
+
 
         [Header("Player Looking")]
         public Transform playerCamera = null;
@@ -35,8 +48,9 @@ namespace Player
 
             walkingState = new WalkingState(this, movementStateMachine);
             sprintingState = new SprintingState(this, movementStateMachine);
-           // crouchingState = new CrouchingState(this, movementStateMachine);
-
+            crouchingState = new CrouchingState(this, movementStateMachine);
+            //playerColliderNormalHeight = playerCollider.size.y;
+            playerColliderNormalSize = playerCollider.size;
             movementStateMachine.Initialize(walkingState);
         }
 
@@ -55,6 +69,10 @@ namespace Player
         private void FixedUpdate()
         {
             movementStateMachine.CurrentState.PhysicsUpdate();
+        }
+        public bool CheckCollisionOverlap(Vector3 point)
+        {
+            return Physics.OverlapSphere(point, collisionOverlapRadius).Length > 0;
         }
     }
 }
