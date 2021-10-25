@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Transform gameObjectParent in this.gameObject.transform.GetComponentInChildren<Transform>())
+        foreach (Transform gameObjectParent in this.gameObject.transform.GetComponentInChildren<Transform>())
         {
             //finds all hideySpots
             if (gameObjectParent.gameObject.tag == "HideySpot")
@@ -26,6 +26,6 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
