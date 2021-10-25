@@ -160,13 +160,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4033d21bf2c7a4abc613b718ec22e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingState: {fileID: 0}
+  sprintingState: {fileID: 0}
+  crouchingState: {fileID: 0}
   controller: {fileID: 9065058748615389909}
+  walkSpeed: 6
+  sprintSpeed: 8
+  gravityMultiplier: 2
   playerAnimator: {fileID: 0}
-  move: {x: 0, y: 0, z: 0}
-  walkSpeed: 10
+  velocity: {x: 0, y: 0, z: 0}
   playerCamera: {fileID: 9065058749898011812}
   mouseSensitivity: 4
+  cameraPitch: 0
   noiseCollider: {fileID: 0}
+  noiseRadius: 0
 --- !u!1 &9065058749898011808
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +230,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 90
   orthographic: 0
