@@ -42,6 +42,12 @@ namespace Player
         public override void LateLogicUpdate()
         {
             base.LateLogicUpdate();
+            Vector2 mouseDelta = new Vector2(mouseX, mouseY);
+            player.cameraPitch -= mouseDelta.y * player.mouseSensitivity;
+            player.cameraPitch = Mathf.Clamp(player.cameraPitch, -90f, 90f);
+            player.playerCamera.localEulerAngles = Vector3.right * player.cameraPitch;
+
+            player.transform.Rotate(Vector3.up * mouseDelta.x * player.mouseSensitivity);
         }
 
         public override void PhysicsUpdate()
