@@ -1,0 +1,9 @@
+diff a/Assets/Scripts/Enemy/Room.cs b/Assets/Scripts/Enemy/Room.cs	(rejected hunks)
+@@ -5,6 +5,7 @@
+ public class Room : MonoBehaviour
+ {
+     [SerializeField] List<Transform> hidingSpots;
++    [SerializeField] public List<Transform> wayPoints;
+     // Start is called before the first frame update
+     void Start()
+     {
