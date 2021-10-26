@@ -8,6 +8,7 @@ namespace EnemyAI
 
     public class Enemy : MonoBehaviour
     {
+        public StateMachine stateMachine;
         //adding using the 'new' keyword means that it doesn't call the start functio
         PatrolState patrolState;
         ChaseState chaseState;
@@ -20,16 +21,18 @@ namespace EnemyAI
         // Start is called before the first frame update
         void Start()
         {
-            patrolState = gameObject.AddComponent<PatrolState>();
-            chaseState = gameObject.AddComponent<ChaseState>();
-            attackState = gameObject.AddComponent<AttackState>();
-            currentState = patrolState;
-            ignoreLayer = Physics.IgnoreRaycastLayer;
+            stateMachine = gameObject.GetComponent<StateMachine>();
+            patrolState = gameObject.GetComponent<PatrolState>();
+            chaseState = gameObject.GetComponent<ChaseState>();
+            attackState = gameObject.GetComponent<AttackState>();
+
+            //currentState = patrolState;
+            stateMachine.Initialize(patrolState);
         }
 
         // Update is called once per frame
         Vector3 direction;
-
+        public bool seenPlayer = false;
         Transform playerPosition;
         void Update()
         {
@@ -37,40 +40,55 @@ namespace EnemyAI
             //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
 
             //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
-
-            enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
+            enemyAgent.destination = stateMachine.CurrentState.LogicUpdate(this.transform.position);
+            //enemyAgent.destination = currentState.LogicUpdate(this.transform.position);
         }
 
         public Vector3 eyesOffset;
+        public Vector3 directionOffset;
 
-        public void SeenPlayer(Transform playerPosition)
+
+        public void SeenPlayer(Transform playerPosition, bool seen)
         {
-            if (currentState == attackState)
+            if (seen == false)
+            {
+                stateMachine.ChangeState(patrolState);
+                return;
+            }
+            if (stateMachine.CurrentState == attackState)
                 return;
 
             this.playerPosition = playerPosition;
-
             RaycastHit hit;
-            Debug.DrawRay(this.transform.position + eyesOffset, -direction, Color.red, 1f);
 
-            Ray ray = new Ray(this.transform.position + eyesOffset, -direction);
+            Ray ray = new Ray(this.transform.position + eyesOffset, -direction + directionOffset);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
                 //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red);
                 if (hit.collider.tag == "Player")
                 {
-                    currentState = chaseState;
+                    if (stateMachine.CurrentState != chaseState)
+                        stateMachine.ChangeState(chaseState);
+
+                    //Debug.DrawRay(this.transform.position + eyesOffset, -direction + directionOffset, Color.green, 1f);
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
+
                 }
                 else
                 {
-                    currentState = patrolState;
+                    if (stateMachine.CurrentState != patrolState)
+                        stateMachine.ChangeState(patrolState);
+
+
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
                 }
             }
         }
 
         public void AttackPlayer()
         {
-            currentState = attackState;
+            stateMachine.ChangeState(attackState);
+            //currentState = attackState;
             Debug.Log("Attacking player");
         }
 
