@@ -38,6 +38,8 @@ namespace Player
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked; 
+
+            // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
 
             walkingState = new WalkingState(this, movementStateMachine);
@@ -63,6 +65,8 @@ namespace Player
         {
             movementStateMachine.CurrentState.PhysicsUpdate();
         }
+
+        // Check if player is below an object (under a table, inside a vent, etc.)
         public bool CheckCollisionOverlap(Vector3 point)
         {
             Ray ray = new Ray(point, Vector3.up);
