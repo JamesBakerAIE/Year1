@@ -18,20 +18,14 @@ namespace Player
         public float sprintSpeed = 0f;
         public float crouchSpeed = 0f;
         public float gravityMultiplier = 0f;
-        public float cameraCrouchDistance = 1.0f;
-        public float cameraCrouchSpeed = 0.7f;
-        private float collisionOverlapRadius = 0.1f;
+        public float cameraCrouchDistance = 0.5f;
+        public float crouchRaycastHeight = 0.85f;
+        public LayerMask ignoreLayerMask = 0;
 
-
-        [HideInInspector] public Vector3 normalCameraPos;
-        [HideInInspector] public float crouchCameraHeight;
         [HideInInspector] public Vector3 velocity = Vector3.zero;
         [HideInInspector] public float playerCrouchColliderHeight = 0f;
         [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
-        public BoxCollider playerCollider = null;
         [SerializeField] private Animator playerAnimator = null;
-        
-
 
         [Header("Player Looking")]
         public Transform playerCamera = null;
@@ -44,13 +38,14 @@ namespace Player
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked; 
+
+            // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
 
             walkingState = new WalkingState(this, movementStateMachine);
             sprintingState = new SprintingState(this, movementStateMachine);
             crouchingState = new CrouchingState(this, movementStateMachine);
-            //playerColliderNormalHeight = playerCollider.size.y;
-            playerColliderNormalSize = playerCollider.size;
+
             movementStateMachine.Initialize(walkingState);
         }
 
@@ -70,9 +65,18 @@ namespace Player
         {
             movementStateMachine.CurrentState.PhysicsUpdate();
         }
+
+        // Check if player is below an object (under a table, inside a vent, etc.)
         public bool CheckCollisionOverlap(Vector3 point)
         {
-            return Physics.OverlapSphere(point, collisionOverlapRadius).Length > 0;
+            Ray ray = new Ray(point, Vector3.up);
+
+            if(Physics.Raycast(ray, crouchRaycastHeight, ~ignoreLayerMask))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
