@@ -121,13 +121,6 @@ namespace Player
             {
                 if (!(crouchHeld || belowCeiling))
                 {
-                    // Set collider info for crouching
-                    Vector3 newHeight = new Vector3(player.controller.bounds.size.x, player.controller.bounds.size.y * 2, player.controller.bounds.size.z);
-                    Vector3 newCenter = new Vector3(player.controller.center.x, player.controller.center.y * 2, player.controller.center.z);
-                   
-                    player.controller.center = newCenter;
-                    player.controller.height = newHeight.y;
-
                     stateMachine.ChangeState(player.walkingState);
                 }   
             }
