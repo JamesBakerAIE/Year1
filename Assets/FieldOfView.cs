@@ -17,13 +17,13 @@ namespace EnemyAI
         private void OnTriggerStay(Collider other)
         { 
             if (other.gameObject.tag == "Player")
-                enemy.SeenPlayer(other.gameObject.transform);
+                enemy.SeenPlayer(other.gameObject.transform, true);
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                enemy.SeenPlayer(other.gameObject.transform);
+                enemy.SeenPlayer(other.gameObject.transform, false);
 
         }
     }
