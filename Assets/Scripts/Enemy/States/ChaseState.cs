@@ -7,14 +7,13 @@ namespace EnemyAI
 {
     public class ChaseState : State
     {
-        // Start is called before the first frame update
-        void Start()
+        public override void Enter()
         {
-
+            Debug.Log("Entered chase state");
         }
 
         // Update is called once per frame
-        public override Vector3 UpdateAgent(Vector3 enemyPosition)
+        public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             return GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position;
         }

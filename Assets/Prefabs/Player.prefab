@@ -71,9 +71,17 @@ MonoBehaviour:
   controller: {fileID: 9065058748615389909}
   walkSpeed: 6
   sprintSpeed: 8
+  crouchSpeed: 0
   gravityMultiplier: 2
-  playerAnimator: {fileID: 0}
+  cameraCrouchDistance: 1
+  cameraCrouchSpeed: 0.7
+  normalCameraPos: {x: 0, y: 0, z: 0}
+  crouchCameraHeight: 0
   velocity: {x: 0, y: 0, z: 0}
+  playerCrouchColliderHeight: 0
+  playerColliderNormalSize: {x: 0, y: 0, z: 0}
+  playerCollider: {fileID: 0}
+  playerAnimator: {fileID: 0}
   playerCamera: {fileID: 9065058749898011812}
   mouseSensitivity: 4
   cameraPitch: 0

@@ -16,7 +16,9 @@ namespace EnemyAI
         {
             if (other.gameObject.tag == "Player")
             {
+
                 enemy.AttackPlayer();
+
             }
         }
     }
