@@ -26,16 +26,17 @@ namespace EnemyAI
             chaseState = gameObject.GetComponent<ChaseState>();
             attackState = gameObject.GetComponent<AttackState>();
 
+            //currentState = patrolState;
             stateMachine.Initialize(patrolState);
         }
 
         // Update is called once per frame
         Vector3 direction;
         public bool seenPlayer = false;
-        //Transform playerPosition;
+        Transform playerPosition;
         void Update()
         {
-            //direction = (this.transform.position - playerPosition.position);
+            direction = (this.transform.position - playerPosition.position);
             //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
 
             //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
@@ -64,10 +65,11 @@ namespace EnemyAI
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
                 //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red);
-                if (hit.collider.tag == "Player" && stateMachine.CurrentState)
+                if (hit.collider.tag == "Player")
                 {
                     if (stateMachine.CurrentState != chaseState)
                         stateMachine.ChangeState(chaseState);
+
                     //Debug.DrawRay(this.transform.position + eyesOffset, -direction + directionOffset, Color.green, 1f);
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
 
