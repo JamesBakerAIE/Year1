@@ -40,7 +40,9 @@ namespace EnemyAI
             {
  
                 room = hit.collider.gameObject;
-                room = room.transform.parent.parent.gameObject;
+                room = room.transform.parent.gameObject;
+
+                //room = room.transform.parent.parent.gameObject;
                 roomScript = room.GetComponent<Room>();
 
                 if (currentWayPoint == null)
