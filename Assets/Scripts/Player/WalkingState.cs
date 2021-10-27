@@ -8,6 +8,8 @@ namespace Player
     {
         private bool crouch;
         private bool sprint;
+        private bool interact = false;
+
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
@@ -29,6 +31,8 @@ namespace Player
             sprint = Input.GetButtonDown("Sprint");
             mouseX = Input.GetAxisRaw("Mouse X");
             mouseY = Input.GetAxisRaw("Mouse Y");
+
+            interact = Input.GetButtonDown("Interact");
         }
         public override void LogicUpdate()
         {
@@ -40,6 +44,18 @@ namespace Player
             else if(sprint)
             {
                 stateMachine.ChangeState(player.sprintingState);
+            }
+            else if(interact)
+            {
+                Ray ray = new Ray(player.transform.position, Vector3.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
+                {
+                    Debug.Log(hit.collider);
+                    player.result = hit;
+                    stateMachine.ChangeState(player.hidingState);
+                }
             }
         }
 

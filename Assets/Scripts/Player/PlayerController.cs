@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 namespace Player
 {
     public class PlayerController : MonoBehaviour
@@ -11,6 +11,7 @@ namespace Player
         [HideInInspector] public WalkingState walkingState = null;
         [HideInInspector] public SprintingState sprintingState = null;
         [HideInInspector] public CrouchingState crouchingState = null;
+        [HideInInspector] public HidingState hidingState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
@@ -32,6 +33,19 @@ namespace Player
         public int mouseSensitivity = 0;
         [HideInInspector] public float cameraPitch;
 
+        [Header("Player Hiding")]
+        public float interactRange = 0.0f;
+        public float walkToLockerTime = 0.0f;
+        public LayerMask hideSpotLayerMask = 0;
+
+        [HideInInspector] public RaycastHit result;
+
+        // VARIABLES FOR FPS COUNTER
+        //private int frameCount;
+        //private float elapsedTime;
+        //private double frameRate;
+
+
         [Header("Player Noise")]
         [SerializeField] private SphereCollider noiseCollider = null;
         [SerializeField] private float noiseRadius = 0f;
@@ -45,8 +59,18 @@ namespace Player
             walkingState = new WalkingState(this, movementStateMachine);
             sprintingState = new SprintingState(this, movementStateMachine);
             crouchingState = new CrouchingState(this, movementStateMachine);
+            hidingState = new HidingState(this, movementStateMachine);
 
             movementStateMachine.Initialize(walkingState);
+
+            // QualitySettings.vSyncCount = 0;
+        }
+
+
+        private void OnGUI()
+        {
+            // FPS COUNTER
+            //GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
         }
 
         private void Update()
@@ -54,6 +78,16 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
+
+            //FPS COUNTER
+            //frameCount++;
+            //elapsedTime += Time.deltaTime;
+            //if (elapsedTime > 0.5f)
+            //{
+            //    frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
+            //    frameCount = 0;
+            //    elapsedTime = 0;
+            //}
         }
 
         private void LateUpdate()

@@ -8,6 +8,7 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
+        public List<Path> paths;
         public GameObject room;
         GameObject[] doors;
         //GameObject[10] waypoints;
@@ -39,7 +40,9 @@ namespace EnemyAI
             {
  
                 room = hit.collider.gameObject;
-                room = room.transform.parent.parent.gameObject;
+                room = room.transform.parent.gameObject;
+
+                //room = room.transform.parent.parent.gameObject;
                 roomScript = room.GetComponent<Room>();
 
                 if (currentWayPoint == null)

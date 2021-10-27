@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideySpot : MonoBehaviour
+public class HideSpot : MonoBehaviour
 {
+    public GameObject front;
     // Start is called before the first frame update
     void Start()
     {
