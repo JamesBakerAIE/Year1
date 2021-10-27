@@ -8,27 +8,38 @@ namespace EnemyAI
 
     public class Enemy : MonoBehaviour
     {
-        //adding using the 'new' keyword means that it doesn't call the start functio
+        public StateMachine stateMachine;
         PatrolState patrolState;
-        ChaseState chaseState;
-        State currentState;
-        GameObject room;
+        Transform playerPosition;
 
         public NavMeshAgent enemyAgent;
-
         // Start is called before the first frame update
         void Start()
         {
-            patrolState = gameObject.AddComponent<PatrolState>();
-            chaseState = gameObject.AddComponent<ChaseState>();
-            currentState = chaseState;
-        }
+            stateMachine = gameObject.GetComponent<StateMachine>();
+            patrolState = gameObject.GetComponent<PatrolState>();
+            playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // Update is called once per frame
+            //currentState = patrolState;
+            stateMachine.Initialize(patrolState);
+        }
         void Update()
         {
-            currentState = patrolState;
-            enemyAgent.destination = currentState.UpdateAgent(this.transform.position);
+            Debug.Log(stateMachine.CurrentState.ToString());
+            //Updates the enemy's destination based on the current state's logic
+            enemyAgent.destination = stateMachine.CurrentState.LogicUpdate(this.transform.position);
+
+            State newState = null;
+            //check if any transition conditions are met
+            foreach (Transition transition in stateMachine.CurrentState.transitions)
+            {
+                newState = transition.CheckTransition(this.transform.position, playerPosition.position);
+                if(newState != null || newState == stateMachine.CurrentState)
+                {
+                    stateMachine.CurrentState = newState;
+                    break;
+                }
+            }
         }
 
     }

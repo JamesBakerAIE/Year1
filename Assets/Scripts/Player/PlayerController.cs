@@ -16,9 +16,16 @@ namespace Player
         public CharacterController controller = null;
         public float walkSpeed = 0f;
         public float sprintSpeed = 0f;
+        public float crouchSpeed = 0f;
         public float gravityMultiplier = 0f;
-        [SerializeField] private Animator playerAnimator = null;
+        public float cameraCrouchDistance = 0.5f;
+        public float crouchRaycastHeight = 0.85f;
+        public LayerMask ignoreLayerMask = 0;
+
         [HideInInspector] public Vector3 velocity = Vector3.zero;
+        [HideInInspector] public float playerCrouchColliderHeight = 0f;
+        [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
+        [SerializeField] private Animator playerAnimator = null;
 
         [Header("Player Looking")]
         public Transform playerCamera = null;
@@ -31,11 +38,13 @@ namespace Player
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked; 
+
+            // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
 
             walkingState = new WalkingState(this, movementStateMachine);
             sprintingState = new SprintingState(this, movementStateMachine);
-           // crouchingState = new CrouchingState(this, movementStateMachine);
+            crouchingState = new CrouchingState(this, movementStateMachine);
 
             movementStateMachine.Initialize(walkingState);
         }
@@ -55,6 +64,19 @@ namespace Player
         private void FixedUpdate()
         {
             movementStateMachine.CurrentState.PhysicsUpdate();
+        }
+
+        // Check if player is below an object (under a table, inside a vent, etc.)
+        public bool CheckCollisionOverlap(Vector3 point)
+        {
+            Ray ray = new Ray(point, Vector3.up);
+
+            if(Physics.Raycast(ray, crouchRaycastHeight, ~ignoreLayerMask))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

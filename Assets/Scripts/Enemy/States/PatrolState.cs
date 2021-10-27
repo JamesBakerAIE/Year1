@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player;
 
 namespace EnemyAI
 {
@@ -13,19 +14,27 @@ namespace EnemyAI
         int selectedDoor;
         public Transform targetWayPoint;
         public Room roomScript;
-        // Start is called before the first frame update
-        void Start()
-        {
-            //Debug.Log("patrol state selected");
-        }
+
 
         Transform currentWayPoint;
 
+        SeenTransition seenTransition;
+
+        public bool seenPlayer = false;
+        private void Start()
+        {
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transitions.Add(seenTransition);
+        }
+
+        public override void Enter()
+        {
+            Debug.Log("Entered patrol state");
+        }
         // Update is called once per frame
-        public override Vector3 UpdateAgent(Vector3 enemyPosition)
+        public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             RaycastHit hit;
-
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
  
@@ -47,17 +56,9 @@ namespace EnemyAI
                         currentWayPoint = roomScript.wayPoints[Random.Range(0, roomScript.wayPoints.Count)];
                 }
 
-
-                return currentWayPoint.position;
-
-                //foreach(Transform wayPoint in roomScript.wayPoints)
-                //{
-                //    targetWayPoint = wayPoint;
-                //    return wayPoint.transform.position;
-                //}
-
             }
-            return Vector3.zero;
+            //return Vector3.zero;
+            return currentWayPoint.position;
         }
     }
 }

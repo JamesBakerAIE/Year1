@@ -47,6 +47,8 @@ namespace Player
         {
             base.LateLogicUpdate();
 
+            // Mouse looking
+
             Vector2 mouseDelta = new Vector2(mouseX, mouseY);
             player.cameraPitch -= mouseDelta.y * player.mouseSensitivity;
             player.cameraPitch = Mathf.Clamp(player.cameraPitch, -90f, 90f);
@@ -59,16 +61,22 @@ namespace Player
         {
             base.PhysicsUpdate();
 
+            // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
             if (player.controller.isGrounded && player.velocity.y < 0)
             {
                 player.velocity.y = -2f;
             }
+
+            // Normalized movement
 
             Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
             inputDir.Normalize();
 
             Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
             player.controller.Move(move * Time.deltaTime);
+
+
+            // Apply gravity
 
             player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
 

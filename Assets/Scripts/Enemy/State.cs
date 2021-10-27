@@ -6,16 +6,40 @@ namespace EnemyAI
 {
     public class State : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public List<Transition> transitions;
+
+
+        //called when first switched to state
+        public virtual void Enter()
         {
 
         }
 
-        // Update is called once per frame
-        public virtual Vector3 UpdateAgent(Vector3 enemyPosition)
+        public virtual void HandleInput()
+        {
+
+        }
+
+        //normal update
+        public virtual Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             return Vector3.zero;
+        }
+
+        //late update
+        public virtual void LateLogicUpdate()
+        {
+
+        }
+
+        public virtual void PhysicsUpdate()
+        {
+
+        }
+
+        public virtual void Exit()
+        {
+
         }
 
     }
