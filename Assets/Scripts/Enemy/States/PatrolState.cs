@@ -23,6 +23,8 @@ namespace EnemyAI
         public bool seenPlayer = false;
         private void Start()
         {
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transitions.Add(seenTransition);
         }
 
         public override void Enter()
@@ -33,7 +35,6 @@ namespace EnemyAI
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             RaycastHit hit;
-
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
  
@@ -56,7 +57,7 @@ namespace EnemyAI
                 }
 
 
-                return currentWayPoint.position;
+                //return currentWayPoint.position;
 
             }
 
@@ -64,9 +65,12 @@ namespace EnemyAI
 
             foreach(Transition transition in transitions)
             {
-                transition.CheckTransition(enemyPosition, playerPosition, seenPlayer);
+                transition.CheckTransition(enemyPosition, playerPosition);
             }
-            return Vector3.zero;
+
+
+            //return Vector3.zero;
+            return currentWayPoint.position;
         }
     }
 }

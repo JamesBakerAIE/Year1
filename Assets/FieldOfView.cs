@@ -8,22 +8,24 @@ namespace EnemyAI
     public class FieldOfView : MonoBehaviour
     {
         public Enemy enemy;
+        public SeenTransition seenTransition;
 
         private void Start()
         {
             enemy = GameObject.FindObjectOfType<Enemy>();
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
         }
 
         private void OnTriggerStay(Collider other)
-        { 
+        {
             if (other.gameObject.tag == "Player")
-                enemy.SeenPlayer(other.gameObject.transform, true);
+                seenTransition.seenPlayer = true;
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                enemy.SeenPlayer(other.gameObject.transform, false);
+                seenTransition.seenPlayer = true;
 
         }
     }

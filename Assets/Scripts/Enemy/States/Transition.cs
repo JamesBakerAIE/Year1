@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace EnemyAI
 {
-    public class Transition
+    public class Transition : MonoBehaviour
     {
-        public virtual State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition, bool seenPlayer /*, Vector3 eyeOffset*/)
+        public virtual State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition/*, Vector3 eyeOffset*/)
         {
             return null;
         }

@@ -6,8 +6,10 @@ namespace EnemyAI
 {
     public class SeenTransition : Transition
     {
-        bool seenPlayer = true;
-        public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition, bool seenPlayer /*Vector3 eyeOffset*/)
+        public bool seenPlayer;
+        public Vector3 eyesOffset;
+        public Vector3 directionOffset;
+        public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition /*Vector3 eyeOffset*/)
         {
 
             if (seenPlayer == false)
@@ -18,10 +20,11 @@ namespace EnemyAI
             Vector3 direction = (enemyPositon - playerPosition);
             RaycastHit hit;
 
-            Ray ray = new Ray(enemyPositon /* + eyeOffset*/, -direction /*+ directionOffset*/);
+            Ray ray = new Ray(enemyPositon + eyesOffset, -direction + directionOffset);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
-                //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red);
+                //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red)
                 if (hit.collider.tag == "Player")
                 {
                     //Debug.DrawRay(this.transform.position + eyesOffset, -direction + directionOffset, Color.green, 1f);
