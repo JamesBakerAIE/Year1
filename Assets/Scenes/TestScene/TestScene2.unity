@@ -547,9 +547,9 @@ GameObject:
   - component: {fileID: 915624423}
   - component: {fileID: 915624422}
   - component: {fileID: 915624421}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Locker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -562,8 +562,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915624419}
   m_LocalRotation: {x: 0.010616957, y: -0.00811637, z: -0.0032978593, w: 0.9999053}
-  m_LocalPosition: {x: 4.0157814, y: 2.912363, z: -1.9306493}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3.687, y: 2.965, z: -1.937}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 797206373}
   m_RootOrder: 0
@@ -1671,37 +1671,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 919132148081917855, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: crouchSpeed
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: playerCollider
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: normalCameraPos.y
-      value: 0.599
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: cameraCrouchDistance
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: ignoreLayerMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1747,16 +1719,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9065058749898011808, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 9065058749898011813, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2871
       objectReference: {fileID: 0}
-    - target: {fileID: 9065058749898011808, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 797076124, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
 --- !u!1 &2121750002
 GameObject:
@@ -1770,9 +1737,9 @@ GameObject:
   - component: {fileID: 2121750006}
   - component: {fileID: 2121750005}
   - component: {fileID: 2121750004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Locker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1785,8 +1752,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121750002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.2342186, y: 2.412363, z: -5.9306493}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.2342186, y: 2.925, z: -5.9306493}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 797206373}
   m_RootOrder: 1
