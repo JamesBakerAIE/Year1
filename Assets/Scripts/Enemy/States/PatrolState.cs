@@ -8,6 +8,7 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
+        public List<Path> paths;
         public GameObject room;
         GameObject[] doors;
         //GameObject[10] waypoints;
@@ -23,6 +24,8 @@ namespace EnemyAI
         public bool seenPlayer = false;
         private void Start()
         {
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transitions.Add(seenTransition);
         }
 
         public override void Enter()
@@ -33,7 +36,6 @@ namespace EnemyAI
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             RaycastHit hit;
-
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
  
@@ -55,18 +57,9 @@ namespace EnemyAI
                         currentWayPoint = roomScript.wayPoints[Random.Range(0, roomScript.wayPoints.Count)];
                 }
 
-
-                return currentWayPoint.position;
-
             }
-
-            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-            foreach(Transition transition in transitions)
-            {
-                transition.CheckTransition(enemyPosition, playerPosition, seenPlayer);
-            }
-            return Vector3.zero;
+            //return Vector3.zero;
+            return currentWayPoint.position;
         }
     }
 }
