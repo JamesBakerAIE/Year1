@@ -25,7 +25,7 @@ namespace EnemyAI
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                seenTransition.seenPlayer = true;
+                seenTransition.seenPlayer = false;
 
         }
     }

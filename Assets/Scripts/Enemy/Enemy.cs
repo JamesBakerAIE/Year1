@@ -25,6 +25,7 @@ namespace EnemyAI
             patrolState = gameObject.GetComponent<PatrolState>();
             chaseState = gameObject.GetComponent<ChaseState>();
             attackState = gameObject.GetComponent<AttackState>();
+            playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
 
             //currentState = patrolState;
             stateMachine.Initialize(patrolState);
@@ -42,6 +43,17 @@ namespace EnemyAI
             //Debug.DrawRay(this.transform.position, -direction, Color.red, Mathf.Infinity);
             enemyAgent.destination = stateMachine.CurrentState.LogicUpdate(this.transform.position);
             //enemyAgent.destination = currentState.LogicUpdate(this.transform.position);
+
+            State newState = null;
+            foreach (Transition transition in stateMachine.CurrentState.transitions)
+            {
+                newState = transition.CheckTransition(this.transform.position, playerPosition.position);
+                if(newState != null)
+                {
+                    stateMachine.CurrentState = newState;
+                    break;
+                }
+            }
         }
 
         public Vector3 eyesOffset;

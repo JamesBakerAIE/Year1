@@ -63,11 +63,6 @@ namespace EnemyAI
 
             Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-            foreach(Transition transition in transitions)
-            {
-                transition.CheckTransition(enemyPosition, playerPosition);
-            }
-
 
             //return Vector3.zero;
             return currentWayPoint.position;

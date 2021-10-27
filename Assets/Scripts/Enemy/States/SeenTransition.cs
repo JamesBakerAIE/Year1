@@ -9,6 +9,13 @@ namespace EnemyAI
         public bool seenPlayer;
         public Vector3 eyesOffset;
         public Vector3 directionOffset;
+
+        ChaseState chaseState;
+        private void Start()
+        {
+            chaseState = GameObject.FindObjectOfType<ChaseState>();
+        }
+
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition /*Vector3 eyeOffset*/)
         {
 
@@ -29,14 +36,14 @@ namespace EnemyAI
                 {
                     //Debug.DrawRay(this.transform.position + eyesOffset, -direction + directionOffset, Color.green, 1f);
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
-                    return new ChaseState();
+                    return chaseState;
                 }
                 else
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
                 }
             }
-            return new PatrolState();
+            return null;
         }
     }
 }
