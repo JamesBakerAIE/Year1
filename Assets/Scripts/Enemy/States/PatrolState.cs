@@ -8,6 +8,7 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
+        public List<Path> paths;
         public GameObject room;
         GameObject[] doors;
         //GameObject[10] waypoints;

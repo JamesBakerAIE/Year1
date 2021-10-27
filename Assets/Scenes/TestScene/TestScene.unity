@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19428
+  m_Name: pb_Mesh19432
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -334,8 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0500ddbf5ac990a428d41451b3e710b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  seenTransition: {fileID: 0}
 --- !u!64 &557850135
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -596,6 +594,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitions: []
+  paths:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   room: {fileID: 0}
   targetWayPoint: {fileID: 0}
   roomScript: {fileID: 0}
@@ -664,7 +673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83d7432f55262842b4618777caa6e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seenPlayer: 0
+  inFOV: 0
+  inAttack: 0
   eyesOffset: {x: 0, y: 0.16, z: 1.28}
   directionOffset: {x: 0, y: 0, z: -1.06}
 --- !u!1001 &1154818337
@@ -705,6 +715,10 @@ PrefabInstance:
     - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065058748615389906, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1177,7 +1191,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19476
+  m_Name: pb_Mesh19480
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1382,7 +1396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7389138da9d7bec4eb5032ccbbbff9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  seenTransition: {fileID: 0}
 --- !u!64 &1718893973
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1920,6 +1934,14 @@ PrefabInstance:
     - target: {fileID: 493226281871549554, guid: 80ea9870987846f4fb44e69f9510fc1f, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 493226281871549555, guid: 80ea9870987846f4fb44e69f9510fc1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 493226281871549555, guid: 80ea9870987846f4fb44e69f9510fc1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.54
       objectReference: {fileID: 0}
     - target: {fileID: 493226281925243721, guid: 80ea9870987846f4fb44e69f9510fc1f, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2736,7 +2758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1976276642, guid: dd56f11cb17f6bc40a677493d28674af, type: 3}
       propertyPath: m_Speed
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1976276647, guid: dd56f11cb17f6bc40a677493d28674af, type: 3}
       propertyPath: eyesOffset.y
