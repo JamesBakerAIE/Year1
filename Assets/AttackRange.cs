@@ -6,20 +6,25 @@ namespace EnemyAI
 
     public class AttackRange : MonoBehaviour
     {
-        public Enemy enemy;
 
+        public SeenTransition seenTransition;
         private void Start()
         {
-            enemy = GameObject.FindObjectOfType<Enemy>();
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
         }
-        private void OnTriggerEnter(Collider other)
+
+        private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == "Player")
-            {
+                seenTransition.inAttack = true;
 
-                enemy.AttackPlayer();
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+                seenTransition.inAttack = false;
 
-            }
+
         }
     }
 }

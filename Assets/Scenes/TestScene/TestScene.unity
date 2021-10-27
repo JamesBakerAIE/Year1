@@ -686,6 +686,10 @@ PrefabInstance:
       propertyPath: cameraCrouchDistance
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1325974861893668843, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+      propertyPath: ignoreLayerMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 1711813854561820234, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -704,7 +708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.11
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalPosition.y
@@ -712,7 +716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.88
+      value: 2.98
       objectReference: {fileID: 0}
     - target: {fileID: 9065058748615389911, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
       propertyPath: m_LocalRotation.x

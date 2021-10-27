@@ -7,15 +7,22 @@ namespace EnemyAI
 {
     public class ChaseState : State
     {
-        public override void Enter()
+        Transform player;
+
+        SeenTransition seenTransition;
+        private void Start()
         {
-            Debug.Log("Entered chase state");
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transitions.Add(seenTransition);
+
+            player = GameObject.FindObjectOfType<PlayerController>().gameObject.transform;
+
         }
 
         // Update is called once per frame
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
-            return GameObject.FindObjectOfType<PlayerController>().gameObject.transform.position;
+            return player.position;
         }
     }
 }

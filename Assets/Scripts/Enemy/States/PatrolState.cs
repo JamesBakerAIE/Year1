@@ -56,14 +56,7 @@ namespace EnemyAI
                         currentWayPoint = roomScript.wayPoints[Random.Range(0, roomScript.wayPoints.Count)];
                 }
 
-
-                //return currentWayPoint.position;
-
             }
-
-            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-
             //return Vector3.zero;
             return currentWayPoint.position;
         }

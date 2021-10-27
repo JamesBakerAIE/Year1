@@ -6,23 +6,29 @@ namespace EnemyAI
 {
     public class SeenTransition : Transition
     {
-        public bool seenPlayer;
+        public bool inFOV = false;
+        public bool inAttack = false;
         public Vector3 eyesOffset;
         public Vector3 directionOffset;
 
+        State changeState;
         ChaseState chaseState;
+        PatrolState patrolState;
+        AttackState attackState;
         private void Start()
         {
             chaseState = GameObject.FindObjectOfType<ChaseState>();
+            patrolState = GameObject.FindObjectOfType<PatrolState>();
+            attackState = GameObject.FindObjectOfType<AttackState>();
         }
 
-        public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition /*Vector3 eyeOffset*/)
+        public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
 
-            if (seenPlayer == false)
-            {
-                return new PatrolState();
-            }
+            if (inFOV == false)
+                return null;
+
+            //ignores colliders on this specific layer
             LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
             Vector3 direction = (enemyPositon - playerPosition);
             RaycastHit hit;
@@ -31,16 +37,21 @@ namespace EnemyAI
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
-                //Debug.DrawRay(this.transform.position, Vector3.forward, Color.red)
+                //Player is in direct sight to the enemy
                 if (hit.collider.tag == "Player")
                 {
-                    //Debug.DrawRay(this.transform.position + eyesOffset, -direction + directionOffset, Color.green, 1f);
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
-                    return chaseState;
+                    if (inAttack)
+                        return attackState;
+                    else
+                        return chaseState;
                 }
+                //Player isn't in direct sight to the enemy
                 else
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+                    return patrolState;
+
                 }
             }
             return null;
