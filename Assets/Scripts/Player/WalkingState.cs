@@ -47,14 +47,18 @@ namespace Player
             }
             else if(interact)
             {
-                Ray ray = new Ray(player.transform.position, Vector3.forward);
+                Ray ray = new Ray(player.transform.position, player.transform.forward);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
                 {
-                    Debug.Log(hit.collider);
-                    player.result = hit;
-                    stateMachine.ChangeState(player.hidingState);
+                    if(hit.collider.isTrigger)
+                    {
+                        Debug.Log(hit.collider);
+                        player.result = hit;
+                        stateMachine.ChangeState(player.hidingState);
+                    }
+
                 }
             }
         }
