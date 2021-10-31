@@ -26,7 +26,7 @@ namespace Player
             Vector3 newCenter = new Vector3(player.controller.center.x, player.controller.center.y * 2, player.controller.center.z);
 
             player.controller.height = newHeight.y;
-            player.controller.center = newCenter;
+            //player.controller.center = newCenter;
             crouchHeld = false;
 
             startValue = player.playerCamera.localPosition.y;
@@ -122,7 +122,10 @@ namespace Player
                 if (!(crouchHeld || belowCeiling))
                 {
                     stateMachine.ChangeState(player.walkingState);
-                }   
+                    Vector3 newHeight = new Vector3(player.controller.bounds.size.x, player.controller.bounds.size.y * 2, player.controller.bounds.size.z);
+                    player.controller.height = newHeight.y;
+
+                }
             }
 
 
