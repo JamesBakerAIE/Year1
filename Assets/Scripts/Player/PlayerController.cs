@@ -36,7 +36,9 @@ namespace Player
         [Header("Player Hiding")]
         public float interactRange = 0.0f;
         public float walkToLockerTime = 0.0f;
+        public float exitLockerTime = 0.0f;
         public LayerMask hideSpotLayerMask = 0;
+        public float lockerExitDistance = 0;
 
         [HideInInspector] public RaycastHit result;
 
