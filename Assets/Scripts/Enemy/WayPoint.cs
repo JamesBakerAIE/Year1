@@ -2,8 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WayPoint : MonoBehaviour
+namespace EnemyAI
 {
-    public float wayPointChance;
-    public bool patrolled = false;
+
+
+    public class WayPoint : MonoBehaviour
+    {
+        public float wayPointChance;
+        public bool patrolled = false;
+
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.gameObject.tag == "Enemy")
+        //    {
+        //        patrolled = true;
+        //        FindObjectOfType<PatrolState>().CheckPath();
+        //    }
+        //}
+    }
 }

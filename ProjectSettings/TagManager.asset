@@ -8,6 +8,7 @@ TagManager:
   - WayPoint
   - Door
   - Locker
+  - Enemy
   layers:
   - Default
   - TransparentFX

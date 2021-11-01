@@ -19,6 +19,7 @@ namespace EnemyAI
         public Room roomScript;
 
         public Material selectedWayPointMaterial;
+        public Material wayPointMaterial;
 
 
         Transform currentWayPoint;
@@ -45,28 +46,30 @@ namespace EnemyAI
             RaycastHit hit;
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
- 
-                room = hit.collider.gameObject;
-                room = room.transform.parent.gameObject;
+                if (room == hit.collider.gameObject.transform.parent.gameObject)
+                {
+                    Debug.Log("Already in this room");
+                }
+
+                room = hit.collider.gameObject.transform.parent.gameObject;
+                //room = room.transform.parent.gameObject;
 
                 //room = room.transform.parent.parent.gameObject;
                 roomScript = room.GetComponent<Room>();
-
-                if (selectedWayPoint == null)
-                    CheckPath();
-
-                closestWaypoint = Vector3.Distance(selectedWayPoint.GetComponent<Transform>().position, enemyPosition);
-
-                if (closestWaypoint < 1)
-                {
-                    selectedWayPoint.patrolled = true;
-                    closestWaypoint = 100000f;
-                    CheckPath();
-                }
-
-                //return currentWayPoint.position;
-
             }
+
+            if (selectedWayPoint == null)
+                CheckPath();
+
+            closestWaypoint = Vector3.Distance(selectedWayPoint.GetComponent<Transform>().position, enemyPosition);
+
+            if (closestWaypoint < 1)
+            {
+                selectedWayPoint.patrolled = true;
+                closestWaypoint = 100000f;
+                CheckPath();
+            }
+
             //return Vector3.zero;
             if (selectedWayPoint == null)
                 return Vector3.zero;
@@ -75,8 +78,11 @@ namespace EnemyAI
             return selectedWayPoint.GetComponent<Transform>().position;
         }
 
-        void CheckPath()
+
+        public void CheckPath()
         {
+            int requiredWayPoints = 0;
+            int requiredWayPointsVisited = 0;
             foreach (Transform wayPointTransform in roomScript.wayPoints)
             {
 
@@ -88,9 +94,16 @@ namespace EnemyAI
                     wayPoint.patrolled = true;
                 }
 
+                if(wayPoint.wayPointChance == 100)
+                    requiredWayPoints++;
+
                 if (wayPoint.patrolled == true)
                 {
-                    StartCoroutine(PatrolledDelay(wayPoint));
+                    if(wayPoint.wayPointChance == 100)
+                    {
+                        requiredWayPointsVisited++;
+                    }
+                    //StartCoroutine(PatrolledDelay(wayPoint));
 
                 }
 
@@ -107,6 +120,18 @@ namespace EnemyAI
                 }
 
             }
+
+            if (requiredWayPoints == requiredWayPointsVisited)
+                foreach (Transform wayPoint in roomScript.wayPoints)
+                {
+                    wayPoint.GetComponent<WayPoint>().patrolled = false;
+                    wayPoint.GetComponent<Renderer>().material = wayPointMaterial;
+                    foreach (Transform wayPointChild in wayPoint.GetComponentInChildren<Transform>())
+                    {
+                        wayPointChild.GetComponent<WayPoint>().patrolled = false;
+                        wayPointChild.GetComponent<Renderer>().material = wayPointMaterial;
+                    }
+                }
         }
 
         IEnumerator PatrolledDelay(WayPoint wayPoint)

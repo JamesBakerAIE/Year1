@@ -43,9 +43,9 @@ namespace Player
         [HideInInspector] public RaycastHit result;
 
         // VARIABLES FOR FPS COUNTER
-        //private int frameCount;
-        //private float elapsedTime;
-        //private double frameRate;
+        private int frameCount;
+        private float elapsedTime;
+        private double frameRate;
 
 
         [Header("Player Noise")]
@@ -65,14 +65,14 @@ namespace Player
 
             movementStateMachine.Initialize(walkingState);
 
-            // QualitySettings.vSyncCount = 0;
+            QualitySettings.vSyncCount = 0;
         }
 
 
         private void OnGUI()
         {
             // FPS COUNTER
-            //GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
+            GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
         }
 
         private void Update()
@@ -82,14 +82,14 @@ namespace Player
             movementStateMachine.CurrentState.LogicUpdate();
 
             //FPS COUNTER
-            //frameCount++;
-            //elapsedTime += Time.deltaTime;
-            //if (elapsedTime > 0.5f)
-            //{
-            //    frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
-            //    frameCount = 0;
-            //    elapsedTime = 0;
-            //}
+            frameCount++;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > 0.5f)
+            {
+                frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
+                frameCount = 0;
+                elapsedTime = 0;
+            }
         }
 
         private void LateUpdate()
