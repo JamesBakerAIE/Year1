@@ -89,10 +89,10 @@ namespace EnemyAI
                 float wayPointDistance = Vector3.Distance(wayPointTransform.position, this.transform.position);
                 WayPoint wayPoint = wayPointTransform.GetComponent<WayPoint>();
 
-                if(wayPoint == selectedWayPoint)
-                {
-                    wayPoint.patrolled = true;
-                }
+                //if(wayPoint == selectedWayPoint)
+                //{
+                //    wayPoint.patrolled = true;
+                //}
 
                 if(wayPoint.wayPointChance == 100)
                     requiredWayPoints++;
