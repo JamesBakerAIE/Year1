@@ -88,6 +88,11 @@ namespace EnemyAI
                     wayPoint.patrolled = true;
                 }
 
+                if (wayPoint.patrolled == true)
+                {
+                    StartCoroutine(PatrolledDelay(wayPoint));
+
+                }
 
                 if (wayPointDistance < closestWaypoint && wayPoint.patrolled == false)
                 {
@@ -102,6 +107,19 @@ namespace EnemyAI
                 }
 
             }
+        }
+
+        IEnumerator PatrolledDelay(WayPoint wayPoint)
+        {
+            Debug.Log("Starting delay");
+            yield return new WaitForSeconds(1f);
+            foreach (Transform childWayPoint in wayPoint.transform)
+            {
+                childWayPoint.GetComponent<WayPoint>().patrolled = true;
+                childWayPoint.gameObject.GetComponent<Renderer>().material = selectedWayPointMaterial;
+            }
+            Debug.Log("Ending delay");
+
         }
     }
 }
