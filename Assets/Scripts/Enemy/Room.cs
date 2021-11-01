@@ -18,7 +18,11 @@ public class Room : MonoBehaviour
             //finds all waypoints in the room
             if (gameObjectParent.gameObject.tag == "WayPoint")
                 foreach (Transform wayPoint in gameObjectParent.GetComponentInChildren<Transform>())
+                {
                     wayPoints.Add(wayPoint);
+                    foreach(Transform wayPointChild in wayPoint.GetComponentInChildren<Transform>())
+                        wayPoints.Add(wayPointChild);
+                }
 
         }
     }
