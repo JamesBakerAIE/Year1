@@ -8,13 +8,18 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
-        public List<Path> paths;
+        public List<Transform> wayPoints;
+        public List<Transform> checkedWayPoints;
+
         public GameObject room;
         GameObject[] doors;
         //GameObject[10] waypoints;
         int selectedDoor;
         public Transform targetWayPoint;
         public Room roomScript;
+
+        public Material selectedWayPointMaterial;
+        public Material wayPointMaterial;
 
 
         Transform currentWayPoint;
@@ -32,36 +37,114 @@ namespace EnemyAI
         {
             Debug.Log("Entered patrol state");
         }
+
+        float closestWaypoint = 10000;
+        public WayPoint selectedWayPoint;
         // Update is called once per frame
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
             RaycastHit hit;
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
- 
-                room = hit.collider.gameObject;
-                room = room.transform.parent.gameObject;
+                if (room == hit.collider.gameObject.transform.parent.gameObject)
+                {
+                    Debug.Log("Already in this room");
+                }
+
+                room = hit.collider.gameObject.transform.parent.gameObject;
+                //room = room.transform.parent.gameObject;
 
                 //room = room.transform.parent.parent.gameObject;
                 roomScript = room.GetComponent<Room>();
+            }
 
-                if (currentWayPoint == null)
+            if (selectedWayPoint == null)
+                CheckPath();
+
+            closestWaypoint = Vector3.Distance(selectedWayPoint.GetComponent<Transform>().position, enemyPosition);
+
+            if (closestWaypoint < 1)
+            {
+                selectedWayPoint.patrolled = true;
+                closestWaypoint = 100000f;
+                CheckPath();
+            }
+
+            //return Vector3.zero;
+            if (selectedWayPoint == null)
+                return Vector3.zero;
+
+            selectedWayPoint.gameObject.GetComponent<Renderer>().material = selectedWayPointMaterial;
+            return selectedWayPoint.GetComponent<Transform>().position;
+        }
+
+
+        public void CheckPath()
+        {
+            int requiredWayPoints = 0;
+            int requiredWayPointsVisited = 0;
+            foreach (Transform wayPointTransform in roomScript.wayPoints)
+            {
+
+                float wayPointDistance = Vector3.Distance(wayPointTransform.position, this.transform.position);
+                WayPoint wayPoint = wayPointTransform.GetComponent<WayPoint>();
+
+                //if(wayPoint == selectedWayPoint)
+                //{
+                //    wayPoint.patrolled = true;
+                //}
+
+                if(wayPoint.wayPointChance == 100)
+                    requiredWayPoints++;
+
+                if (wayPoint.patrolled == true)
                 {
-                    currentWayPoint = roomScript.wayPoints[0];
+                    if(wayPoint.wayPointChance == 100)
+                    {
+                        requiredWayPointsVisited++;
+                    }
+                    //StartCoroutine(PatrolledDelay(wayPoint));
+
                 }
 
-                foreach (Transform wayPoint in roomScript.wayPoints)
+                if (wayPointDistance < closestWaypoint && wayPoint.patrolled == false)
                 {
-                    //INSERT RANDOM WAYPOINT PICKING
-                    //float thisDistance = Vector3.Distance(wayPoint.position, enemyPosition);
-                    float currentClosest = Vector3.Distance(currentWayPoint.position, enemyPosition);
-                    if (currentClosest < 1)
-                        currentWayPoint = roomScript.wayPoints[Random.Range(0, roomScript.wayPoints.Count)];
+                    float check = Random.Range(0, 100);
+                    float testCheck = wayPoint.wayPointChance;
+                    if (check <= testCheck && wayPoint.patrolled == false)
+                    {
+                        selectedWayPoint = wayPoint;
+                        closestWaypoint = wayPointDistance;
+                    }
+
                 }
 
             }
-            //return Vector3.zero;
-            return currentWayPoint.position;
+
+            if (requiredWayPoints == requiredWayPointsVisited)
+                foreach (Transform wayPoint in roomScript.wayPoints)
+                {
+                    wayPoint.GetComponent<WayPoint>().patrolled = false;
+                    wayPoint.GetComponent<Renderer>().material = wayPointMaterial;
+                    foreach (Transform wayPointChild in wayPoint.GetComponentInChildren<Transform>())
+                    {
+                        wayPointChild.GetComponent<WayPoint>().patrolled = false;
+                        wayPointChild.GetComponent<Renderer>().material = wayPointMaterial;
+                    }
+                }
+        }
+
+        IEnumerator PatrolledDelay(WayPoint wayPoint)
+        {
+            Debug.Log("Starting delay");
+            yield return new WaitForSeconds(1f);
+            foreach (Transform childWayPoint in wayPoint.transform)
+            {
+                childWayPoint.GetComponent<WayPoint>().patrolled = true;
+                childWayPoint.gameObject.GetComponent<Renderer>().material = selectedWayPointMaterial;
+            }
+            Debug.Log("Ending delay");
+
         }
     }
 }

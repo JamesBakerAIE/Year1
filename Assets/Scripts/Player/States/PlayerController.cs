@@ -36,19 +36,21 @@ namespace Player
         [Header("Player Hiding")]
         public float interactRange = 0.0f;
         public float walkToLockerTime = 0.0f;
+        public float exitLockerTime = 0.0f;
         public LayerMask hideSpotLayerMask = 0;
+        public float lockerExitDistance = 0;
 
         [HideInInspector] public RaycastHit result;
 
         // VARIABLES FOR FPS COUNTER
-        //private int frameCount;
-        //private float elapsedTime;
-        //private double frameRate;
+        private int frameCount;
+        private float elapsedTime;
+        private double frameRate;
 
 
-        [Header("Player Noise")]
-        [SerializeField] private SphereCollider noiseCollider = null;
-        [SerializeField] private float noiseRadius = 0f;
+
+
+
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked; 
@@ -63,14 +65,14 @@ namespace Player
 
             movementStateMachine.Initialize(walkingState);
 
-            // QualitySettings.vSyncCount = 0;
+            QualitySettings.vSyncCount = 0;
         }
 
 
         private void OnGUI()
         {
             // FPS COUNTER
-            //GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
+            GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
         }
 
         private void Update()
@@ -80,14 +82,14 @@ namespace Player
             movementStateMachine.CurrentState.LogicUpdate();
 
             //FPS COUNTER
-            //frameCount++;
-            //elapsedTime += Time.deltaTime;
-            //if (elapsedTime > 0.5f)
-            //{
-            //    frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
-            //    frameCount = 0;
-            //    elapsedTime = 0;
-            //}
+            frameCount++;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > 0.5f)
+            {
+                frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
+                frameCount = 0;
+                elapsedTime = 0;
+            }
         }
 
         private void LateUpdate()
