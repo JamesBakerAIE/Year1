@@ -39,9 +39,13 @@ namespace Player
             verticalInput = Input.GetAxisRaw("Vertical");
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
-            crouchHeld = Input.GetButton("Crouch");
-            mouseX = Input.GetAxisRaw("Mouse X");
-            mouseY = Input.GetAxisRaw("Mouse Y");
+            if (Time.timeScale != 0)
+            {
+                crouchHeld = Input.GetButton("Crouch");
+                mouseX = Input.GetAxisRaw("Mouse X");
+                mouseY = Input.GetAxisRaw("Mouse Y");
+            }
+
         }
 
         public override void LogicUpdate()
