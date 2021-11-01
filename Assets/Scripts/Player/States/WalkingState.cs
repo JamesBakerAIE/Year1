@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace Player
 {
-    public class SprintingState : State
+    public class WalkingState : State
     {
-        private bool walk;
-        private bool interact;
-        public SprintingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
+        private bool crouch;
+        private bool sprint;
+        private bool interact = false;
+
+        public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
         }
@@ -16,8 +18,8 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
-            speed = player.sprintSpeed;
-            walk = false;
+            speed = player.walkSpeed;
+            crouch = false;
         }
         public override void HandleInput()
         {
@@ -25,29 +27,37 @@ namespace Player
             verticalInput = Input.GetAxisRaw("Vertical");
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
-            walk = Input.GetButtonUp("Sprint");
+            crouch = Input.GetButtonDown("Crouch");
+            sprint = Input.GetButtonDown("Sprint");
 
-            mouseX = Input.GetAxisRaw("Mouse X");
-            mouseY = Input.GetAxisRaw("Mouse Y");
+            if(Time.timeScale != 0)
+            {
+                mouseX = Input.GetAxisRaw("Mouse X");
+                mouseY = Input.GetAxisRaw("Mouse Y");
 
-            interact = Input.GetButtonDown("Interact");
+                interact = Input.GetButtonDown("Interact");
+            }
+
         }
-
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (walk)
+            if (crouch)
             {
-                stateMachine.ChangeState(player.walkingState);
+                stateMachine.ChangeState(player.crouchingState);
             }
-            else if (interact)
+            else if(sprint)
+            {
+                stateMachine.ChangeState(player.sprintingState);
+            }
+            else if(interact)
             {
                 Ray ray = new Ray(player.transform.position, player.transform.forward);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
                 {
-                    if (hit.collider.isTrigger)
+                    if(hit.collider.isTrigger)
                     {
                         Debug.Log(hit.collider);
                         player.result = hit;
@@ -63,6 +73,7 @@ namespace Player
             base.LateLogicUpdate();
 
             // Mouse looking
+
             Vector2 mouseDelta = new Vector2(mouseX, mouseY);
             player.cameraPitch -= mouseDelta.y * player.mouseSensitivity;
             player.cameraPitch = Mathf.Clamp(player.cameraPitch, -90f, 90f);
@@ -74,29 +85,31 @@ namespace Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
+
             // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
-            if(player.controller.isGrounded && player.velocity.y < 0)
+            if (player.controller.isGrounded && player.velocity.y < 0)
             {
                 player.velocity.y = -2f;
             }
 
             // Normalized movement
+
             Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
             inputDir.Normalize();
 
             Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
             player.controller.Move(move * Time.deltaTime);
 
+
             // Apply gravity
+
             player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
 
             player.controller.Move(player.velocity * Time.deltaTime);
+            
         }
 
-        public override void Exit()
-        {
-            base.Exit();
-        }
     }
+
 
 }

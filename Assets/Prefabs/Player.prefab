@@ -289,8 +289,9 @@ MonoBehaviour:
   playerCamera: {fileID: 9065058749898011812}
   mouseSensitivity: 4
   cameraPitch: 0
-  interactRange: 10
+  interactRange: 1
   walkToLockerTime: 1
+  exitLockerTime: 1
   hideSpotLayerMask:
     serializedVersion: 2
     m_Bits: 2048
