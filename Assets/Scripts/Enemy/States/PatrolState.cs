@@ -43,6 +43,7 @@ namespace EnemyAI
         // Update is called once per frame
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
+            //Gets the room and all the waypoints and hiding spots
             RaycastHit hit;
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
@@ -50,12 +51,11 @@ namespace EnemyAI
                 {
                     Debug.Log("Already in this room");
                 }
-
-                room = hit.collider.gameObject.transform.parent.gameObject;
-                //room = room.transform.parent.gameObject;
-
-                //room = room.transform.parent.parent.gameObject;
-                roomScript = room.GetComponent<Room>();
+                else
+                {
+                    room = hit.collider.gameObject.transform.parent.gameObject;
+                    roomScript = room.GetComponent<Room>();
+                }
             }
 
             if (selectedWayPoint == null)
