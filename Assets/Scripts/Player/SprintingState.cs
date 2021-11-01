@@ -7,6 +7,7 @@ namespace Player
     public class SprintingState : State
     {
         private bool walk;
+        private bool interact;
         public SprintingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
@@ -28,14 +29,32 @@ namespace Player
 
             mouseX = Input.GetAxisRaw("Mouse X");
             mouseY = Input.GetAxisRaw("Mouse Y");
+
+            interact = Input.GetButtonDown("Interact");
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if(walk)
+            if (walk)
             {
                 stateMachine.ChangeState(player.walkingState);
+            }
+            else if (interact)
+            {
+                Ray ray = new Ray(player.transform.position, player.transform.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
+                {
+                    if (hit.collider.isTrigger)
+                    {
+                        Debug.Log(hit.collider);
+                        player.result = hit;
+                        stateMachine.ChangeState(player.hidingState);
+                    }
+
+                }
             }
         }
 
