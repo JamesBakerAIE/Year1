@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 using UnityEngine;
 
@@ -14,9 +16,48 @@ namespace Managers.UIManager
 
         //OptionsMenu
         public GameObject optionsMenuUI;
+       
+        //Main Menu
+        public GameObject mainMenu;
 
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
+        [SerializeField] private string mainGameSceneName = string.Empty;
+
+        Resolution[] resolutions;
+        public TMP_Dropdown resolutionDropdown;
+
+        public void Start()
+        {
+            resolutions = Screen.resolutions;
+            resolutionDropdown.ClearOptions();
+            List<string> options = new List<string>();
+            int currentResolutionIndex = 0;
+            for (int i = 0; i < resolutions.Length; i++)
+            {
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
+                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                {
+                    currentResolutionIndex = i;
+                }
+            }
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.RefreshShownValue();
+        }
+
+        public void SetResolution(int resolutionIndex)
+        {
+            Resolution resolution = resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        }
+
+        string ResToString(Resolution res)
+        {
+            return res.width + " x " + res.height;
+        }
 
         void Update()
         {
@@ -35,7 +76,6 @@ namespace Managers.UIManager
             }
 
         }
-
         public void Resume()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -58,10 +98,22 @@ namespace Managers.UIManager
             optionsMenuUI.SetActive(true);
         }
 
+        public void MainMenuOptionsMenu()
+        {
+            mainMenu.SetActive(false);
+            optionsMenuUI.SetActive(true);
+        }
+
+
         public void BackButton()
         {
             optionsMenuUI.SetActive(false);
             pauseMenuUI.SetActive(true);
+        }
+        public void MainMenuBackButton()
+        {
+            mainMenu.SetActive(true);
+            optionsMenuUI.SetActive(false);
         }
 
         public void ReturnToMenu()
@@ -69,11 +121,17 @@ namespace Managers.UIManager
             SceneManager.LoadSceneAsync(mainMenuSceneName);
         }
 
+        public void PlayGame()
+        {
+            SceneManager.LoadSceneAsync(mainGameSceneName);
+        }
+
         public void QuitGame()
         {
             Application.Quit();
         }
-
     }
+  
+
 
 }

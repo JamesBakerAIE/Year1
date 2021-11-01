@@ -48,9 +48,9 @@ namespace Player
         //private double frameRate;
 
 
-        [Header("Player Noise")]
-        [SerializeField] private SphereCollider noiseCollider = null;
-        [SerializeField] private float noiseRadius = 0f;
+
+
+
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked; 
