@@ -6,29 +6,22 @@ namespace EnemyAI
 {
     public class SeenTransition : Transition
     {
-        public bool inFOV = false;
-        public bool inAttack = false;
         public Vector3 eyesOffset;
         public Vector3 directionOffset;
+        Transition parentTransition;
 
-        State changeState;
-        ChaseState chaseState;
-        PatrolState patrolState;
-        AttackState attackState;
-        AgitatedState agitatedState;
         private void Start()
         {
-            chaseState = GameObject.FindObjectOfType<ChaseState>();
-            patrolState = GameObject.FindObjectOfType<PatrolState>();
-            attackState = GameObject.FindObjectOfType<AttackState>();
-            agitatedState = GameObject.FindObjectOfType<AgitatedState>();
+            parentTransition = GameObject.FindObjectOfType<Transition>();
         }
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-
-            if (inFOV == false)
+            if (parentTransition.inFOV == false && inFOV == false)
                 return null;
+
+            inFOV = parentTransition.inFOV;
+
 
             //ignores colliders on this specific layer
             LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
@@ -44,15 +37,18 @@ namespace EnemyAI
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
                     if (inAttack)
-                        return attackState;
+                    {
+                        Debug.Log("attack");
+                        return parentTransition.attackState;
+                    }
                     else
-                        return chaseState;
+                        return parentTransition.chaseState;
                 }
                 //Player isn't in direct sight to the enemy
                 else
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
-                    return patrolState;
+                    return parentTransition.agitatedState;
 
                 }
             }
