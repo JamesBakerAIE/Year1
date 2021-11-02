@@ -7,22 +7,23 @@ namespace EnemyAI
     public class AttackRange : MonoBehaviour
     {
 
-        public SeenTransition seenTransition;
+        Transition transition;
+
         private void Start()
         {
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transition = GameObject.FindObjectOfType<Transition>();
         }
 
         private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                seenTransition.inAttack = true;
+                transition.inAttack = true;
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                seenTransition.inAttack = false;
+                transition.inAttack = false;
 
 
         }
