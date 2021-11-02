@@ -15,11 +15,13 @@ namespace EnemyAI
         ChaseState chaseState;
         PatrolState patrolState;
         AttackState attackState;
+        AgitatedState agitatedState;
         private void Start()
         {
             chaseState = GameObject.FindObjectOfType<ChaseState>();
             patrolState = GameObject.FindObjectOfType<PatrolState>();
             attackState = GameObject.FindObjectOfType<AttackState>();
+            agitatedState = GameObject.FindObjectOfType<AgitatedState>();
         }
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
