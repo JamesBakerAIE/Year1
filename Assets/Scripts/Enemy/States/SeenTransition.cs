@@ -17,10 +17,8 @@ namespace EnemyAI
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-            if (parentTransition.inFOV == false && inFOV == false)
+            if (parentTransition.inFOV == false)
                 return null;
-
-            inFOV = parentTransition.inFOV;
 
 
             //ignores colliders on this specific layer
@@ -47,6 +45,7 @@ namespace EnemyAI
                         parentTransition.inDirectFOV = true;
                         return parentTransition.chaseState;
                     }
+
                 }
                 //Player isn't in direct sight to the enemy
                 else
@@ -57,8 +56,13 @@ namespace EnemyAI
 
                 }
 
-                if(parentTransition.inDirectFOV == false && inFOV)
+                if (parentTransition.inDirectFOV == false && parentTransition.inFOV == true && inDirectFOV == false)
+                {
+                    Debug.Log("SHould be agitated");
                     return parentTransition.agitatedState;
+                }
+                //inFOV = parentTransition.inFOV; //true
+                inDirectFOV = parentTransition.inDirectFOV;
             }
             return null;
         }
