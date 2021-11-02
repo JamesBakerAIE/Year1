@@ -6,7 +6,7 @@ namespace EnemyAI
 {
     public class AgitatedState : State
     {
-        Vector3 playersLastPosition;
+        Transform playerPosition;
         TimerTransition timerTransition;
         public override void Enter()
         {
@@ -20,13 +20,13 @@ namespace EnemyAI
 
         private void Start()
         {
-            playersLastPosition = GameObject.FindObjectOfType<PlayerController>().transform.position;
+            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
             timerTransition = GameObject.FindObjectOfType<TimerTransition>();
             transitions.Add(timerTransition);
         }
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
-            return playersLastPosition;
+            return playerPosition.position;
         }
     }
 }
