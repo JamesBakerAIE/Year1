@@ -7,23 +7,23 @@ namespace EnemyAI
 {
     public class FieldOfView : MonoBehaviour
     {
-        SeenTransition seenTransition;
+        Transition transition;
 
         private void Start()
         {
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transition = GameObject.FindObjectOfType<Transition>();
         }
 
         private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                seenTransition.inFOV = true;
+                transition.inFOV = true;
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
-                seenTransition.inFOV = false;
+                transition.inFOV = false;
 
 
         }

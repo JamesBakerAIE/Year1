@@ -29,22 +29,26 @@ namespace Managers.UIManager
 
         public void Start()
         {
-            resolutions = Screen.resolutions;
-            resolutionDropdown.ClearOptions();
-            List<string> options = new List<string>();
-            int currentResolutionIndex = 0;
-            for (int i = 0; i < resolutions.Length; i++)
+            if(resolutionDropdown != null)
             {
-                string option = resolutions[i].width + " x " + resolutions[i].height;
-                options.Add(option);
-                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                resolutions = Screen.resolutions;
+                resolutionDropdown.ClearOptions();
+                List<string> options = new List<string>();
+                int currentResolutionIndex = 0;
+                for (int i = 0; i < resolutions.Length; i++)
                 {
-                    currentResolutionIndex = i;
+                    string option = resolutions[i].width + " x " + resolutions[i].height;
+                    options.Add(option);
+                    if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    {
+                        currentResolutionIndex = i;
+                    }
                 }
+                resolutionDropdown.AddOptions(options);
+                resolutionDropdown.value = currentResolutionIndex;
+                resolutionDropdown.RefreshShownValue();
             }
-            resolutionDropdown.AddOptions(options);
-            resolutionDropdown.value = currentResolutionIndex;
-            resolutionDropdown.RefreshShownValue();
+
         }
 
         public void SetResolution(int resolutionIndex)

@@ -49,7 +49,7 @@ namespace EnemyAI
             {
                 if (room == hit.collider.gameObject.transform.parent.gameObject)
                 {
-                    Debug.Log("Already in this room");
+                    //Debug.Log("Already in this room");
                 }
                 else
                 {

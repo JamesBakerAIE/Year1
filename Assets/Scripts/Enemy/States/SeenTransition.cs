@@ -6,27 +6,20 @@ namespace EnemyAI
 {
     public class SeenTransition : Transition
     {
-        public bool inFOV = false;
-        public bool inAttack = false;
         public Vector3 eyesOffset;
         public Vector3 directionOffset;
+        Transition parentTransition;
 
-        State changeState;
-        ChaseState chaseState;
-        PatrolState patrolState;
-        AttackState attackState;
         private void Start()
         {
-            chaseState = GameObject.FindObjectOfType<ChaseState>();
-            patrolState = GameObject.FindObjectOfType<PatrolState>();
-            attackState = GameObject.FindObjectOfType<AttackState>();
+            parentTransition = GameObject.FindObjectOfType<Transition>();
         }
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-
-            if (inFOV == false)
+            if (parentTransition.inFOV == false)
                 return null;
+
 
             //ignores colliders on this specific layer
             LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
@@ -42,17 +35,34 @@ namespace EnemyAI
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
                     if (inAttack)
-                        return attackState;
+                    {
+                        Debug.Log("attack");
+                        parentTransition.inDirectAttack = true;
+                        return parentTransition.attackState;
+                    }
                     else
-                        return chaseState;
+                    {
+                        parentTransition.inDirectFOV = true;
+                        return parentTransition.chaseState;
+                    }
+
                 }
                 //Player isn't in direct sight to the enemy
                 else
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
-                    return patrolState;
+                    parentTransition.inDirectFOV = false;
+                    parentTransition.inDirectAttack = false;
 
                 }
+
+                if (parentTransition.inDirectFOV == false && parentTransition.inFOV == true && inDirectFOV == false)
+                {
+                    Debug.Log("SHould be agitated");
+                    return parentTransition.agitatedState;
+                }
+                //inFOV = parentTransition.inFOV; //true
+                inDirectFOV = parentTransition.inDirectFOV;
             }
             return null;
         }
