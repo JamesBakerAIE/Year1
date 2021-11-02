@@ -7,7 +7,9 @@ namespace EnemyAI
     public class Transition : MonoBehaviour
     {
         public bool inFOV = false;
+        public bool inDirectFOV = false;
         public bool inAttack = false;
+        public bool inDirectAttack = false;
 
         State changeState;
         public ChaseState chaseState;

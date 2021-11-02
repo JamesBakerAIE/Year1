@@ -39,18 +39,26 @@ namespace EnemyAI
                     if (inAttack)
                     {
                         Debug.Log("attack");
+                        parentTransition.inDirectAttack = true;
                         return parentTransition.attackState;
                     }
                     else
+                    {
+                        parentTransition.inDirectFOV = true;
                         return parentTransition.chaseState;
+                    }
                 }
                 //Player isn't in direct sight to the enemy
                 else
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
-                    return parentTransition.agitatedState;
+                    parentTransition.inDirectFOV = false;
+                    parentTransition.inDirectAttack = false;
 
                 }
+
+                if(parentTransition.inDirectFOV == false && inFOV)
+                    return parentTransition.agitatedState;
             }
             return null;
         }
