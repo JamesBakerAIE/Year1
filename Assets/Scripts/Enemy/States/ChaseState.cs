@@ -24,5 +24,10 @@ namespace EnemyAI
         {
             return player.position;
         }
+
+        public override void Exit()
+        {
+            Debug.Log("exiting chase");
+        }
     }
 }

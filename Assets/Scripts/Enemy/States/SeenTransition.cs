@@ -35,17 +35,20 @@ namespace EnemyAI
                 //Player is in direct sight to the enemy
                 if (hit.collider.tag == "Player")
                 {
+
+                    //In attack range
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
-                    if (inAttack)
+                    if (parentTransition.inAttack)
                     {
                         Debug.Log("attack");
                         parentTransition.inDirectAttack = true;
                         parentTransition.inDirectFOV = true;
                         selectedState = parentTransition.attackState;
                     }
+                    //In view range
                     else
                     {
-                        inDirectFOV = true;
+                        parentTransition.inDirectFOV = true;
                         selectedState = parentTransition.chaseState;
                     }
 
@@ -59,12 +62,14 @@ namespace EnemyAI
 
                 }
 
-                if (parentTransition.inDirectFOV == false && inDirectFOV == true)
+                //was in directFOV, not anymore
+                if (inDirectFOV == true && parentTransition.inDirectFOV == false && parentTransition.inDirectAttack == false)
                 {
                     Debug.Log("SHould be agitated");
                     selectedState = parentTransition.agitatedState;
                 }
-                //inFOV = parentTransition.inFOV; //true
+
+                //updates local inDirectFOV after it knows whether or not it was in 
                 inDirectFOV = parentTransition.inDirectFOV;
             }
             return selectedState;
