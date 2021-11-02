@@ -64,6 +64,17 @@ namespace Player
                         stateMachine.ChangeState(player.hidingState);
                     }
 
+                } 
+                else if(Physics.Raycast(ray, out hit, player.interactRange, player.keycardLayerMask))
+                {
+                    if(hit.collider.isTrigger)
+                    {
+                        player.keycardCount += 1;
+
+
+                        hit.collider.gameObject.SetActive(false);
+
+                    }
                 }
             }
         }

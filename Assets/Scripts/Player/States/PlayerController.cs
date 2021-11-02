@@ -40,6 +40,12 @@ namespace Player
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
 
+        [Header("Player Puzzles")]
+        public LayerMask keycardLayerMask = 0;
+        public int keycardCount = 0;
+
+
+
         [HideInInspector] public RaycastHit result;
 
         // VARIABLES FOR FPS COUNTER
