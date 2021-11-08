@@ -28,12 +28,12 @@ namespace Noise
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag("Enemy"))
-            {
-                Debug.Log(other.gameObject.name);
-                chaseState = enemy.GetComponent<ChaseState>();
-                stateMachine.CurrentState = chaseState;
-            }
+            //if(other.CompareTag("Enemy"))
+            //{
+            //    Debug.Log(other.gameObject.name);
+            //    chaseState = enemy.GetComponent<ChaseState>();
+            //    stateMachine.CurrentState = chaseState;
+            //}
 
 
             //Vector3 direction = other.transform.position - transform.position;
