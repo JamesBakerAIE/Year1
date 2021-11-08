@@ -47,15 +47,18 @@ namespace EnemyAI
             RaycastHit hit;
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
+                Debug.Log("Hitting: " + hit.collider.gameObject.name);
                 if (room == hit.collider.gameObject.transform.parent.gameObject)
                 {
-                    //Debug.Log("Already in this room");
+                    Debug.Log("Already in this room");
                 }
                 else
                 {
                     room = hit.collider.gameObject.transform.parent.gameObject;
                     roomScript = room.GetComponent<Room>();
                 }
+
+                Debug.Log(room.name);
             }
 
             if (selectedWayPoint == null)
