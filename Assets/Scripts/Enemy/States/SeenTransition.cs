@@ -69,9 +69,9 @@ namespace EnemyAI
                     selectedState = parentTransition.agitatedState;
                 }
 
-                //updates local inDirectFOV after it knows whether or not it was in 
-                inDirectFOV = parentTransition.inDirectFOV;
             }
+            //updates local inDirectFOV after it knows whether or not it was in 
+            inDirectFOV = parentTransition.inDirectFOV;
             return selectedState;
         }
 
