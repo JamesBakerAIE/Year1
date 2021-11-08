@@ -204,6 +204,51 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
+--- !u!1 &3208268865660940120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7870626320354708213}
+  - component: {fileID: 4356022255133772624}
+  m_Layer: 0
+  m_Name: PickupArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7870626320354708213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208268865660940120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9065058749898011812}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4356022255133772624
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208268865660940120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &9065058748615389906
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +261,8 @@ GameObject:
   - component: {fileID: 9065058748615389909}
   - component: {fileID: 1325974861893668843}
   - component: {fileID: 797076124}
+  - component: {fileID: 345946469}
+  - component: {fileID: 345946468}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -289,15 +336,20 @@ MonoBehaviour:
   playerCamera: {fileID: 9065058749898011812}
   mouseSensitivity: 4
   cameraPitch: 0
-  interactRange: 1
+  interactRange: 3
   walkToLockerTime: 1
   exitLockerTime: 1
   hideSpotLayerMask:
     serializedVersion: 2
     m_Bits: 2048
   lockerExitDistance: 10
-  noiseCollider: {fileID: 0}
-  noiseRadius: 0
+  pickupCollider: {fileID: 4356022255133772624}
+  pickupColliderHeight: 2
+  pickupColliderRadius: 0.5
+  keycardLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  keycardCount: 0
 --- !u!65 &797076124
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -311,6 +363,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.65, y: 1.65, z: 0.65}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &345946469
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065058748615389906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &345946468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065058748615389906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae3bb7b4c6b00b4cb38c1b7c762b7b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseCollider: {fileID: 345946469}
+  noiseRadius: 5
+  wallsMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &9065058749898011808
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +424,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 543450653008864643}
+  - {fileID: 7870626320354708213}
   m_Father: {fileID: 9065058748615389911}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -376,7 +459,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2871
+    m_Bits: 11063
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

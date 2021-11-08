@@ -52,7 +52,7 @@ namespace Player
             }
             else if(interact)
             {
-                Ray ray = new Ray(player.transform.position, player.transform.forward);
+                Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
@@ -64,9 +64,10 @@ namespace Player
                         stateMachine.ChangeState(player.hidingState);
                     }
 
-                } 
-                else if(Physics.Raycast(ray, out hit, player.interactRange, player.keycardLayerMask))
+                }
+                else
                 {
+                    Debug.Log(hit.collider.gameObject.name);
                     if(hit.collider.isTrigger)
                     {
                         player.keycardCount += 1;
