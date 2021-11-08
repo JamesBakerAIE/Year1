@@ -17,13 +17,20 @@ namespace EnemyAI
         private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == "Player")
+            {
                 transition.inFOV = true;
+                Debug.Log("In FOV");
+
+            }
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
+            {
                 transition.inFOV = false;
+                Debug.Log("Not in FOV");
+            }
 
 
         }
