@@ -17,80 +17,56 @@ namespace EnemyAI
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-            //if (parentTransition.inFOV == false)
-            //    return null;
 
-            if (parentTransition.inFOV == false)
-            {
-                if (inDirectFOV == true && parentTransition.inDirectFOV == false && parentTransition.inDirectAttack == false)
-                {
-                    Debug.Log("SHould be agitated");
-                    inDirectFOV = parentTransition.inDirectFOV;
-                    return parentTransition.agitatedState;
-                }
-            }
+            bool wasInFOV = parentTransition.inDirectFOV;
 
-
-            //ignores colliders on this specific layer
             LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
             Vector3 direction = (enemyPositon - playerPosition);
             RaycastHit hit;
 
             State selectedState = null;
 
-            if (parentTransition.inFOV)
-            {
-                Ray ray = new Ray(enemyPositon + eyesOffset, -direction + directionOffset);
+            //an array that shoots in the player's direction
+            Ray ray = new Ray(enemyPositon + eyesOffset, -direction + directionOffset);
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
+            {
+                //Player is in direct sight to the enemy
+                if (hit.collider.tag == "Player" && parentTransition.inFOV)
                 {
-                    //Player is in direct sight to the enemy
-                    if (hit.collider.tag == "Player")
+
+                    //In attack range
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
+                    if (parentTransition.inAttack)
                     {
-
-                        //In attack range
-                        Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
-                        if (parentTransition.inAttack)
-                        {
-                            Debug.Log("attack");
-                            parentTransition.inDirectAttack = true;
-                            parentTransition.inDirectFOV = true;
-                            selectedState = parentTransition.attackState;
-                        }
-                        //In view range
-                        else if (parentTransition.inFOV)
-                        {
-                            parentTransition.inDirectFOV = true;
-                            inDirectFOV = true;
-                            selectedState = parentTransition.chaseState;
-                        }
-
+                        Debug.Log("attack");
+                        parentTransition.inDirectAttack = true;
+                        parentTransition.inDirectFOV = true;
+                        selectedState = parentTransition.attackState;
+                    }
+                    //In view range
+                    else if (parentTransition.inFOV)
+                    {
+                        parentTransition.inDirectFOV = true;
+                        selectedState = parentTransition.chaseState;
                     }
 
-                    //was in directFOV, not anymore
-                    //if (inDirectFOV == true && parentTransition.inDirectFOV == false && parentTransition.inDirectAttack == false)
-                    //{
-                    //    Debug.Log("SHould be agitated");
-                    //    selectedState = parentTransition.agitatedState;
-                    //}
-
-                    //if (inFOV == true && parentTransition.inFOV == false && parentTransition.inDirectAttack == false)
-                    //{
-                    //    Debug.Log("SHould be agitated");
-                    //    selectedState = parentTransition.agitatedState;
-                    //}
-                    if (inDirectFOV == true && parentTransition.inDirectFOV == false && parentTransition.inDirectAttack == false)
-                    {
-                        Debug.Log("SHould be agitated");
-                        selectedState = parentTransition.agitatedState;
-                    }
                 }
-            }
-            //Player isn't in direct sight to the enemy
-            else
-            {
-                parentTransition.inDirectFOV = false;
-                parentTransition.inDirectAttack = false;
+                else 
+                {
+                    parentTransition.inDirectFOV = false;
+                }
+
+                //Player isn't in direct sight of the enemy
+                if(parentTransition.inDirectFOV == false && wasInFOV == true)
+                {
+                    parentTransition.inDirectFOV = false;
+                    parentTransition.inDirectAttack = false;
+                    selectedState = parentTransition.agitatedState;
+
+                }
+
+                wasInFOV = parentTransition.inDirectFOV;
 
             }
 
