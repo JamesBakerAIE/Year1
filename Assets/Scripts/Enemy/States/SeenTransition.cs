@@ -17,23 +17,22 @@ namespace EnemyAI
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-            if (parentTransition.inFOV == false)
-                return null;
 
+            bool wasInFOV = parentTransition.inDirectFOV;
 
-            //ignores colliders on this specific layer
             LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
             Vector3 direction = (enemyPositon - playerPosition);
             RaycastHit hit;
 
             State selectedState = null;
 
+            //an array that shoots in the player's direction
             Ray ray = new Ray(enemyPositon + eyesOffset, -direction + directionOffset);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
                 //Player is in direct sight to the enemy
-                if (hit.collider.tag == "Player")
+                if (hit.collider.tag == "Player" && parentTransition.inFOV)
                 {
 
                     //In attack range
@@ -46,32 +45,31 @@ namespace EnemyAI
                         selectedState = parentTransition.attackState;
                     }
                     //In view range
-                    else
+                    else if (parentTransition.inFOV)
                     {
                         parentTransition.inDirectFOV = true;
                         selectedState = parentTransition.chaseState;
                     }
 
                 }
-                //Player isn't in direct sight to the enemy
-                else
+                else 
                 {
-                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+                    parentTransition.inDirectFOV = false;
+                }
+
+                //Player isn't in direct sight of the enemy
+                if(parentTransition.inDirectFOV == false && wasInFOV == true)
+                {
                     parentTransition.inDirectFOV = false;
                     parentTransition.inDirectAttack = false;
-
-                }
-
-                //was in directFOV, not anymore
-                if (inDirectFOV == true && parentTransition.inDirectFOV == false && parentTransition.inDirectAttack == false)
-                {
-                    Debug.Log("SHould be agitated");
                     selectedState = parentTransition.agitatedState;
+
                 }
 
-                //updates local inDirectFOV after it knows whether or not it was in 
-                inDirectFOV = parentTransition.inDirectFOV;
+                wasInFOV = parentTransition.inDirectFOV;
+
             }
+
             return selectedState;
         }
 
