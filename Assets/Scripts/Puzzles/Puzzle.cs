@@ -7,12 +7,6 @@ namespace Puzzle
     public class Puzzle : MonoBehaviour
     {
 
-
-        public void Awake()
-        {
-
-        }
-
         void Start()
         {
 
@@ -20,7 +14,7 @@ namespace Puzzle
 
         void Update()
         {
-
+            UpdatePuzzle();
         }
 
         public virtual void OnComplete()

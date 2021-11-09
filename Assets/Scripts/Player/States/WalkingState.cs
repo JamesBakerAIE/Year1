@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Puzzle;
 
 namespace Player
 {
@@ -74,6 +75,18 @@ namespace Player
 
                 }
 
+                if(Physics.Raycast(ray, out hit, player.puzzleInteractRange, player.keycardHolderLayerMask))
+                {
+                    if(hit.collider.isTrigger)
+                    {
+                        Debug.Log("Test");
+                        player.result = hit;
+                        KeyInput keyInput = hit.collider.gameObject.GetComponent<KeyInput>();
+
+                        keyInput.SetValues(keyInput.gameObject.transform.position);
+                    }
+                }
+
                 Collider[] colliders = Physics.OverlapCapsule(player.playerCamera.transform.position, player.playerCamera.transform.position * player.pickupDistance, player.pickupRadius, player.keycardLayerMask);
 
                 if (colliders != null && colliders.Length >= 1)
@@ -82,6 +95,7 @@ namespace Player
                     player.keycardCount += 1;
                     colliders = null;
                 }
+
             }
         }
 
