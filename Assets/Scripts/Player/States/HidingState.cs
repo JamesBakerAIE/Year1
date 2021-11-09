@@ -47,7 +47,7 @@ namespace Player
             {
                 //Vector3 move = player.transform.forward * player.lockerExitDistance;
                 //player.transform.position += move * Time.deltaTime;
-                player.transform.position = Vector3.MoveTowards(player.transform.position, player.transform.position * player.lockerExitDistance, player.walkToLockerTime * Time.deltaTime);
+                player.transform.position = Vector3.MoveTowards(player.transform.position, player.transform.position + player.transform.forward * player.lockerExitDistance, player.walkToLockerTime * Time.deltaTime);
 
 
                 leavingLocker = false;

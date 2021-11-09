@@ -40,6 +40,7 @@ namespace Player
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
 
+
         [Header("Player Puzzles")]
 
         public CapsuleCollider pickupCollider = null;
