@@ -16,6 +16,7 @@ namespace EnemyAI
         public PatrolState patrolState;
         public AttackState attackState;
         public AgitatedState agitatedState;
+        public SearchState searchState;
 
         private void Awake()
         {
@@ -23,6 +24,7 @@ namespace EnemyAI
             patrolState = GameObject.FindObjectOfType<PatrolState>();
             attackState = GameObject.FindObjectOfType<AttackState>();
             agitatedState = GameObject.FindObjectOfType<AgitatedState>();
+            searchState = GameObject.FindObjectOfType<SearchState>();
         }
 
         public virtual State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)

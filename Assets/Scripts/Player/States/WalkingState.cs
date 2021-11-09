@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EnemyAI;
 
 namespace Player
 {
@@ -68,6 +69,8 @@ namespace Player
                     {
                         Debug.Log(hit.collider);
                         player.result = hit;
+                        player.hidingState.lockerInsideOf = hit.collider.gameObject;
+
                         stateMachine.ChangeState(player.hidingState);
                     }
 

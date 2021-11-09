@@ -14,6 +14,8 @@ namespace Player
         private bool enteringLocker = false;
         private bool leavingLocker = false;
         private bool lookToFrontOfLocker = false;
+
+        public GameObject lockerInsideOf = null;
         public HidingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
@@ -21,6 +23,7 @@ namespace Player
 
         public override void Enter()
         {
+            lockerInsideOf.GetComponentInParent<HideSpot>().hasPlayer = true;
             base.Enter();
         }
 
@@ -40,6 +43,7 @@ namespace Player
             if(interact && enteringLocker == false && lookToFrontOfLocker)
             {
                 leavingLocker = true;
+                lockerInsideOf.GetComponentInParent<HideSpot>().hasPlayer = false;
                 //stateMachine.ChangeState(player.walkingState);
             }
 
@@ -48,7 +52,6 @@ namespace Player
                 //Vector3 move = player.transform.forward * player.lockerExitDistance;
                 //player.transform.position += move * Time.deltaTime;
                 player.transform.position = Vector3.MoveTowards(player.transform.position, player.transform.position + player.transform.forward * player.lockerExitDistance, player.walkToLockerTime * Time.deltaTime);
-
 
                 leavingLocker = false;
 
@@ -79,7 +82,8 @@ namespace Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            Vector3 target = new Vector3(player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.x, player.transform.position.y,
+            Vector3 target = new Vector3(player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.x, 
+                player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y,
                 player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.z);
 
             Transform lookTransform = player.result.collider.gameObject.transform;

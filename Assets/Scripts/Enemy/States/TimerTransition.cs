@@ -20,15 +20,10 @@ namespace EnemyAI
         {
             currentState = null;
 
-            if (parentTransition.inDirectAttack)
-                currentState = parentTransition.attackState;
-            else if(parentTransition.inDirectFOV)
-                currentState = parentTransition.patrolState;
-
             if(timeElapsed >= timeAgitated)
             {
                 timeElapsed = 0;
-                currentState = parentTransition.patrolState;
+                currentState = parentTransition.searchState;
             }
             else
             {
