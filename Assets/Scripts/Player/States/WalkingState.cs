@@ -9,6 +9,7 @@ namespace Player
         private bool crouch;
         private bool sprint;
         public bool interact = false;
+        private List<Collider> colliders = new List<Collider>();
 
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
@@ -38,6 +39,12 @@ namespace Player
                 interact = Input.GetButtonDown("Interact");
             }
 
+            if(Time.timeScale == 0)
+            {
+                mouseX = 0;
+                mouseY = 0;
+            }
+
         }
         public override void LogicUpdate()
         {
@@ -64,19 +71,17 @@ namespace Player
                         stateMachine.ChangeState(player.hidingState);
                     }
 
+
                 }
-                //else if()
-                //{
-                //    Debug.Log(hit.collider.gameObject.name);
-                //    if(hit.collider.isTrigger)
-                //    {
-                //        player.keycardCount += 1;
 
+                Collider[] colliders = Physics.OverlapCapsule(player.playerCamera.transform.position, player.playerCamera.transform.position * player.pickupDistance, player.pickupRadius, player.keycardLayerMask);
 
-                //        hit.collider.gameObject.SetActive(false);
-
-                //    }
-                //}
+                if (colliders != null && colliders.Length >= 1)
+                {
+                    colliders[0].gameObject.SetActive(false);
+                    player.keycardCount += 1;
+                    colliders = null;
+                }
             }
         }
 

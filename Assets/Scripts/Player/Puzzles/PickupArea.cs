@@ -16,12 +16,4 @@ public class PickupArea : MonoBehaviour
     {
         
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.gameObject.layer == player.keycardLayerMask && player.walkingState.interact == true)
-        {
-
-        }
-    }
 }

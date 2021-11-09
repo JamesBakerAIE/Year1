@@ -42,10 +42,8 @@ namespace Player
 
 
         [Header("Player Puzzles")]
-
-        public CapsuleCollider pickupCollider = null;
-        public float pickupColliderHeight = 0;
-        public float pickupColliderRadius = 0;
+        public float pickupDistance = 0;
+        public float pickupRadius = 0;
 
         public LayerMask keycardLayerMask = 0;
 
@@ -79,9 +77,6 @@ namespace Player
             movementStateMachine.Initialize(walkingState);
 
             QualitySettings.vSyncCount = 0;
-
-            pickupColliderHeight = pickupCollider.height;
-            pickupColliderRadius = pickupCollider.radius;
         }
 
 
