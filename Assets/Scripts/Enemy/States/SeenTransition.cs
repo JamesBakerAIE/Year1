@@ -54,6 +54,8 @@ namespace EnemyAI
                 }
                 else 
                 {
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+
                     parentTransition.inDirectFOV = false;
                 }
 

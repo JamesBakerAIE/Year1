@@ -19,7 +19,6 @@ namespace EnemyAI
             if (other.gameObject.tag == "Player")
             {
                 transition.inFOV = true;
-                Debug.Log("In FOV");
 
             }
 
@@ -29,7 +28,6 @@ namespace EnemyAI
             if (other.gameObject.tag == "Player")
             {
                 transition.inFOV = false;
-                Debug.Log("Not in FOV");
             }
 
 
