@@ -8,6 +8,7 @@ namespace EnemyAI
     {
         Transform playerPosition;
         TimerTransition timerTransition;
+        SeenTransition seenTransition;
         public override void Enter()
         {
             //Debug.Log("Entered agitated state");
@@ -22,7 +23,9 @@ namespace EnemyAI
         {
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
             timerTransition = GameObject.FindObjectOfType<TimerTransition>();
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
             transitions.Add(timerTransition);
+            transitions.Add(seenTransition);
         }
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {

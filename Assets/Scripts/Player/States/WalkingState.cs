@@ -8,7 +8,7 @@ namespace Player
     {
         private bool crouch;
         private bool sprint;
-        private bool interact = false;
+        public bool interact = false;
 
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
@@ -65,18 +65,18 @@ namespace Player
                     }
 
                 }
-                else
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                    if(hit.collider.isTrigger)
-                    {
-                        player.keycardCount += 1;
+                //else if()
+                //{
+                //    Debug.Log(hit.collider.gameObject.name);
+                //    if(hit.collider.isTrigger)
+                //    {
+                //        player.keycardCount += 1;
 
 
-                        hit.collider.gameObject.SetActive(false);
+                //        hit.collider.gameObject.SetActive(false);
 
-                    }
-                }
+                //    }
+                //}
             }
         }
 
