@@ -44,8 +44,11 @@ namespace Player
         [Header("Player Puzzles")]
         public float pickupDistance = 0;
         public float pickupRadius = 0;
+        
+        public float puzzleInteractRange = 0;
 
         public LayerMask keycardLayerMask = 0;
+        public LayerMask keycardHolderLayerMask = 0;
 
         public int keycardCount = 0;
 

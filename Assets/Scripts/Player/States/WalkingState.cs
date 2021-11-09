@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EnemyAI;
+using Puzzle;
 
 namespace Player
 {
@@ -69,12 +69,22 @@ namespace Player
                     {
                         Debug.Log(hit.collider);
                         player.result = hit;
-                        player.hidingState.lockerInsideOf = hit.collider.gameObject;
-
                         stateMachine.ChangeState(player.hidingState);
                     }
 
 
+                }
+
+                if(Physics.Raycast(ray, out hit, player.puzzleInteractRange, player.keycardHolderLayerMask))
+                {
+                    if(hit.collider.isTrigger)
+                    {
+                        Debug.Log("Test");
+                        player.result = hit;
+                        KeyInput keyInput = hit.collider.gameObject.GetComponent<KeyInput>();
+
+                        keyInput.SetValues(keyInput.gameObject.transform.position);
+                    }
                 }
 
                 Collider[] colliders = Physics.OverlapCapsule(player.playerCamera.transform.position, player.playerCamera.transform.position * player.pickupDistance, player.pickupRadius, player.keycardLayerMask);
@@ -85,6 +95,7 @@ namespace Player
                     player.keycardCount += 1;
                     colliders = null;
                 }
+
             }
         }
 
