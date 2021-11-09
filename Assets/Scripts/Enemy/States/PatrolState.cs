@@ -64,7 +64,7 @@ namespace EnemyAI
 
             closestWaypoint = Vector3.Distance(selectedWayPoint.GetComponent<Transform>().position, enemyPosition);
 
-            if (closestWaypoint < 1)
+            if (closestWaypoint < 3)
             {
                 selectedWayPoint.patrolled = true;
                 closestWaypoint = 100000f;
