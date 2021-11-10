@@ -918,7 +918,7 @@ Transform:
   m_GameObject: {fileID: 6271209059612594754}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -16.697239, y: 11.000204, z: -10.010075}
-  m_LocalScale: {x: 0.009999999, y: 0.009999999, z: 0.009999999}
+  m_LocalScale: {x: 0.011165999, y: 0.0127364285, z: 0.005626161}
   m_Children:
   - {fileID: 6374381724901828602}
   - {fileID: 6029593238731570109}
@@ -956,9 +956,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74629b16770a7e1418e76caa8a2bf0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchChance: 0
+  searchChance: 50
   searched: 0
   hasPlayer: 0
+  doorObject: {fileID: 0}
 --- !u!65 &2411798996713462545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1353,7 +1354,7 @@ GameObject:
   - component: {fileID: 2755608216018686329}
   m_Layer: 11
   m_Name: door
-  m_TagString: Untagged
+  m_TagString: Locker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

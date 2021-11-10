@@ -58,7 +58,7 @@ namespace EnemyAI
             if (Vector3.Distance(this.transform.position, hidingSpotsToSearch[0].position) < 1)
             {
                 //closestHidingSpot = 100000f;
-                hidingSpotsToSearch[0].GetComponent<Renderer>().material = selectedHidingSpotMaterial;
+                hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material= selectedHidingSpotMaterial;
                 hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
                 Debug.Log("Searched locker");
 
@@ -86,7 +86,7 @@ namespace EnemyAI
                     //checks if it should be added to the hidingSpotSearchList
                     float check = Random.Range(0, 100);
                     float testCheck = hideSpotTransform.GetComponent<HideSpot>().searchChance;
-                    hideSpotTransform.GetComponent<Renderer>().material = hdingSpotMaterial;
+                    //hideSpotTransform.GetComponent<HideSpot>().doorObject.material = hdingSpotMaterial;
 
                     if (check <= testCheck)
                     {
