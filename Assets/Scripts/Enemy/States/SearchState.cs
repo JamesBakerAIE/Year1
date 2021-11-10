@@ -16,56 +16,62 @@ namespace EnemyAI
 
         public Material selectedHidingSpotMaterial;
         public Material hdingSpotMaterial;
+
+        public float maxDistanceFromHideSpot;
+
+        public List<Transform> hidingSpotsToSearch;
         public override void Enter()
         {
-            //Debug.Log("Entered agitated state");
-            //playersLastPosition = GameObject.FindObjectOfType<PlayerController>().transform.position;
-            //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
-            //transitions.Add(timerTransition);
-            Debug.Log("Entered agitated state");
+            Debug.Log("Entered searching state");
 
+            RaycastHit hit;
+            //Gets hiding spots, and resets hiding spots
+            if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
+            {
+                room = hit.collider.gameObject.transform.parent.gameObject;
+                roomScript = room.GetComponent<Room>();
+                hidingSpotsToSearch.Clear();
+                CheckHidingSpots();
+            }
         }
 
         private void Start()
         {
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
-            timerTransition = GameObject.FindObjectOfType<TimerTransition>();
-            transitions.Add(timerTransition);
+
+            //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
+            //transitions.Add(timerTransition);
         }
 
 
-
-        float closestHidingSpot = 10000;
-        public HideSpot selectedHidingSpot;
-
         public override Vector3 LogicUpdate(Vector3 enemyPosition)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
-            {
 
-                if (room == hit.collider.gameObject.transform.parent.gameObject)
-                {
-                    //Debug.Log("Already in this room");
-                }
-                else
-                {
-                    room = hit.collider.gameObject.transform.parent.gameObject;
-                    roomScript = room.GetComponent<Room>();
-                }
+            //once all hiding spots that it wants to search have been searched, change state to patrolling
+            if (hidingSpotsToSearch.Count == 0)
+            {
+                this.GetComponent<Enemy>().stateMachine.ChangeState(this.GetComponent<PatrolState>());
+                return this.transform.position;
             }
 
-            if (closestHidingSpot < 3)
+            //if close to the locker, set location as the next hiding spot
+            if (Vector3.Distance(this.transform.position, hidingSpotsToSearch[0].position) < 1)
             {
-                selectedHidingSpot.searched = true;
-                closestHidingSpot = 100000f;
-                selectedHidingSpot.gameObject.GetComponent<Renderer>().material = selectedHidingSpotMaterial;
-                CheckHidingSpots();
+                //closestHidingSpot = 100000f;
+                hidingSpotsToSearch[0].GetComponent<Renderer>().material = selectedHidingSpotMaterial;
+                hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
+                Debug.Log("Searched locker");
+
+                hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
+                {
+                    var dist1 = Vector3.Distance(transform.position, t1.position);
+                    var dist2 = Vector3.Distance(transform.position, t2.position);
+                    return dist1.CompareTo(dist2);
+                });
+
             }
 
-            CheckHidingSpots();
-
-            return selectedHidingSpot.GetComponent<Transform>().position;
+            return hidingSpotsToSearch[0].position;
         }
 
         public void CheckHidingSpots()
@@ -74,45 +80,50 @@ namespace EnemyAI
             {
 
                 float hideSpotDistance = Vector3.Distance(hideSpotTransform.position, this.transform.position);
-                HideSpot hideSpot = hideSpotTransform.GetComponent<HideSpot>();
 
-
-                if (hideSpot.searched == true)
+                if (hideSpotDistance < maxDistanceFromHideSpot)
                 {
-                    //if (hideSpot.searchChance == 100)
-                    //{
-                    //    requiredWayPointsVisited++;
-                    //}
-                    //StartCoroutine(PatrolledDelay(wayPoint));
-
-                }
-
-                if (hideSpotDistance < closestHidingSpot && hideSpot.searched == false)
-                {
+                    //checks if it should be added to the hidingSpotSearchList
                     float check = Random.Range(0, 100);
-                    float testCheck = hideSpot.searchChance;
-                    if (check <= testCheck && hideSpot.searched == false)
+                    float testCheck = hideSpotTransform.GetComponent<HideSpot>().searchChance;
+                    hideSpotTransform.GetComponent<Renderer>().material = hdingSpotMaterial;
+
+                    if (check <= testCheck)
                     {
-                        selectedHidingSpot = hideSpot;
-                        closestHidingSpot = hideSpotDistance;
+                        hidingSpotsToSearch.Add(hideSpotTransform);
                     }
-
-
                 }
-
             }
 
-            //NEED TO SET ALL HIDING SPOTS TO FALSE AS SEARCHED ONCE THE SEARCH STATE HAS ENDED
-                //foreach (Transform wayPoint in roomScript.wayPoints)
-                //{
-                //    wayPoint.GetComponent<WayPoint>().patrolled = false;
-                //    wayPoint.GetComponent<Renderer>().material = wayPointMaterial;
-                //    foreach (Transform wayPointChild in wayPoint.GetComponentInChildren<Transform>())
-                //    {
-                //        wayPointChild.GetComponent<WayPoint>().patrolled = false;
-                //        wayPointChild.GetComponent<Renderer>().material = wayPointMaterial;
-                //    }
-                //}
+
+            //sorts hidingspots in order of closenessv to the enemy
+            hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
+            {
+                var dist1 = Vector3.Distance(transform.position, t1.position);
+                var dist2 = Vector3.Distance(transform.position, t2.position);
+                return dist1.CompareTo(dist2);
+            });
+
+            //infinite loop
+            //bool ordered = false;
+            //while(ordered == false)
+            //{
+            //    ordered = true;
+            //    if (hidingSpotsToSearch.Count <= 1)
+            //        break;
+
+            //    for(int i = 0; i < hidingSpotsToSearch.Count - 1; i++)
+            //    {
+            //        float distanceToHidingSpot = Vector3.Distance(this.transform.position, hidingSpotsToSearch[i].position);
+            //        if(distanceToHidingSpot > Vector3.Distance(this.transform.position, hidingSpotsToSearch[i+ 1].position))
+            //        {
+            //            Transform tempHidingSpot = hidingSpotsToSearch[i];
+            //            hidingSpotsToSearch[i] = hidingSpotsToSearch[i + 1];
+            //            hidingSpotsToSearch[i++] = tempHidingSpot;
+            //            ordered = false;
+            //        }
+            //    }
+            //}
         }
     }
 }

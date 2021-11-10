@@ -36,7 +36,7 @@ namespace EnemyAI
                 newState = transition.CheckTransition(this.transform.position, playerPosition.position);
                 if(newState != null || newState == stateMachine.CurrentState)
                 {
-                    stateMachine.CurrentState = newState;
+                    stateMachine.ChangeState(newState);
                     break;
                 }
             }
