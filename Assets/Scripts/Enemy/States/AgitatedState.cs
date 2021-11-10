@@ -15,7 +15,7 @@ namespace EnemyAI
             //playersLastPosition = GameObject.FindObjectOfType<PlayerController>().transform.position;
             //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
             //transitions.Add(timerTransition);
-            Debug.Log("Entered agitated state");
+
 
         }
 

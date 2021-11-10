@@ -12,7 +12,7 @@ namespace EnemyAI
         public Room roomScript;
         // Start is called before the first frame update
         Transform playerPosition;
-        TimerTransition timerTransition;
+        SeenTransition seenTransition;
 
         public Material selectedHidingSpotMaterial;
         public Material hdingSpotMaterial;
@@ -22,7 +22,7 @@ namespace EnemyAI
         public List<Transform> hidingSpotsToSearch;
         public override void Enter()
         {
-            Debug.Log("Entered searching state");
+
 
             RaycastHit hit;
             //Gets hiding spots, and resets hiding spots
@@ -39,8 +39,8 @@ namespace EnemyAI
         {
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
-            //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
-            //transitions.Add(timerTransition);
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            transitions.Add(seenTransition);
         }
 
 
@@ -103,27 +103,6 @@ namespace EnemyAI
                 var dist2 = Vector3.Distance(transform.position, t2.position);
                 return dist1.CompareTo(dist2);
             });
-
-            //infinite loop
-            //bool ordered = false;
-            //while(ordered == false)
-            //{
-            //    ordered = true;
-            //    if (hidingSpotsToSearch.Count <= 1)
-            //        break;
-
-            //    for(int i = 0; i < hidingSpotsToSearch.Count - 1; i++)
-            //    {
-            //        float distanceToHidingSpot = Vector3.Distance(this.transform.position, hidingSpotsToSearch[i].position);
-            //        if(distanceToHidingSpot > Vector3.Distance(this.transform.position, hidingSpotsToSearch[i+ 1].position))
-            //        {
-            //            Transform tempHidingSpot = hidingSpotsToSearch[i];
-            //            hidingSpotsToSearch[i] = hidingSpotsToSearch[i + 1];
-            //            hidingSpotsToSearch[i++] = tempHidingSpot;
-            //            ordered = false;
-            //        }
-            //    }
-            //}
         }
     }
 }

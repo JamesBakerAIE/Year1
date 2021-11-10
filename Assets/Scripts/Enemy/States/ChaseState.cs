@@ -27,7 +27,7 @@ namespace EnemyAI
 
         public override void Exit()
         {
-            Debug.Log("exiting chase");
+
         }
     }
 }
