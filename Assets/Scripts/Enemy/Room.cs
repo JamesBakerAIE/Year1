@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] List<Transform> hidingSpots;
+    [SerializeField] public List<Transform> hidingSpots;
     [SerializeField] public List<Transform> wayPoints;
     // Start is called before the first frame update
     void Start()

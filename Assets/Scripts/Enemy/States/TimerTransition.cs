@@ -14,24 +14,23 @@ namespace EnemyAI
         }
 
         public float timeAgitated = 5;
+        public float timeElapsed = 0;
+
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-            if (parentTransition.inDirectAttack)
-                currentState = parentTransition.attackState;
-            else if(parentTransition.inDirectFOV)
-                currentState = parentTransition.patrolState;
+            currentState = null;
 
-            StartCoroutine(PatrolledDelay());
-
+            if(timeElapsed >= timeAgitated)
+            {
+                timeElapsed = 0;
+                currentState = parentTransition.searchState;
+            }
+            else
+            {
+                timeElapsed += Time.deltaTime;
+            }
             return currentState;
         }
 
-        IEnumerator PatrolledDelay()
-        {
-            Debug.Log("Patrolling");
-            yield return new WaitForSeconds(timeAgitated);
-            currentState = parentTransition.patrolState;
-            Debug.Log("Stop Patrolling");
-        }
     }
 }

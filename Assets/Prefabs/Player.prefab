@@ -248,7 +248,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9065058749898011812}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!108 &970751644
 Light:
@@ -434,51 +434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467123d34f5ff2744b0027da05d7891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3208268865660940120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7870626320354708213}
-  - component: {fileID: 4356022255133772624}
-  m_Layer: 0
-  m_Name: PickupArea
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7870626320354708213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3208268865660940120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9065058749898011812}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4356022255133772624
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3208268865660940120}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &9065058748615389906
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,7 +528,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   lockerExitDistance: 10
-  pickupCollider: {fileID: 4356022255133772624}
+  pickupCollider: {fileID: 0}
   pickupColliderHeight: 2
   pickupColliderRadius: 0.5
   keycardLayerMask:
@@ -605,7 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae3bb7b4c6b00b4cb38c1b7c762b7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noiseCollider: {fileID: 345946469, guid: 28f2270a3f5f9ef4788e28aefd9a6671, type: 3}
+  noiseCollider: {fileID: 0}
   noiseRadius: 5
   wallsMask:
     serializedVersion: 2
@@ -739,7 +694,6 @@ Transform:
   m_Children:
   - {fileID: 543450653008864643}
   - {fileID: 543450651855944368}
-  - {fileID: 7870626320354708213}
   - {fileID: 970751645}
   m_Father: {fileID: 9065058748615389911}
   m_RootOrder: 0

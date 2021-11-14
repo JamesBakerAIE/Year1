@@ -40,13 +40,15 @@ namespace Player
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
 
-        [Header("Player Puzzles")]
 
-        public CapsuleCollider pickupCollider = null;
-        public float pickupColliderHeight = 0;
-        public float pickupColliderRadius = 0;
+        [Header("Player Puzzles")]
+        public float pickupDistance = 0;
+        public float pickupRadius = 0;
+        
+        public float puzzleInteractRange = 0;
 
         public LayerMask keycardLayerMask = 0;
+        public LayerMask keycardHolderLayerMask = 0;
 
         public int keycardCount = 0;
 
@@ -78,9 +80,6 @@ namespace Player
             movementStateMachine.Initialize(walkingState);
 
             QualitySettings.vSyncCount = 0;
-
-            pickupColliderHeight = pickupCollider.height;
-            pickupColliderRadius = pickupCollider.radius;
         }
 
 

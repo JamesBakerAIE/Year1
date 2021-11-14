@@ -53,7 +53,7 @@ namespace Player
                 {
                     if (hit.collider.isTrigger)
                     {
-                        Debug.Log(hit.collider);
+
                         player.result = hit;
                         stateMachine.ChangeState(player.hidingState);
                     }
