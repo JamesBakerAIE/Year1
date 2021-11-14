@@ -7,6 +7,9 @@ public class FlickerLightTest : MonoBehaviour
     public bool isFlickering = false;
      public float timeDelay;
 
+    private void OnDisable()
+    {
+    }
     void Update()
     {
         if (isFlickering == false)
