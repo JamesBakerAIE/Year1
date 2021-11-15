@@ -7,7 +7,7 @@ namespace EnemyAI
 {
     public class SearchState : State
     {
-
+        public float stateSpeed;
         public GameObject room;
         public Room roomScript;
         // Start is called before the first frame update
@@ -43,8 +43,14 @@ namespace EnemyAI
             transitions.Add(seenTransition);
         }
 
+        public override float GetSpeed()
+        {
+            return stateSpeed;
+        }
 
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+
+
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
 
             //once all hiding spots that it wants to search have been searched, change state to patrolling

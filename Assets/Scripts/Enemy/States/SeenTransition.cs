@@ -9,10 +9,20 @@ namespace EnemyAI
         public Vector3 eyesOffset;
         public Vector3 directionOffset;
         Transition parentTransition;
+        LayerMask ignoreLayer;
 
         private void Start()
         {
             parentTransition = GameObject.FindObjectOfType<Transition>();
+            ignoreLayer = Physics.IgnoreRaycastLayer;
+        }
+        public override void Enter()
+        {
+            //UPDATING ENTER AND EXIT FOR STATES AND TRANSITIONS
+        }
+        public override void Exit()
+        {
+            //UPDATING ENTER AND EXIT FOR STATES AND TRANSITIONS
         }
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
@@ -20,7 +30,6 @@ namespace EnemyAI
 
             bool wasInFOV = parentTransition.inDirectFOV;
 
-            LayerMask ignoreLayer = Physics.IgnoreRaycastLayer;
             Vector3 direction = (enemyPositon - playerPosition);
             RaycastHit hit;
 
@@ -48,7 +57,6 @@ namespace EnemyAI
                     else if (parentTransition.inFOV)
                     {
                         parentTransition.inDirectFOV = true;
-                        FindObjectOfType<TimerTransition>().timeElapsed = 0;
                         selectedState = parentTransition.chaseState;
                     }
 

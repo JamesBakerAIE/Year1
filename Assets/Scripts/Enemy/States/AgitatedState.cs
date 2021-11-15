@@ -6,18 +6,10 @@ namespace EnemyAI
 {
     public class AgitatedState : State
     {
+        public float stateSpeed;
         Transform playerPosition;
         TimerTransition timerTransition;
         SeenTransition seenTransition;
-        public override void Enter()
-        {
-            //Debug.Log("Entered agitated state");
-            //playersLastPosition = GameObject.FindObjectOfType<PlayerController>().transform.position;
-            //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
-            //transitions.Add(timerTransition);
-
-
-        }
 
         private void Start()
         {
@@ -27,7 +19,22 @@ namespace EnemyAI
             transitions.Add(timerTransition);
             transitions.Add(seenTransition);
         }
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+
+        public override void Enter()
+        {
+
+        }
+        public override void Exit()
+        {
+
+        }
+
+
+        public override float GetSpeed()
+        {
+            return stateSpeed;
+        }
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             return playerPosition.position;
         }
