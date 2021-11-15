@@ -14,6 +14,7 @@ namespace EnemyAI
         // Start is called before the first frame update
         Transform playerPosition;
         SeenTransition seenTransition;
+        LockerTransition lockerTransition;
 
         public Material selectedHidingSpotMaterial;
         public Material hdingSpotMaterial;
@@ -23,6 +24,8 @@ namespace EnemyAI
         public List<Transform> hidingSpotsToSearch;
 
         Vector3 lockerDestination;
+
+        public bool foundPlayer;
         public override void Enter()
         {
             RaycastHit hit;
@@ -34,6 +37,7 @@ namespace EnemyAI
                 hidingSpotsToSearch.Clear();
                 CheckHidingSpots();
             }
+            foundPlayer = false;
         }
 
         private void Start()
@@ -41,7 +45,9 @@ namespace EnemyAI
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
             seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            lockerTransition = GameObject.FindObjectOfType<LockerTransition>();
             transitions.Add(seenTransition);
+            transitions.Add(lockerTransition);
         }
 
         public override float GetSpeed()
@@ -68,6 +74,9 @@ namespace EnemyAI
             {
                 //closestHidingSpot = 100000f;
                 hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material= selectedHidingSpotMaterial;
+                if (hidingSpotsToSearch[0].GetComponent<HideSpot>().hasPlayer == true)
+                    foundPlayer = true;
+
                 hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
                 Debug.Log("Searched locker");
 
