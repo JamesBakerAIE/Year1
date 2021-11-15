@@ -27,9 +27,21 @@ namespace EnemyAI
             searchState = GameObject.FindObjectOfType<SearchState>();
         }
 
+        public virtual void Enter()
+        {
+
+        }
+
+        public virtual void Exit()
+        {
+
+        }
+
+
         public virtual State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
             return null;
         }
+
     }
 }

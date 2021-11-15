@@ -7,6 +7,7 @@ namespace EnemyAI
 {
     public class ChaseState : State
     {
+        public float stateSpeed;
         Transform player;
 
         SeenTransition seenTransition;
@@ -19,15 +20,24 @@ namespace EnemyAI
 
         }
 
-        // Update is called once per frame
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+        public override void Enter()
         {
-            return player.position;
-        }
 
+        }
         public override void Exit()
         {
 
+        }
+
+        public override float GetSpeed()
+        {
+            return stateSpeed;
+        }
+
+        // Update is called once per frame
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
+        {
+            return player.position;
         }
     }
 }
