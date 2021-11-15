@@ -48,6 +48,7 @@ namespace EnemyAI
                     else if (parentTransition.inFOV)
                     {
                         parentTransition.inDirectFOV = true;
+                        FindObjectOfType<TimerTransition>().timeElapsed = 0;
                         selectedState = parentTransition.chaseState;
                     }
 

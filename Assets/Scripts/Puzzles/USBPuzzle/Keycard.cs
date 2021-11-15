@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Puzzle
 {
-    public class Key : MonoBehaviour
+    public class Keycard : Puzzle
     {
         // Start is called before the first frame update
         void Start()
@@ -18,5 +19,5 @@ namespace Puzzle
 
         }
     }
-}
 
+}
