@@ -12,6 +12,8 @@ namespace Player
         public bool interact = false;
         private List<Collider> colliders = new List<Collider>();
 
+        public RaycastHit hit;
+
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
@@ -61,7 +63,7 @@ namespace Player
             else if(interact)
             {
                 Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
-                RaycastHit hit;
+
 
                 if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
                 {
@@ -75,25 +77,22 @@ namespace Player
 
                 }
 
-                if(Physics.Raycast(ray, out hit, player.puzzleInteractRange, player.keycardHolderLayerMask))
+                if (Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardLayerMask))
                 {
-                    if(hit.collider.isTrigger)
+                    if (hit.collider.isTrigger)
                     {
-                        Debug.Log("Test");
-                        player.result = hit;
-                        KeyInput keyInput = hit.collider.gameObject.GetComponent<KeyInput>();
-
-                        keyInput.SetValues(keyInput.gameObject.transform.position);
+                        hit.collider.gameObject.SetActive(false);
+                        player.keycardCount += 1;
                     }
                 }
 
-                Collider[] colliders = Physics.OverlapCapsule(player.playerCamera.transform.position, player.playerCamera.transform.position * player.pickupDistance, player.pickupRadius, player.keycardLayerMask);
-
-                if (colliders != null && colliders.Length >= 1)
+                if(Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
-                    colliders[0].gameObject.SetActive(false);
-                    player.keycardCount += 1;
-                    colliders = null;
+                    if(player.keycardCount >= 1)
+                    {
+                        KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
+                        keycardInput.SpawnCard();
+                    }
                 }
 
             }
