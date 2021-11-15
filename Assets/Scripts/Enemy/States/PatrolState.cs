@@ -8,6 +8,7 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
+        public float stateSpeed;
         public List<Transform> wayPoints;
         public List<Transform> checkedWayPoints;
 
@@ -35,13 +36,22 @@ namespace EnemyAI
 
         public override void Enter()
         {
-            Debug.Log("Entered patrol state");
+
+        }
+        public override void Exit()
+        {
+
+        }
+
+        public override float GetSpeed()
+        {
+            return stateSpeed;
         }
 
         float closestWaypoint = 10000;
         public WayPoint selectedWayPoint;
         // Update is called once per frame
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             //Gets the room and all the waypoints and hiding spots
             RaycastHit hit;

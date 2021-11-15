@@ -7,6 +7,7 @@ namespace EnemyAI
 {
     public class AttackState : State
     {
+        public float stateSpeed;
         GameObject deathMenu;
         GameObject pauseMenu;
         // Start is called before the first frame update
@@ -15,6 +16,15 @@ namespace EnemyAI
             Debug.Log("Entered attack state");
             deathMenu.SetActive(true);
             pauseMenu.SetActive(false);
+        }
+        public override void Exit()
+        {
+
+        }
+
+        public override float GetSpeed()
+        {
+            return stateSpeed;
         }
 
         private void Start()

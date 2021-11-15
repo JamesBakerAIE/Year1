@@ -47,6 +47,8 @@ namespace Player
         
         public float puzzleInteractRange = 0;
 
+        public float keycardInsertTime = 0;
+
         public LayerMask keycardLayerMask = 0;
         public LayerMask keycardHolderLayerMask = 0;
 

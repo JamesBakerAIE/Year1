@@ -7,7 +7,8 @@ namespace EnemyAI
 {
     public class SearchState : State
     {
-
+        public float stateSpeed;
+        public float distanceFromLocker;
         public GameObject room;
         public Room roomScript;
         // Start is called before the first frame update
@@ -20,10 +21,10 @@ namespace EnemyAI
         public float maxDistanceFromHideSpot;
 
         public List<Transform> hidingSpotsToSearch;
+
+        Vector3 lockerDestination;
         public override void Enter()
         {
-
-
             RaycastHit hit;
             //Gets hiding spots, and resets hiding spots
             if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
@@ -43,8 +44,14 @@ namespace EnemyAI
             transitions.Add(seenTransition);
         }
 
+        public override float GetSpeed()
+        {
+            return stateSpeed;
+        }
 
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+
+
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
 
             //once all hiding spots that it wants to search have been searched, change state to patrolling
@@ -54,8 +61,10 @@ namespace EnemyAI
                 return this.transform.position;
             }
 
+            Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan);
+
             //if close to the locker, set location as the next hiding spot
-            if (Vector3.Distance(this.transform.position, hidingSpotsToSearch[0].position) < 1)
+            if (Vector3.Distance(this.transform.position, lockerDestination) < 1)
             {
                 //closestHidingSpot = 100000f;
                 hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material= selectedHidingSpotMaterial;
@@ -69,9 +78,11 @@ namespace EnemyAI
                     return dist1.CompareTo(dist2);
                 });
 
+                lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+
             }
 
-            return hidingSpotsToSearch[0].position;
+            return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
         }
 
         public void CheckHidingSpots()
@@ -103,6 +114,8 @@ namespace EnemyAI
                 var dist2 = Vector3.Distance(transform.position, t2.position);
                 return dist1.CompareTo(dist2);
             });
+
+            lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
         }
     }
 }
