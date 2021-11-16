@@ -83,7 +83,7 @@ namespace Player
 
 
 
-            movementStateMachine.Initialize(puzzleState);
+            movementStateMachine.Initialize(walkingState);
 
             QualitySettings.vSyncCount = 0;
         }
@@ -91,8 +91,7 @@ namespace Player
 
         private void OnGUI()
         {
-            // FPS COUNTER
-            GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
+
         }
 
         private void Update()
@@ -100,16 +99,6 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
-
-            //FPS COUNTER
-            frameCount++;
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime > 0.5f)
-            {
-                frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
-                frameCount = 0;
-                elapsedTime = 0;
-            }
         }
 
         private void LateUpdate()
