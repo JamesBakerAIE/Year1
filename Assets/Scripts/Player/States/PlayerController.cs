@@ -12,6 +12,7 @@ namespace Player
         [HideInInspector] public SprintingState sprintingState = null;
         [HideInInspector] public CrouchingState crouchingState = null;
         [HideInInspector] public HidingState hidingState = null;
+        [HideInInspector] public PuzzleState puzzleState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
@@ -78,8 +79,11 @@ namespace Player
             sprintingState = new SprintingState(this, movementStateMachine);
             crouchingState = new CrouchingState(this, movementStateMachine);
             hidingState = new HidingState(this, movementStateMachine);
+            puzzleState = new PuzzleState(this, movementStateMachine);
 
-            movementStateMachine.Initialize(walkingState);
+
+
+            movementStateMachine.Initialize(puzzleState);
 
             QualitySettings.vSyncCount = 0;
         }
