@@ -8,6 +8,7 @@ namespace EnemyAI
     {
         public List<Transition> transitions;
         public float speed;
+        public  AudioClip enemySound;
 
 
         //called when first switched to state

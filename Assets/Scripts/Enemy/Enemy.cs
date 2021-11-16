@@ -22,6 +22,7 @@ namespace EnemyAI
 
             //currentState = patrolState;
             stateMachine.Initialize(patrolState);
+            stateMachine.ChangeState(patrolState);
         }
         void Update()
         {
@@ -40,6 +41,8 @@ namespace EnemyAI
                     break;
                 }
             }
+
+            Debug.Log("Current audio playing is: " + GetComponent<AudioSource>().clip.name);
         }
 
     }
