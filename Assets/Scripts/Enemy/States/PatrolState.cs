@@ -62,13 +62,13 @@ namespace EnemyAI
             if (Physics.Raycast(enemyPosition, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
                 
-                if (room == hit.collider.gameObject.transform.parent.gameObject)
+                if (room == hit.collider.gameObject.transform.parent.parent.gameObject)
                 {
                     //Debug.Log("Already in this room");
                 }
                 else
                 {
-                    room = hit.collider.gameObject.transform.parent.gameObject;
+                    room = hit.collider.gameObject.transform.parent.parent.gameObject;
                     roomScript = room.GetComponent<Room>();
                 }
             }
