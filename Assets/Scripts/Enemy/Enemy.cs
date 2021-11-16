@@ -22,6 +22,7 @@ namespace EnemyAI
 
             //currentState = patrolState;
             stateMachine.Initialize(patrolState);
+            stateMachine.ChangeState(patrolState);
         }
         void Update()
         {

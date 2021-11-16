@@ -37,6 +37,13 @@ namespace EnemyAI
                 CheckHidingSpots();
             }
             foundPlayer = false;
+            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            {
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+            }
+
         }
 
         private void Start()
@@ -115,7 +122,7 @@ namespace EnemyAI
             }
 
 
-            //sorts hidingspots in order of closenessv to the enemy
+            //sorts hidingspots in order of closeness to the enemy
             hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
             {
                 var dist1 = Vector3.Distance(transform.position, t1.position);
