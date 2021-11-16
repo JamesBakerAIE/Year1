@@ -99,7 +99,7 @@ namespace Managers.UIManager
         {
             Cursor.lockState = CursorLockMode.Confined;
             pauseMenuUI.SetActive(true);
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             GameIsPaused = true;
         }
 

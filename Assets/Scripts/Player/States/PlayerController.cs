@@ -12,8 +12,7 @@ namespace Player
         [HideInInspector] public SprintingState sprintingState = null;
         [HideInInspector] public CrouchingState crouchingState = null;
         [HideInInspector] public HidingState hidingState = null;
-
-
+        [HideInInspector] public PuzzleState puzzleState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
@@ -25,21 +24,15 @@ namespace Player
         public float crouchRaycastHeight = 0.85f;
         public LayerMask ignoreLayerMask = 0;
 
-
-
         [HideInInspector] public Vector3 velocity = Vector3.zero;
         [HideInInspector] public float playerCrouchColliderHeight = 0f;
         [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
         [SerializeField] private Animator playerAnimator = null;
 
-
-
         [Header("Player Looking")]
         public Transform playerCamera = null;
         public int mouseSensitivity = 0;
         [HideInInspector] public float cameraPitch;
-
-
 
         [Header("Player Hiding")]
         public float interactRange = 0.0f;
@@ -49,34 +42,22 @@ namespace Player
         public float lockerExitDistance = 0;
 
 
-
-
         [Header("Player Puzzles")]
         public float pickupDistance = 0;
         public float pickupRadius = 0;
-
+        
         public float puzzleInteractRange = 0;
-
-
 
         public float keycardInsertTime = 0;
 
-
-
         public LayerMask keycardLayerMask = 0;
         public LayerMask keycardHolderLayerMask = 0;
-
-
 
         public int keycardCount = 0;
 
 
 
-
-
         [HideInInspector] public RaycastHit result;
-
-
 
         // VARIABLES FOR FPS COUNTER
         private int frameCount;
@@ -87,34 +68,25 @@ namespace Player
 
 
 
-
-
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-
-
+            Cursor.lockState = CursorLockMode.Locked; 
 
             // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
-
-
 
             walkingState = new WalkingState(this, movementStateMachine);
             sprintingState = new SprintingState(this, movementStateMachine);
             crouchingState = new CrouchingState(this, movementStateMachine);
             hidingState = new HidingState(this, movementStateMachine);
+            puzzleState = new PuzzleState(this, movementStateMachine);
 
 
 
-            movementStateMachine.Initialize(walkingState);
-
-
+            movementStateMachine.Initialize(puzzleState);
 
             QualitySettings.vSyncCount = 0;
         }
-
-
 
 
         private void OnGUI()
@@ -123,17 +95,11 @@ namespace Player
             GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
         }
 
-
-
         private void Update()
         {
             movementStateMachine.CurrentState.HandleInput();
 
-
-
             movementStateMachine.CurrentState.LogicUpdate();
-
-
 
             //FPS COUNTER
             frameCount++;
@@ -146,35 +112,25 @@ namespace Player
             }
         }
 
-
-
         private void LateUpdate()
         {
             movementStateMachine.CurrentState.LateLogicUpdate();
         }
-
-
 
         private void FixedUpdate()
         {
             movementStateMachine.CurrentState.PhysicsUpdate();
         }
 
-
-
         // Check if player is below an object (under a table, inside a vent, etc.)
         public bool CheckCollisionOverlap(Vector3 point)
         {
             Ray ray = new Ray(point, Vector3.up);
 
-
-
-            if (Physics.Raycast(ray, crouchRaycastHeight, ~ignoreLayerMask))
+            if(Physics.Raycast(ray, crouchRaycastHeight, ~ignoreLayerMask))
             {
                 return true;
             }
-
-
 
             return false;
         }
