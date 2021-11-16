@@ -31,7 +31,7 @@ namespace EnemyAI
             //Gets hiding spots, and resets hiding spots
             if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
-                room = hit.collider.gameObject.transform.parent.gameObject;
+                room = hit.collider.gameObject.transform.parent.parent.gameObject;
                 roomScript = room.GetComponent<Room>();
                 hidingSpotsToSearch.Clear();
                 CheckHidingSpots();
