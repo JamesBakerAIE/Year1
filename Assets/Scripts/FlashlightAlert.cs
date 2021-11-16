@@ -9,6 +9,7 @@ public class FlashlightAlert : MonoBehaviour
     public int flickerChance;
     private Light myLight;
     public float flicker;
+    public GameObject lightFlicker;
     
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class FlashlightAlert : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             lightOn.GetComponent<FlashLight>().isFlickering = true;
+            lightFlicker.SetActive(true);
         }
       
 
@@ -43,6 +45,7 @@ public class FlashlightAlert : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             lightOn.GetComponent<FlashLight>().isFlickering = false;
+            lightFlicker.SetActive(false);
         }
     }
 }
