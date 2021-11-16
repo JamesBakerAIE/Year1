@@ -7,7 +7,6 @@ namespace EnemyAI
 {
     public class SearchState : State
     {
-        public float stateSpeed;
         public float distanceFromLocker;
         public GameObject room;
         public Room roomScript;
@@ -52,7 +51,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return stateSpeed;
+            return speed;
         }
 
 

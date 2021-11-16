@@ -12,7 +12,9 @@ namespace Managers.UIManager
     {
         //PauseMenu
         public static bool GameIsPaused = false;
+        public static bool GameIsOver = false;
         public GameObject pauseMenuUI;
+        public GameObject deathMenu;
 
         //OptionsMenu
         public GameObject optionsMenuUI;
@@ -49,6 +51,8 @@ namespace Managers.UIManager
                 resolutionDropdown.RefreshShownValue();
             }
 
+
+
         }
 
         public void SetResolution(int resolutionIndex)
@@ -67,15 +71,18 @@ namespace Managers.UIManager
         {
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Pause))
             {
-                if (GameIsPaused)
+                if (GameIsOver == false)
                 {
-                    Resume();
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
-                else
-                {
-                    Pause();
-                    Cursor.lockState = CursorLockMode.Confined;
+                    if (GameIsPaused)
+                    {
+                        Resume();
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                    else
+                    {
+                        Pause();
+                        Cursor.lockState = CursorLockMode.Confined;
+                    }
                 }
             }
 
@@ -127,7 +134,18 @@ namespace Managers.UIManager
 
         public void PlayGame()
         {
+            Time.timeScale = 1;
             SceneManager.LoadSceneAsync(mainGameSceneName);
+        }
+
+        public void Death()
+        {
+            optionsMenuUI.SetActive(false);
+            deathMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            GameIsOver = true;
+            Time.timeScale = 0;
+            mainGameSceneName = SceneManager.GetActiveScene().name;
         }
 
         public void QuitGame()

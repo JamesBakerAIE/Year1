@@ -6,7 +6,6 @@ namespace EnemyAI
 {
     public class AgitatedState : State
     {
-        public float stateSpeed;
         Transform playerPosition;
         TimerTransition timerTransition;
         SeenTransition seenTransition;
@@ -32,7 +31,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return stateSpeed;
+            return speed;
         }
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
