@@ -7,7 +7,6 @@ namespace EnemyAI
 {
     public class ChaseState : State
     {
-        public float stateSpeed;
         Transform player;
 
         SeenTransition seenTransition;
@@ -31,7 +30,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return stateSpeed;
+            return speed;
         }
 
         // Update is called once per frame

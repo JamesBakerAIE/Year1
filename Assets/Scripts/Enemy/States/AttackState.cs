@@ -1,21 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Managers.UIManager;
 
 namespace EnemyAI
 {
     public class AttackState : State
     {
-        public float stateSpeed;
-        GameObject deathMenu;
-        GameObject pauseMenu;
         // Start is called before the first frame update
         public override void Enter()
         {
-            Debug.Log("Entered attack state");
-            deathMenu.SetActive(true);
-            pauseMenu.SetActive(false);
+            FindObjectOfType<UIManager>().Death();
         }
         public override void Exit()
         {
@@ -24,18 +19,9 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return stateSpeed;
+            return speed;
         }
 
-        private void Start()
-        {
-            deathMenu = GameObject.FindGameObjectWithTag("Finish");
-            deathMenu.SetActive(false);
-
-            pauseMenu = GameObject.FindGameObjectWithTag("Start");
-            pauseMenu.SetActive(false);
-
-        }
         // Update is called once per frame
         //public override Vector3 UpdateAgent(Vector3 enemyPosition)
         //{

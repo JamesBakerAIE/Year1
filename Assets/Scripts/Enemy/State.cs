@@ -7,6 +7,7 @@ namespace EnemyAI
     public class State : MonoBehaviour
     {
         public List<Transition> transitions;
+        public float speed;
 
 
         //called when first switched to state
