@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tapeRecorderOff : MonoBehaviour
+public class tutorial1 : MonoBehaviour
 {
-    public GameObject soundForward;
-    public GameObject soundBackwards;
-    public GameObject subtitles;
-    
+    public GameObject mouse;
+    public GameObject w;
+
     // Start is called before the first frame update
     void Start()
     {
-      
+        w.SetActive(true);
+        mouse.SetActive(true);
     }
 
     // Update is called once per frame
@@ -23,12 +23,9 @@ public class tapeRecorderOff : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            soundForward.SetActive(false);
-          
-           
-            subtitles.SetActive(false);
+            w.SetActive(false);
+            mouse.SetActive(false);
         }
 
     }
-
 }
