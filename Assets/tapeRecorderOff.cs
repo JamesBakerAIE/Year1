@@ -7,6 +7,7 @@ public class tapeRecorderOff : MonoBehaviour
     public GameObject soundForward;
     public GameObject soundBackwards;
     public GameObject subtitles;
+    public GameObject Beacon;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class tapeRecorderOff : MonoBehaviour
         if (other.gameObject.name == "Player")
         {
             soundForward.SetActive(false);
+            Beacon.SetActive(false);
            
             subtitles.SetActive(false);
         }
