@@ -10,19 +10,23 @@ namespace Puzzle
         public GameObject keycardPrefab;
         private GameObject keycardNew;
 
+        private KeycardPuzzle keycardPuzzle = null;
+
+        private void Start()
+        {
+            keycardPuzzle = FindObjectOfType<KeycardPuzzle>();
+        }
         public GameObject keyPositionObject;
 
-        PlayerController player;
-        // Start is called before the first frame update
-        void Start()
-        {
-            player = FindObjectOfType<PlayerController>();
-        }
+        public GameObject door = null;
 
         // Update is called once per frame
         void Update()
         {
-
+            if (keycardPuzzle.keycardInsertedCount >= 2 && door.activeInHierarchy)
+            {
+                door.SetActive(false);
+            }
         }
 
         public void SpawnCard()
@@ -30,8 +34,7 @@ namespace Puzzle
             Vector3 pos = new Vector3(keyPositionObject.transform.position.x, keyPositionObject.transform.position.y, keyPositionObject.transform.position.z);
 
             keycardNew = Instantiate(keycardPrefab, pos, keyPositionObject.transform.rotation);
-
-            Debug.Log("Test");
+            keycardPuzzle.keycardInsertedCount++;
         }
     }
 

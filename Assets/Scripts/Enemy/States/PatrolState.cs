@@ -8,7 +8,6 @@ namespace EnemyAI
 
     public class PatrolState : State
     {
-        public float stateSpeed;
         public List<Transform> wayPoints;
         public List<Transform> checkedWayPoints;
 
@@ -45,7 +44,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return stateSpeed;
+            return speed;
         }
 
         float closestWaypoint = 10000;
