@@ -32,12 +32,12 @@ namespace EnemyAI
 
             bool wasInFOV = parentTransition.inDirectFOV;
 
-            Vector3 direction = (enemyPositon - playerPosition);
+            Vector3 direction = (GameObject.FindGameObjectWithTag("Eyes").transform.position - playerPosition);
             selectedState = null;
 
             //an array that shoots in the player's direction
 
-            Vector3 rayStart = enemyPositon + eyesOffset;
+            Vector3 rayStart = GameObject.FindGameObjectWithTag("Eyes").transform.position + eyesOffset;
             Vector3 rayDestination = direction + directionOffset;
 
             bool hitPlayer = false;
@@ -86,7 +86,6 @@ namespace EnemyAI
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 1f);
                     if (parentTransition.inAttack)
                     {
-                        Debug.Log("attack");
                         parentTransition.inDirectAttack = true;
                         parentTransition.inDirectFOV = true;
                         selectedState = parentTransition.attackState;
@@ -102,7 +101,8 @@ namespace EnemyAI
                     }
 
                 }
-                //Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
+                //Debug.Log(hit.collider.name);
             }
             return false;
 

@@ -41,8 +41,6 @@ namespace EnemyAI
                     break;
                 }
             }
-
-            Debug.Log("Current audio playing is: " + GetComponent<AudioSource>().clip.name);
         }
 
     }
