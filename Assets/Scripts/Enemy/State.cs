@@ -7,6 +7,8 @@ namespace EnemyAI
     public class State : MonoBehaviour
     {
         public List<Transition> transitions;
+        public float speed;
+        public  AudioClip enemySound;
 
 
         //called when first switched to state
@@ -15,26 +17,17 @@ namespace EnemyAI
 
         }
 
-        public virtual void HandleInput()
-        {
-
-        }
 
         //normal update
-        public virtual Vector3 LogicUpdate(Vector3 enemyPosition)
+        public virtual Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             return Vector3.zero;
         }
 
         //late update
-        public virtual void LateLogicUpdate()
+        public virtual float GetSpeed()
         {
-
-        }
-
-        public virtual void PhysicsUpdate()
-        {
-
+            return 0;
         }
 
         public virtual void Exit()

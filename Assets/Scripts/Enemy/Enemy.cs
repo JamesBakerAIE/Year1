@@ -22,13 +22,14 @@ namespace EnemyAI
 
             //currentState = patrolState;
             stateMachine.Initialize(patrolState);
+            stateMachine.ChangeState(patrolState);
         }
         void Update()
         {
             Debug.Log(stateMachine.CurrentState.ToString());
             //Updates the enemy's destination based on the current state's logic
-            enemyAgent.destination = stateMachine.CurrentState.LogicUpdate(this.transform.position);
-
+            enemyAgent.destination = stateMachine.CurrentState.DestinationUpdate(this.transform.position);
+            enemyAgent.speed = stateMachine.CurrentState.GetSpeed();
             State newState = null;
             //check if any transition conditions are met
             foreach (Transition transition in stateMachine.CurrentState.transitions)

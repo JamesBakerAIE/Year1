@@ -9,15 +9,6 @@ namespace EnemyAI
         Transform playerPosition;
         TimerTransition timerTransition;
         SeenTransition seenTransition;
-        public override void Enter()
-        {
-            //Debug.Log("Entered agitated state");
-            //playersLastPosition = GameObject.FindObjectOfType<PlayerController>().transform.position;
-            //timerTransition = GameObject.FindObjectOfType<TimerTransition>();
-            //transitions.Add(timerTransition);
-
-
-        }
 
         private void Start()
         {
@@ -26,8 +17,30 @@ namespace EnemyAI
             seenTransition = GameObject.FindObjectOfType<SeenTransition>();
             transitions.Add(timerTransition);
             transitions.Add(seenTransition);
+
+
         }
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+
+        public override void Enter()
+        {
+            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            {
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+            }
+        }
+        public override void Exit()
+        {
+
+        }
+
+
+        public override float GetSpeed()
+        {
+            return speed;
+        }
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             return playerPosition.position;
         }

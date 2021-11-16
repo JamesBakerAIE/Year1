@@ -17,15 +17,19 @@ namespace EnemyAI
         private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == "Player")
+            {
+                FindObjectOfType<SearchState>().foundPlayer = true;
                 transition.inAttack = true;
+            }
 
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
+            {
+                FindObjectOfType<SearchState>().foundPlayer = false;
                 transition.inAttack = false;
-
-
+            }
         }
     }
 }

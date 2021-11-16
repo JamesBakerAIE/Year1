@@ -12,6 +12,7 @@ namespace Player
         [HideInInspector] public SprintingState sprintingState = null;
         [HideInInspector] public CrouchingState crouchingState = null;
         [HideInInspector] public HidingState hidingState = null;
+        [HideInInspector] public PuzzleState puzzleState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
@@ -47,6 +48,8 @@ namespace Player
         
         public float puzzleInteractRange = 0;
 
+        public float keycardInsertTime = 0;
+
         public LayerMask keycardLayerMask = 0;
         public LayerMask keycardHolderLayerMask = 0;
 
@@ -76,6 +79,9 @@ namespace Player
             sprintingState = new SprintingState(this, movementStateMachine);
             crouchingState = new CrouchingState(this, movementStateMachine);
             hidingState = new HidingState(this, movementStateMachine);
+            puzzleState = new PuzzleState(this, movementStateMachine);
+
+
 
             movementStateMachine.Initialize(walkingState);
 
@@ -85,8 +91,7 @@ namespace Player
 
         private void OnGUI()
         {
-            // FPS COUNTER
-            GUI.Label(new Rect(50, 50, 50, 50), frameRate.ToString());
+
         }
 
         private void Update()
@@ -94,16 +99,6 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
-
-            //FPS COUNTER
-            frameCount++;
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime > 0.5f)
-            {
-                frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
-                frameCount = 0;
-                elapsedTime = 0;
-            }
         }
 
         private void LateUpdate()

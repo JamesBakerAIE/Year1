@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Puzzle
 {
-    public class Key : MonoBehaviour
+    public class NineTilePuzzle : Puzzle
     {
-        // Start is called before the first frame update
+
         void Start()
         {
 
@@ -18,5 +18,5 @@ namespace Puzzle
 
         }
     }
-}
 
+}

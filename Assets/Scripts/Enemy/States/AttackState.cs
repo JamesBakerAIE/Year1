@@ -1,31 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Managers.UIManager;
 
 namespace EnemyAI
 {
     public class AttackState : State
     {
-        GameObject deathMenu;
-        GameObject pauseMenu;
         // Start is called before the first frame update
         public override void Enter()
         {
-            Debug.Log("Entered attack state");
-            deathMenu.SetActive(true);
-            pauseMenu.SetActive(false);
+            FindObjectOfType<UIManager>().Death();
+            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            {
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
+            }
         }
-
-        private void Start()
+        public override void Exit()
         {
-            deathMenu = GameObject.FindGameObjectWithTag("Finish");
-            deathMenu.SetActive(false);
-
-            pauseMenu = GameObject.FindGameObjectWithTag("Start");
-            pauseMenu.SetActive(false);
 
         }
+
+        public override float GetSpeed()
+        {
+            return speed;
+        }
+
         // Update is called once per frame
         //public override Vector3 UpdateAgent(Vector3 enemyPosition)
         //{

@@ -35,13 +35,27 @@ namespace EnemyAI
 
         public override void Enter()
         {
-            Debug.Log("Entered patrol state");
+            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            {
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
+                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+            }
+        }
+        public override void Exit()
+        {
+
+        }
+
+        public override float GetSpeed()
+        {
+            return speed;
         }
 
         float closestWaypoint = 10000;
         public WayPoint selectedWayPoint;
         // Update is called once per frame
-        public override Vector3 LogicUpdate(Vector3 enemyPosition)
+        public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             //Gets the room and all the waypoints and hiding spots
             RaycastHit hit;
