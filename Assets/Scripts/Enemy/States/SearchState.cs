@@ -8,8 +8,8 @@ namespace EnemyAI
     public class SearchState : State
     {
         public float distanceFromLocker;
-        public GameObject room;
-        public Room roomScript;
+        GameObject room;
+        Room roomScript;
         // Start is called before the first frame update
         Transform playerPosition;
         SeenTransition seenTransition;

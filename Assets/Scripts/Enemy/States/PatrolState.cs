@@ -11,12 +11,15 @@ namespace EnemyAI
         public List<Transform> wayPoints;
         public List<Transform> checkedWayPoints;
 
-        public GameObject room;
+        GameObject room;
         GameObject[] doors;
         //GameObject[10] waypoints;
         int selectedDoor;
         public Transform targetWayPoint;
-        public Room roomScript;
+        Room roomScript;
+
+        float closestWaypoint = 10000;
+        WayPoint selectedWayPoint;
 
         public Material selectedWayPointMaterial;
         public Material wayPointMaterial;
@@ -52,8 +55,6 @@ namespace EnemyAI
             return speed;
         }
 
-        float closestWaypoint = 10000;
-        public WayPoint selectedWayPoint;
         // Update is called once per frame
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {

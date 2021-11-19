@@ -10,13 +10,14 @@ namespace EnemyAI
         public bool inDirectFOV = false;
         public bool inAttack = false;
         public bool inDirectAttack = false;
+        public bool inHearingRange = false;
 
         State changeState;
-        public ChaseState chaseState;
-        public PatrolState patrolState;
-        public AttackState attackState;
-        public AgitatedState agitatedState;
-        public SearchState searchState;
+        [HideInInspector] public ChaseState chaseState;
+        [HideInInspector] public PatrolState patrolState;
+        [HideInInspector] public AttackState attackState;
+        [HideInInspector] public AgitatedState agitatedState;
+        [HideInInspector] public SearchState searchState;
 
         private void Awake()
         {
