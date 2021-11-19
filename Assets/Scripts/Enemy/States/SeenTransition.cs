@@ -57,10 +57,17 @@ namespace EnemyAI
                 //Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
 
                 parentTransition.inDirectFOV = false;
+                //Re-enable for hearing to work
+                //if(inHearingRange == false)
+                //{
+                //    selectedState = parentTransition.agitatedState;
+                //}
             }
 
+
+
             //Last time this was called it was in field of view, now it isn't so become agitated
-            if (parentTransition.inDirectFOV == false && wasInFOV == true || inHearingRange == true)
+            if (parentTransition.inDirectFOV == false && wasInFOV == true /* || inHearingRange == true */)
             {
                 parentTransition.inDirectFOV = false;
                 parentTransition.inDirectAttack = false;

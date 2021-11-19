@@ -7,9 +7,11 @@ namespace EnemyAI
     public class State : MonoBehaviour
     {
         public List<Transition> transitions;
-        public float speed;
+        public float movementSpeed;
+        public float hearingRadius;
         public  AudioClip enemySound;
 
+        [HideInInspector] public SphereCollider hearingCollider;
 
         //called when first switched to state
         public virtual void Enter()

@@ -16,6 +16,7 @@ namespace EnemyAI
             transitions.Add(seenTransition);
 
             player = GameObject.FindObjectOfType<PlayerController>().gameObject.transform;
+            hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
 
@@ -27,7 +28,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
-
+            hearingCollider.radius = hearingRadius;
 
         }
         public override void Exit()
@@ -37,7 +38,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return speed;
+            return movementSpeed;
         }
 
         // Update is called once per frame

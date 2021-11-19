@@ -7,6 +7,12 @@ namespace EnemyAI
 {
     public class AttackState : State
     {
+
+        private void Start()
+        {
+            hearingCollider = GetComponentInChildren<SphereCollider>();
+
+        }
         // Start is called before the first frame update
         public override void Enter()
         {
@@ -17,6 +23,8 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
             }
+            hearingCollider.radius = hearingRadius;
+
         }
         public override void Exit()
         {
@@ -25,7 +33,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return speed;
+            return movementSpeed;
         }
 
         // Update is called once per frame

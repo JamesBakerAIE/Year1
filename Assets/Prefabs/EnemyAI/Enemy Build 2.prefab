@@ -42,7 +42,8 @@ GameObject:
   - component: {fileID: 3160174335434155055}
   - component: {fileID: 3160174335434155048}
   - component: {fileID: 3160174335434155049}
-  m_Layer: 0
+  - component: {fileID: 396486706}
+  m_Layer: 2
   m_Name: Hearing Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,6 +126,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &396486706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160174335434155051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6a55d6eb9244c40b09076226368ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3160174335484135827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,8 +1115,6 @@ MonoBehaviour:
   speed: 3
   enemySound: {fileID: 8300000, guid: 7d1920557f16c51489f0cf1035f92a91, type: 3}
   distanceFromLocker: 2
-  room: {fileID: 0}
-  roomScript: {fileID: 0}
   selectedHidingSpotMaterial: {fileID: 2100000, guid: a2fc59fd3e1806649a295c35dc98b202, type: 2}
   hdingSpotMaterial: {fileID: 5561349426305759274, guid: a2d4c698bce3faa4f8625c0bd623765e, type: 3}
   maxDistanceFromHideSpot: 20
@@ -1126,13 +1137,10 @@ MonoBehaviour:
   enemySound: {fileID: 8300000, guid: 7d1920557f16c51489f0cf1035f92a91, type: 3}
   wayPoints: []
   checkedWayPoints: []
-  room: {fileID: 0}
   targetWayPoint: {fileID: 0}
-  roomScript: {fileID: 0}
   selectedWayPointMaterial: {fileID: 2100000, guid: fec3bf4d30b5e4f448736581252b1b78, type: 2}
   wayPointMaterial: {fileID: 2100000, guid: 9c24906b735ac4c4ba991a6c3d3fd457, type: 2}
   seenPlayer: 0
-  selectedWayPoint: {fileID: 0}
 --- !u!114 &3160174335895850140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,6 +1202,7 @@ MonoBehaviour:
   inDirectFOV: 0
   inAttack: 0
   inDirectAttack: 0
+  inHearingRange: 0
   chaseState: {fileID: 3160174335895850140}
   patrolState: {fileID: 3160174335895850141}
   attackState: {fileID: 3160174335895850131}
@@ -1215,6 +1224,7 @@ MonoBehaviour:
   inDirectFOV: 0
   inAttack: 0
   inDirectAttack: 0
+  inHearingRange: 0
   chaseState: {fileID: 0}
   patrolState: {fileID: 0}
   attackState: {fileID: 0}
@@ -1236,6 +1246,7 @@ MonoBehaviour:
   inDirectFOV: 0
   inAttack: 0
   inDirectAttack: 0
+  inHearingRange: 0
   chaseState: {fileID: 0}
   patrolState: {fileID: 0}
   attackState: {fileID: 0}

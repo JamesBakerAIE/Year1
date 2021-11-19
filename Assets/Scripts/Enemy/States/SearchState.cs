@@ -25,6 +25,19 @@ namespace EnemyAI
         Vector3 lockerDestination;
 
         public bool foundPlayer;
+
+
+        private void Start()
+        {
+            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
+
+            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            lockerTransition = GameObject.FindObjectOfType<LockerTransition>();
+            hearingCollider = GetComponentInChildren<SphereCollider>();
+            transitions.Add(seenTransition);
+            transitions.Add(lockerTransition);
+
+        }
         public override void Enter()
         {
             RaycastHit hit;
@@ -44,21 +57,14 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
 
-        }
+            hearingCollider.radius = hearingRadius;
 
-        private void Start()
-        {
-            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
-            lockerTransition = GameObject.FindObjectOfType<LockerTransition>();
-            transitions.Add(seenTransition);
-            transitions.Add(lockerTransition);
         }
 
         public override float GetSpeed()
         {
-            return speed;
+            return movementSpeed;
         }
 
 

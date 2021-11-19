@@ -24,7 +24,6 @@ namespace EnemyAI
         public Material selectedWayPointMaterial;
         public Material wayPointMaterial;
 
-
         Transform currentWayPoint;
 
         SeenTransition seenTransition;
@@ -34,6 +33,8 @@ namespace EnemyAI
         {
             seenTransition = GameObject.FindObjectOfType<SeenTransition>();
             transitions.Add(seenTransition);
+            hearingCollider = GetComponentInChildren<SphereCollider>();
+
         }
 
         public override void Enter()
@@ -44,6 +45,8 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
+
+            hearingCollider.radius = hearingRadius;
         }
         public override void Exit()
         {
@@ -52,7 +55,7 @@ namespace EnemyAI
 
         public override float GetSpeed()
         {
-            return speed;
+            return movementSpeed;
         }
 
         // Update is called once per frame

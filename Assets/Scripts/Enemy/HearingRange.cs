@@ -16,7 +16,7 @@ namespace EnemyAI
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "MainCamera")
             {
                 FindObjectOfType<SearchState>().foundPlayer = true;
                 transition.inHearingRange = true;
@@ -25,7 +25,7 @@ namespace EnemyAI
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "MainCamera")
             {
                 FindObjectOfType<SearchState>().foundPlayer = false;
                 transition.inHearingRange = false;
