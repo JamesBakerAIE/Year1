@@ -6,8 +6,8 @@ namespace EnemyAI
 {
     public class SeenTransition : Transition
     {
-        public Vector3 eyesOffset;
-        public Vector3 directionOffset;
+        //public Vector3 eyesOffset;
+        //public Vector3 directionOffset;
         Transition parentTransition;
         LayerMask ignoreLayer;
 
@@ -29,7 +29,7 @@ namespace EnemyAI
         readonly List<Ray> rays;
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-
+            inHearingRange = parentTransition.inHearingRange;
             bool wasInFOV = parentTransition.inDirectFOV;
 
             Vector3 direction = (GameObject.FindGameObjectWithTag("Eyes").transform.position - playerPosition);
@@ -37,8 +37,8 @@ namespace EnemyAI
 
             //an array that shoots in the player's direction
 
-            Vector3 rayStart = GameObject.FindGameObjectWithTag("Eyes").transform.position + eyesOffset;
-            Vector3 rayDestination = direction + directionOffset;
+            Vector3 rayStart = GameObject.FindGameObjectWithTag("Eyes").transform.position;
+            Vector3 rayDestination = direction;
 
             bool hitPlayer = false;
 
@@ -49,16 +49,25 @@ namespace EnemyAI
             if (hitPlayer == false)
                 hitPlayer = ShootRay(rayStart, rayDestination + new Vector3(0, 0, -1));
 
+
+
             //Player isn;t in direct sight of the enemy
             if (hitPlayer == false)
             {
                 //Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
 
                 parentTransition.inDirectFOV = false;
+                //Re-enable for hearing to work
+                //if(inHearingRange == false)
+                //{
+                //    selectedState = parentTransition.agitatedState;
+                //}
             }
 
+
+
             //Last time this was called it was in field of view, now it isn't so become agitated
-            if (parentTransition.inDirectFOV == false && wasInFOV == true)
+            if (parentTransition.inDirectFOV == false && wasInFOV == true /* || inHearingRange == true */)
             {
                 parentTransition.inDirectFOV = false;
                 parentTransition.inDirectAttack = false;

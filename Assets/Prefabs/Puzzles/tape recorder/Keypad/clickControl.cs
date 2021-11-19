@@ -22,8 +22,6 @@ public class clickControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(playerCode);
-
         if (totalDigits == 4)
         {
             if (playerCode == correctCode)
