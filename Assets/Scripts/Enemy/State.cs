@@ -11,7 +11,7 @@ namespace EnemyAI
         public float hearingRadius;
         public  AudioClip enemySound;
 
-        [HideInInspector] public SphereCollider hearingCollider;
+        //[HideInInspector] public SphereCollider hearingCollider;
 
         //called when first switched to state
         public virtual void Enter()

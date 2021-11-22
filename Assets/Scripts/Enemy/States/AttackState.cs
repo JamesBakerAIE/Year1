@@ -10,7 +10,7 @@ namespace EnemyAI
 
         private void Start()
         {
-            hearingCollider = GetComponentInChildren<SphereCollider>();
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
         // Start is called before the first frame update
@@ -23,7 +23,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
             }
-            hearingCollider.radius = hearingRadius;
+            //hearingCollider.radius = hearingRadius;
 
         }
         public override void Exit()
