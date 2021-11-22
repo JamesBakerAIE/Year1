@@ -52,8 +52,11 @@ namespace Player
 
         public LayerMask keycardLayerMask = 0;
         public LayerMask keycardHolderLayerMask = 0;
+        public LayerMask computerLayerMask = 0;
 
         public int keycardCount = 0;
+
+        public Slider computerLoadingBar = null;
 
 
 
