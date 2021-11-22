@@ -11,8 +11,8 @@ public class ToggleMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        on.SetActive(false);
-        off.SetActive(false);
+        //on.SetActive(false);
+        //off.SetActive(false);
         isOn = false;
     }
 
@@ -23,17 +23,17 @@ public class ToggleMap : MonoBehaviour
         {
             if (isOn)
             {
-                on.SetActive(false);
-                off.SetActive(true);
+                //on.SetActive(false);
+                //off.SetActive(true);
             }
 
             if (!isOn)
             {
-                on.SetActive(true);
-                off.SetActive(false);
+                //on.SetActive(true);
+                //off.SetActive(false);
             }
         }
-        isOn = !isOn;
+        //isOn = !isOn;
     }
 }
   

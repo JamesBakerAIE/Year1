@@ -12,7 +12,7 @@ public class TapeRecorder : MonoBehaviour
     void Start()
     {
         soundForward.SetActive(false);
-        soundBackwards.SetActive(false);
+        //soundBackwards.SetActive(false);
         subtitles.SetActive(false);
     }
 

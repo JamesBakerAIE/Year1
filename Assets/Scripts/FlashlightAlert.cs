@@ -10,14 +10,14 @@ public class FlashlightAlert : MonoBehaviour
     private Light myLight;
     public float flicker;
     public GameObject lightFlicker;
-    public GameObject ssound;
+    public GameObject sound;
     
     
     // Start is called before the first frame update
     void Start()
     {
         myLight = GetComponent<Light>();
-        ssound.SetActive(false);
+        //sound.SetActive(false);
       
     }
 
@@ -34,7 +34,7 @@ public class FlashlightAlert : MonoBehaviour
         {
             lightOn.GetComponent<FlashLight>().isFlickering = true;
             lightFlicker.SetActive(true);
-            ssound.SetActive(true);
+            //sound.SetActive(true);
 
         }
       
@@ -52,7 +52,7 @@ public class FlashlightAlert : MonoBehaviour
         {
             lightOn.GetComponent<FlashLight>().isFlickering = false;
             lightFlicker.SetActive(false);
-            ssound.SetActive(false);
+            sound.SetActive(false);
 
         }
     }

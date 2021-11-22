@@ -46,7 +46,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
 
-            hearingCollider.radius = hearingRadius;
+            //hearingCollider.radius = hearingRadius;
         }
         public override void Exit()
         {

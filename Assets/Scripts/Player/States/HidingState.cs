@@ -86,7 +86,7 @@ namespace Player
 
 
 
-            if (interact && enteringLocker == false && lookToFrontOfLocker)
+            if (interact && enteringLocker == false)
             {
                 leavingLocker = true;
                 lockerInsideOf.hasPlayer = false;
@@ -177,20 +177,6 @@ namespace Player
             {
                 enteringLocker = false;
             }
-
-
-
-            if (player.transform.rotation.x == lookTransform.rotation.x && player.transform.rotation.z == lookTransform.rotation.z)
-            {
-                lookToFrontOfLocker = true;
-            }
-            else
-            {
-                lookToFrontOfLocker = false;
-            }
-
-
-
 
         }
 
