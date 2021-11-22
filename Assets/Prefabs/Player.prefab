@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 91985874}
   - component: {fileID: 2082682831}
   - component: {fileID: 3508897101440624212}
-  - component: {fileID: 7093834623402113906}
+  - component: {fileID: 2594024372789938152}
   m_Layer: 0
   m_Name: Spot Light (2)
   m_TagString: Untagged
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlickering: 0
   timeDelay: 0
---- !u!114 &7093834623402113906
+--- !u!114 &2594024372789938152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,7 +279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9065058749898011812}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!108 &177120716
 Light:
@@ -827,7 +827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9065058749898011812}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1418924662
 GameObject:
@@ -889,7 +889,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9065058749898011812}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!108 &2194558361044532109
 Light:
@@ -1140,8 +1140,8 @@ GameObject:
   - component: {fileID: 1708360137}
   - component: {fileID: 4050249057169084873}
   - component: {fileID: 1708360140}
-  - component: {fileID: 6959550198602246895}
-  - component: {fileID: 2643267499079866140}
+  - component: {fileID: 6076844482941455344}
+  - component: {fileID: 3055023527844014762}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: {fileID: 0}
   off: {fileID: 0}
---- !u!82 &6959550198602246895
+--- !u!82 &6076844482941455344
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1567,7 +1567,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2643267499079866140
+--- !u!114 &3055023527844014762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1616,9 +1616,9 @@ Transform:
   - {fileID: -4894653987230139961}
   - {fileID: 1418924663}
   - {fileID: 970751645}
-  - {fileID: 177120713}
   - {fileID: 268191736047320659}
   - {fileID: 1084010137}
+  - {fileID: 177120713}
   m_Father: {fileID: 9065058748615389911}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

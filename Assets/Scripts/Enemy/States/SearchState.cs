@@ -33,7 +33,7 @@ namespace EnemyAI
 
             seenTransition = GameObject.FindObjectOfType<SeenTransition>();
             lockerTransition = GameObject.FindObjectOfType<LockerTransition>();
-            hearingCollider = GetComponentInChildren<SphereCollider>();
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
             transitions.Add(seenTransition);
             transitions.Add(lockerTransition);
 
@@ -57,7 +57,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
 
-            hearingCollider.radius = hearingRadius;
+            //hearingCollider.radius = hearingRadius;
 
 
         }
