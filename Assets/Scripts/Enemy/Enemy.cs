@@ -11,6 +11,7 @@ namespace EnemyAI
         public StateMachine stateMachine;
         PatrolState patrolState;
         Transform playerPosition;
+        public Animator animator;
 
         public NavMeshAgent enemyAgent;
         // Start is called before the first frame update
@@ -30,6 +31,7 @@ namespace EnemyAI
             //Updates the enemy's destination based on the current state's logic
             enemyAgent.destination = stateMachine.CurrentState.DestinationUpdate(this.transform.position);
             enemyAgent.speed = stateMachine.CurrentState.GetSpeed();
+            animator.SetBool("Running", stateMachine.CurrentState.isRunning); 
             State newState = null;
             //check if any transition conditions are met
             foreach (Transition transition in stateMachine.CurrentState.transitions)

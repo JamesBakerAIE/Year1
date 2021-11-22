@@ -30,7 +30,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
-
+            isRunning = true;
             //hearingCollider.radius = hearingRadius;
 
         }
