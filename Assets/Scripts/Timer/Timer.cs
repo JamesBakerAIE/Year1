@@ -7,7 +7,7 @@ namespace GasTimer
     public class Timer : MonoBehaviour
     {
         [Header("Timer Variables")]
-        private float timerDuration = 3f * 60f;
+         [SerializeField] private float timerDuration = 0f;
         private float timer;
         [SerializeField]
         private TextMeshProUGUI firstMinute;
@@ -23,6 +23,7 @@ namespace GasTimer
         void Start()
         {
             ResetTimer();
+            timerDuration = timerDuration * 60f;
         }
 
         // Update is called once per frame
@@ -30,8 +31,8 @@ namespace GasTimer
         {
             if (timer > 0)
             {
-                timer -= Time.deltaTime;
-                //UpdateTimerDisplay(timer);
+                timer += Time.deltaTime;
+                UpdateTimerDisplay(timer);
             }
             else
             {
@@ -49,10 +50,11 @@ namespace GasTimer
             float minutes = Mathf.FloorToInt(time / 60);
             float seconds = Mathf.FloorToInt(time % 60);
             string currentTime = string.Format("{00:00}{1:00}", minutes, seconds);
-            firstMinute.text = currentTime[0].ToString();
-            secondMinute.text = currentTime[1].ToString();
-            firstSecond.text = currentTime[2].ToString();
-            secondSecond.text = currentTime[3].ToString();
+            //firstMinute.text = currentTime[0].ToString();
+            //secondMinute.text = currentTime[1].ToString();
+            //firstSecond.text = currentTime[2].ToString();
+            //secondSecond.text = currentTime[3].ToString();
+            Debug.Log(currentTime);
         }
 
         private void flash()
