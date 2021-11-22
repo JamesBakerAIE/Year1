@@ -29,7 +29,7 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
             }
             //hearingCollider.radius = hearingRadius;
-
+            isRunning = true;
         }
         public override void Exit()
         {

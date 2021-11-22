@@ -10,6 +10,7 @@ namespace EnemyAI
         public float movementSpeed;
         public float hearingRadius;
         public  AudioClip enemySound;
+        public bool isRunning = false;
 
         //[HideInInspector] public SphereCollider hearingCollider;
 
