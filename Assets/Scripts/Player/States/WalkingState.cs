@@ -121,6 +121,14 @@ namespace Player
                         keycardInput.SpawnCard();
                     }
                 }
+                Debug.DrawRay(ray.origin, ray.direction * player.pickupDistance, Color.red, Mathf.Infinity);
+                if(Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.computerLayerMask))
+                {
+                    if(player.computerLoadingBar.value < 100)
+                    {
+                        player.computerLoadingBar.value += Time.deltaTime;
+                    }
+                }
 
 
 
