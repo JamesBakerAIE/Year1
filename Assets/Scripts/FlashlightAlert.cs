@@ -34,7 +34,7 @@ public class FlashlightAlert : MonoBehaviour
         {
             lightOn.GetComponent<FlashLight>().isFlickering = true;
             lightFlicker.SetActive(true);
-            //sound.SetActive(true);
+            sound.SetActive(true);
 
         }
       
