@@ -20,7 +20,6 @@ namespace EnemyAI
             stateMachine = gameObject.GetComponent<StateMachine>();
             patrolState = gameObject.GetComponent<PatrolState>();
             playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
-
             //currentState = patrolState;
             stateMachine.Initialize(patrolState);
             stateMachine.ChangeState(patrolState);
