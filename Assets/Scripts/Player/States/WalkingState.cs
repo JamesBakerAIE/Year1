@@ -12,6 +12,7 @@ namespace Player
         private bool crouch;
         private bool sprint;
         public bool interact = false;
+        public bool holdingInteract = false;
         private List<Collider> colliders = new List<Collider>();
 
 
@@ -56,6 +57,9 @@ namespace Player
 
 
                 interact = Input.GetButtonDown("Interact");
+
+                holdingInteract = Input.GetButton("Interact");
+
             }
 
 
@@ -94,15 +98,11 @@ namespace Player
                         player.result = hit;
                         stateMachine.ChangeState(player.hidingState);
                     }
-
-
-
-
                 }
 
 
 
-                if (Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardLayerMask))
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
                 {
                     if (hit.collider.isTrigger)
                     {
@@ -113,7 +113,7 @@ namespace Player
 
 
 
-                if (Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+                if (Physics.Raycast(ray, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
                     {
@@ -122,21 +122,27 @@ namespace Player
                     }
                 }
                 Debug.DrawRay(ray.origin, ray.direction * player.pickupDistance, Color.red, Mathf.Infinity);
-                if(Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.computerLayerMask))
-                {
-                    if(player.computerLoadingBar.value < 100)
-                    {
-                        player.computerLoadingBar.value += Time.deltaTime;
-                    }
-                }
+
+ 
 
 
 
             }
+            else if (holdingInteract)
+            {
+                Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
+
+
+                Collider[] hitColliders = Physics.OverlapSphere(ray.origin, player.pickupRadius, player.computerLayerMask.value);
+
+                if (hitColliders.Length > 0)
+                {
+                    player.computerLoadingBar.value += Time.deltaTime;
+                }   
+            }
         }
-
-
-
+        
+        
         public override void LateLogicUpdate()
         {
             base.LateLogicUpdate();
