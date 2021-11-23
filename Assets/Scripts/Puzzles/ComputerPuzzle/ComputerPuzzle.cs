@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Puzzle
 {
-    public class NineTilePuzzle : Puzzle
+    public class ComputerPuzzle : Puzzle
     {
-
+        // Start is called before the first frame update
         void Start()
         {
 
