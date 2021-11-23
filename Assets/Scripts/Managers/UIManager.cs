@@ -27,7 +27,7 @@ namespace Managers.UIManager
         [SerializeField] private string mainGameSceneName = string.Empty;
 
         Resolution[] resolutions;
-        public TMP_Dropdown resolutionDropdown;
+        public Dropdown resolutionDropdown;
 
         public void Start()
         {
