@@ -113,7 +113,7 @@ namespace Player
 
 
 
-                if (Physics.Raycast(ray, player.pickupDistance, player.keycardHolderLayerMask))
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
                     {
