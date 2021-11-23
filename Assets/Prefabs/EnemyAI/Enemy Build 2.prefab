@@ -1504,7 +1504,7 @@ MonoBehaviour:
   attackState: {fileID: 0}
   agitatedState: {fileID: 0}
   searchState: {fileID: 0}
-  timeAgitated: 3
+  timeAgitated: 4
   timeElapsed: 0
 --- !u!1001 &1594805912589986636
 PrefabInstance:
