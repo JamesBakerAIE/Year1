@@ -4,7 +4,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    private float timerDuration = 3f * 60f;
+    private float timerDuration = 15.40f * 60f;
 
     private float timer;
     [SerializeField]

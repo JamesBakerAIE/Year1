@@ -8,6 +8,8 @@ public class clickControl : MonoBehaviour
     public static string playerCode = "";
     public GameObject door;
     public GameObject door2;
+    public GameObject hitBox;
+    public GameObject hitBox1;
 
     public static string didclick = "n";
 
@@ -30,6 +32,8 @@ public class clickControl : MonoBehaviour
                 door.SetActive(false);
                 door2.SetActive(false);
                 Debug.Log("Correct");
+                hitBox.SetActive(true);
+                hitBox1.SetActive(true);
             }
             else
             {

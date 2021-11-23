@@ -12,9 +12,12 @@ namespace Puzzle
 
         private KeycardPuzzle keycardPuzzle = null;
 
+        private PlayerController player;
+
         private void Start()
         {
             keycardPuzzle = FindObjectOfType<KeycardPuzzle>();
+            player = FindObjectOfType<PlayerController>();
         }
         public GameObject keyPositionObject;
 
@@ -35,6 +38,7 @@ namespace Puzzle
 
             keycardNew = Instantiate(keycardPrefab, pos, keyPositionObject.transform.rotation);
             keycardPuzzle.keycardInsertedCount++;
+            player.keycardCount -= 1;
         }
     }
 
