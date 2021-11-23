@@ -12,6 +12,7 @@ namespace Player
         public bool searched = false;
         public bool hasPlayer = false;
         public Renderer doorObject;
+        //Locker
 
         private void Start()
         {
