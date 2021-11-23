@@ -30,7 +30,8 @@ namespace EnemyAI
             //Updates the enemy's destination based on the current state's logic
             enemyAgent.destination = stateMachine.CurrentState.DestinationUpdate(this.transform.position);
             enemyAgent.speed = stateMachine.CurrentState.GetSpeed();
-            animator.SetBool("Running", stateMachine.CurrentState.isRunning); 
+            animator.SetBool("Running", stateMachine.CurrentState.isRunning);
+            animator.SetBool("Searching", stateMachine.CurrentState.isSearching);
             State newState = null;
             //check if any transition conditions are met
             foreach (Transition transition in stateMachine.CurrentState.transitions)
