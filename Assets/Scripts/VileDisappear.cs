@@ -8,12 +8,17 @@ public class VileDisappear : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Destroy(this.gameObject);
+        
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+            {
+            Vile.SetActive(false);
         }
     }
-    
+
+
 
 }
 
