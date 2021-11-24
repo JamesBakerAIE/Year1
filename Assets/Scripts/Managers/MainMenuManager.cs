@@ -15,6 +15,8 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject pressAnyKeyText;
 
+    public MainMenuEvent mainMenuEventObject;
+
 
     public float cameraSpeed;
     // Start is called before the first frame update
@@ -66,6 +68,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void Play(float speed)
     {
+        mainMenuEventObject.StartEvent();
         cameraSpeed = speed;
         destination = playArea;
     }
