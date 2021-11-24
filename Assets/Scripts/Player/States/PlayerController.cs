@@ -85,16 +85,7 @@ namespace Player
             hidingState = new HidingState(this, movementStateMachine);
             puzzleState = new PuzzleState(this, movementStateMachine);
 
-            //movementStateMachine = gameObject.AddComponent<StateMachine>();
-            //walkingState = gameObject.AddComponent<WalkingState>();
-            //sprintingState = gameObject.AddComponent<SprintingState>();
-            //crouchingState = gameObject.AddComponent<CrouchingState>();
-            //hidingState = gameObject.AddComponent<HidingState>();
-            //puzzleState = gameObject.AddComponent<PuzzleState>();
-
             movementStateMachine.Initialize(walkingState);
-
-            QualitySettings.vSyncCount = 0;
         }
 
 
