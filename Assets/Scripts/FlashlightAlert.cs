@@ -33,7 +33,7 @@ public class FlashlightAlert : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             lightOn.GetComponent<FlashLight>().isFlickering = true;
-            lightFlicker.SetActive(true);
+            //lightFlicker.SetActive(true);
             sound.SetActive(true);
 
         }
