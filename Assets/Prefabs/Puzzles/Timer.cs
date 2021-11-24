@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using TMPro;
+using Managers.UIManager;
 
 public class Timer : MonoBehaviour
 {
-    private float timerDuration = 15.40f * 60f;
+    private float timerDuration = 15 * 60f;
 
     private float timer;
     [SerializeField]
@@ -17,9 +17,12 @@ public class Timer : MonoBehaviour
     private TextMeshProUGUI firstSecond;
     [SerializeField]
     private TextMeshProUGUI secondSecond;
+
+    private UIManager uiManager;
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = FindObjectOfType<UIManager>();
         ResetTimer();
     }
 
@@ -33,7 +36,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            flash();
+            Death();
         }
     }
     private void ResetTimer()
@@ -50,8 +53,8 @@ public class Timer : MonoBehaviour
         firstSecond.text = currentTime[2].ToString();
         secondSecond.text = currentTime[3].ToString();
     }
-    private void flash()
+    private void Death()
     {
-
+        uiManager.Death();
     }
 }
