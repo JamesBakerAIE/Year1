@@ -119,15 +119,12 @@ namespace Player
                 {
                     stateMachine.ChangeState(player.walkingState);
                 }
-
-
-
             }
 
-
-
-
-
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
         }
 
 
@@ -143,7 +140,7 @@ namespace Player
         {
             base.PhysicsUpdate();
             Vector3 target = new Vector3(player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.x,
-            player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y,
+            player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y - player.lockerHeightOffset,
             player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.z);
 
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Puzzle;
 
 namespace Player
 {
@@ -9,7 +10,9 @@ namespace Player
     {
         private bool crouchHeld;
         private bool belowCeiling;
+        public bool interact = false;
 
+        public RaycastHit hit;
         private float startValue = 0.599f;
         private float endValue = 0f;    
         public CrouchingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
@@ -44,6 +47,7 @@ namespace Player
                 crouchHeld = Input.GetButton("Crouch");
                 mouseX = Input.GetAxisRaw("Mouse X");
                 mouseY = Input.GetAxisRaw("Mouse Y");
+                interact = Input.GetButtonDown("Interact");
             }
 
         }
@@ -52,6 +56,34 @@ namespace Player
         {
             base.LogicUpdate();
             Crouch();
+
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
+
+            if(interact)
+            {
+                Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
+
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
+                {
+                    if (hit.collider.isTrigger)
+                    {
+                        hit.collider.gameObject.SetActive(false);
+                        player.keycardCount += 1;
+                    }
+                }
+
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+                {
+                    if (player.keycardCount >= 1)
+                    {
+                        KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
+                        keycardInput.SpawnCard();
+                    }
+                }
+            }
         }
 
         public override void LateLogicUpdate()
