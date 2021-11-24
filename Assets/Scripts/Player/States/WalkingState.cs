@@ -15,7 +15,7 @@ namespace Player
         public bool holdingInteract = false;
         private List<Collider> colliders = new List<Collider>();
 
-
+        private IncreaseDownload increaseDownload = null;
 
         public RaycastHit hit;
 
@@ -137,7 +137,12 @@ namespace Player
 
                 if (hitColliders.Length > 0)
                 {
-                    player.computerLoadingBar.value += Time.deltaTime;
+                    if(increaseDownload == null)
+                    {
+                        increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
+                    }
+
+                    increaseDownload.Increase();
                 }   
             }
         }

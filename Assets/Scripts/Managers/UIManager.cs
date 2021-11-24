@@ -27,7 +27,7 @@ namespace Managers.UIManager
         [SerializeField] private string mainGameSceneName = string.Empty;
 
         Resolution[] resolutions;
-        public TMP_Dropdown resolutionDropdown;
+        public Dropdown resolutionDropdown;
 
         public void Start()
         {
@@ -144,7 +144,7 @@ namespace Managers.UIManager
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
             GameIsOver = true;
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
         }
 
