@@ -7,11 +7,7 @@ namespace GasTimer
 {
     public class IncreaseGas : MonoBehaviour
     {
-
-        public float density = 0.0f;
-
-        private float timerDuration = 3f * 60f;
-        private float timer;
+        public Timer timer;
         // Start is called before the first frame update
         void Start()
         {
@@ -20,15 +16,6 @@ namespace GasTimer
 
         // Update is called once per frame
         void Update()
-        {
-            if (timer > 0)
-            {
-                timer -= Time.deltaTime;
-                //UpdateTimerDisplay(timer);
-            }
-        }
-
-        public void IncreaseDensity(float time)
         {
 
         }
