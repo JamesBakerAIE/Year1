@@ -918,7 +918,7 @@ Transform:
   m_GameObject: {fileID: 6271209059612594754}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -16.697239, y: 11.000204, z: -10.010075}
-  m_LocalScale: {x: 0.010000002, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.009707031, y: 0.009707032, z: 0.009707031}
   m_Children:
   - {fileID: 6374381724901828602}
   - {fileID: 6029593238731570109}
@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74629b16770a7e1418e76caa8a2bf0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchChance: 50
+  searchChance: 100
   searched: 0
   hasPlayer: 0
   doorObject: {fileID: 0}
