@@ -106,8 +106,10 @@ namespace EnemyAI
 
                 }
 
-
-                return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
+                if (isSearching == false)
+                {
+                    return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
+                }
             }
             return tempTransform;
         }
