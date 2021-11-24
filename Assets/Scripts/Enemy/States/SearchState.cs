@@ -26,6 +26,7 @@ namespace EnemyAI
 
         public bool foundPlayer;
 
+        GameObject attackRange;
 
         private void Start()
         {
@@ -36,10 +37,11 @@ namespace EnemyAI
             //hearingCollider = GetComponentInChildren<SphereCollider>();
             transitions.Add(seenTransition);
             transitions.Add(lockerTransition);
-
+            attackRange = FindObjectOfType<AttackRange>().gameObject;
         }
         public override void Enter()
         {
+            attackRange.SetActive(false);
             RaycastHit hit;
             //Gets hiding spots, and resets hiding spots
             if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
@@ -71,45 +73,42 @@ namespace EnemyAI
 
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
-            Vector3 tempTransform = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
-            if (isSearching == false)
+            //Vector3 tempTransform;
+            //if (hidingSpotsToSearch.Count > -1)
+            //    tempTransform = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+            //once all hiding spots that it wants to search have been searched, change state to patrolling
+            if (hidingSpotsToSearch.Count == 0)
             {
-                //once all hiding spots that it wants to search have been searched, change state to patrolling
-                if (hidingSpotsToSearch.Count == 0)
+                this.GetComponent<Enemy>().stateMachine.ChangeState(this.GetComponent<PatrolState>());
+                return this.transform.position;
+            }
+
+            Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan);
+
+            //if close to the locker, set location as the next hiding spot
+            if (Vector3.Distance(this.transform.position, lockerDestination) < 1)
+            {
+                isSearching = true;
+                //closestHidingSpot = 100000f;
+                hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
+                if (hidingSpotsToSearch[0].GetComponent<HideSpot>().hasPlayer == true)
+                    foundPlayer = true;
+
+                hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
+                Debug.Log("Searched locker");
+
+                hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
                 {
-                    this.GetComponent<Enemy>().stateMachine.ChangeState(this.GetComponent<PatrolState>());
-                    return this.transform.position;
-                }
+                    var dist1 = Vector3.Distance(transform.position, t1.position);
+                    var dist2 = Vector3.Distance(transform.position, t2.position);
+                    return dist1.CompareTo(dist2);
+                });
 
-                Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan);
+                lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
 
-                //if close to the locker, set location as the next hiding spot
-                if (Vector3.Distance(this.transform.position, lockerDestination) < 1)
-                {
-                    isSearching = true;
-                    //closestHidingSpot = 100000f;
-                    hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
-                    if (hidingSpotsToSearch[0].GetComponent<HideSpot>().hasPlayer == true)
-                        foundPlayer = true;
-
-                    hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
-                    Debug.Log("Searched locker");
-
-                    hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
-                    {
-                        var dist1 = Vector3.Distance(transform.position, t1.position);
-                        var dist2 = Vector3.Distance(transform.position, t2.position);
-                        return dist1.CompareTo(dist2);
-                    });
-
-                    lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
-
-                }
-
+            }
 
                 return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
-            }
-            return tempTransform;
         }
 
         public void CheckHidingSpots()
@@ -143,6 +142,11 @@ namespace EnemyAI
             });
 
             lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+        }
+
+        public override void Exit()
+        {
+            attackRange.SetActive(true);
         }
     }
 }
