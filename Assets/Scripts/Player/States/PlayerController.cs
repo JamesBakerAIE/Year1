@@ -20,7 +20,7 @@ namespace Player
         public float sprintSpeed = 0f;
         public float crouchSpeed = 0f;
         public float maxSprintTime = 0f;
-        public float currentSprintTime = 0f;
+        [HideInInspector] public float currentSprintTime = 0f;
         public float gravityMultiplier = 0f;
         public float cameraCrouchDistance = 0.5f;
         public float crouchRaycastHeight = 0.85f;
