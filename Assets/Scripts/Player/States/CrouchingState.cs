@@ -52,6 +52,11 @@ namespace Player
         {
             base.LogicUpdate();
             Crouch();
+
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
         }
 
         public override void LateLogicUpdate()
