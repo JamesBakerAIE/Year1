@@ -24,11 +24,7 @@ namespace Player
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
-
-
         }
-
-
 
         public override void Enter()
         {
@@ -111,8 +107,6 @@ namespace Player
                     }
                 }
 
-
-
                 if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
@@ -121,11 +115,6 @@ namespace Player
                         keycardInput.SpawnCard();
                     }
                 }
-                Debug.DrawRay(ray.origin, ray.direction * player.pickupDistance, Color.red, Mathf.Infinity);
-
- 
-
-
 
             }
             else if (holdingInteract)
@@ -137,13 +126,16 @@ namespace Player
 
                 if (hitColliders.Length > 0)
                 {
-                    if(increaseDownload == null)
-                    {
-                        increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
-                    }
+                    
+                    increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
 
                     increaseDownload.Increase();
                 }   
+            }
+
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
             }
         }
         
@@ -185,9 +177,6 @@ namespace Player
 
 
             // Normalized movement
-
-
-
             Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
             inputDir.Normalize();
 
@@ -200,9 +189,6 @@ namespace Player
 
 
             // Apply gravity
-
-
-
             player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
 
 

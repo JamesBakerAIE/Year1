@@ -19,6 +19,8 @@ namespace Player
         public float walkSpeed = 0f;
         public float sprintSpeed = 0f;
         public float crouchSpeed = 0f;
+        public float maxSprintTime = 0f;
+        [HideInInspector] public float currentSprintTime = 0f;
         public float gravityMultiplier = 0f;
         public float cameraCrouchDistance = 0.5f;
         public float crouchRaycastHeight = 0.85f;
@@ -40,6 +42,7 @@ namespace Player
         public float exitLockerTime = 0.0f;
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
+        public float lockerHeightOffset = 0;
 
 
         [Header("Player Puzzles")]
@@ -56,8 +59,6 @@ namespace Player
 
         public int keycardCount = 0;
 
-        public Slider computerLoadingBar = null;
-
 
 
         [HideInInspector] public RaycastHit result;
@@ -73,7 +74,7 @@ namespace Player
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked; 
+            Cursor.lockState = CursorLockMode.Locked;
 
             // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
@@ -84,7 +85,12 @@ namespace Player
             hidingState = new HidingState(this, movementStateMachine);
             puzzleState = new PuzzleState(this, movementStateMachine);
 
-
+            //movementStateMachine = gameObject.AddComponent<StateMachine>();
+            //walkingState = gameObject.AddComponent<WalkingState>();
+            //sprintingState = gameObject.AddComponent<SprintingState>();
+            //crouchingState = gameObject.AddComponent<CrouchingState>();
+            //hidingState = gameObject.AddComponent<HidingState>();
+            //puzzleState = gameObject.AddComponent<PuzzleState>();
 
             movementStateMachine.Initialize(walkingState);
 
@@ -102,6 +108,8 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
+
+            currentSprintTime = Mathf.Clamp(currentSprintTime, 0, maxSprintTime);
         }
 
         private void LateUpdate()
