@@ -126,10 +126,8 @@ namespace Player
 
                 if (hitColliders.Length > 0)
                 {
-                    if(increaseDownload == null)
-                    {
-                        increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
-                    }
+                    
+                    increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
 
                     increaseDownload.Increase();
                 }   
