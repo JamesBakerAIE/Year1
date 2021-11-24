@@ -60,6 +60,8 @@ namespace Player
 
                 }
             }
+
+            player.currentSprintTime += Time.deltaTime;
         }
 
         public override void LateLogicUpdate()
@@ -78,23 +80,32 @@ namespace Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
-            if(player.controller.isGrounded && player.velocity.y < 0)
+
+            if(player.currentSprintTime < player.maxSprintTime)
             {
-                player.velocity.y = -2f;
+                // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
+                if (player.controller.isGrounded && player.velocity.y < 0)
+                {
+                    player.velocity.y = -2f;
+                }
+
+                // Normalized movement
+                Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
+                inputDir.Normalize();
+
+                Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
+                player.controller.Move(move * Time.deltaTime);
+
+                // Apply gravity
+                player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
+
+                player.controller.Move(player.velocity * Time.deltaTime);
             }
-
-            // Normalized movement
-            Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
-            inputDir.Normalize();
-
-            Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
-            player.controller.Move(move * Time.deltaTime);
-
-            // Apply gravity
-            player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
-
-            player.controller.Move(player.velocity * Time.deltaTime);
+            else
+            {
+                stateMachine.ChangeState(player.walkingState);
+            }
+           
         }
 
         public override void Exit()
