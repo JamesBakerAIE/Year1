@@ -29,7 +29,7 @@ namespace Player
         [HideInInspector] public Vector3 velocity = Vector3.zero;
         [HideInInspector] public float playerCrouchColliderHeight = 0f;
         [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
-        [SerializeField] private Animator playerAnimator = null;
+        //public Animator playerAnimator = null;
 
         [Header("Player Looking")]
         public Transform playerCamera = null;
