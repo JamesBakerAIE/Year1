@@ -35,14 +35,20 @@ namespace Player
 
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
-                    //player.playerAnimator.SetBool("Walking", true);
-                   // player.playerAnimator.SetFloat("Speed", 4);
+                    player.playerAnimator.SetBool("Walking", true);
+                    player.playerAnimator.SetFloat("Speed", 4);
+
+                    player.leftArmAnimator.SetBool("Walking", true);
+                    player.leftArmAnimator.SetFloat("Speed", 4);
+
                 }
                 else
                 {
-                   // player.playerAnimator.SetBool("Walking", false);
-                    //player.playerAnimator.SetFloat("Speed", 0);
+                    player.playerAnimator.SetBool("Walking", false);
+                    player.playerAnimator.SetFloat("Speed", 0);
 
+                    player.leftArmAnimator.SetBool("Walking", false);
+                    player.leftArmAnimator.SetFloat("Speed", 0);
                 }
             }
             walk = Input.GetButtonUp("Sprint");

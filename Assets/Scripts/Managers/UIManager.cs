@@ -10,10 +10,9 @@ namespace Managers.UIManager
 {
     public class UIManager : MonoBehaviour
     {
-        public Camera mainCamera;
         //PauseMenu
         public static bool GameIsPaused = false;
-        public bool GameIsOver = false;
+        public static bool GameIsOver = false;
         public GameObject pauseMenuUI;
         public GameObject deathMenu;
 
@@ -23,17 +22,19 @@ namespace Managers.UIManager
         //Main Menu
         public GameObject mainMenu;
 
+        public GameObject objectivesMenu;
+
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
 
-        public float timeAgitated = 5;
-        public float timeElapsed = 0;
-        public float FOVZoom = 90;
-
-
         Resolution[] resolutions;
         public Dropdown resolutionDropdown;
+
+        public TextMeshProUGUI accesskeyText;
+        public TextMeshProUGUI eggText;
+
+
 
         public void Start()
         {
@@ -92,25 +93,9 @@ namespace Managers.UIManager
                 }
             }
 
-            if(GameIsOver == true)
+            if(Input.GetKeyDown(KeyCode.M))
             {
-                if (timeElapsed >= timeAgitated)
-                {
-                    timeElapsed = 0;
-                    Death();
-                }
-                else
-                {
-                    timeElapsed += Time.deltaTime;
-                }
-
-                if (FOVZoom > 60 && timeElapsed > timeAgitated / 2)
-                {
-                    FOVZoom -= timeElapsed * 5;
-                    mainCamera.fieldOfView = FOVZoom;
-                }
-
-
+                objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
             }
 
         }
@@ -170,8 +155,21 @@ namespace Managers.UIManager
             optionsMenuUI.SetActive(false);
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
+            GameIsOver = true;
             //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
+        }
+
+        public void ChangeAccessKeyText()
+        {
+            accesskeyText.fontStyle = FontStyles.Strikethrough;
+            accesskeyText.color = Color.grey;
+        }
+
+        public void ChangeEggText()
+        {
+            eggText.fontStyle = FontStyles.Strikethrough;
+            eggText.color = Color.grey;
         }
 
         public void QuitGame()
