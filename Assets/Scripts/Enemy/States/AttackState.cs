@@ -15,7 +15,7 @@ namespace EnemyAI
         // Start is called before the first frame update
         public override void Enter()
         {
-            FindObjectOfType<UIManager>().GameIsOver = true;
+            //FindObjectOfType<UIManager>().GameIsOver = true;
             if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
             {
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
