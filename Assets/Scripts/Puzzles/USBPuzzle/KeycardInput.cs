@@ -21,12 +21,14 @@ namespace Puzzle
         public GameObject door = null;
 
         public UIManager uiManager;
+        private AllPuzzlesDone puzzlesDone;
 
         private void Start()
         {
             keycardPuzzle = FindObjectOfType<KeycardPuzzle>();
             player = FindObjectOfType<PlayerController>();
             uiManager = FindObjectOfType<UIManager>();
+            puzzlesDone = FindObjectOfType<AllPuzzlesDone>();
         }
 
 
@@ -37,6 +39,7 @@ namespace Puzzle
             {
                 door.SetActive(false);
                 uiManager.ChangeAccessKeyText();
+                puzzlesDone.keycardPuzzleDone = true;
             }
         }
 
