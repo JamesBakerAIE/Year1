@@ -15,7 +15,8 @@ namespace EnemyAI
         // Start is called before the first frame update
         public override void Enter()
         {
-            //FindObjectOfType<UIManager>().GameIsOver = true;
+            FindObjectOfType<UIManager>().GameIsOver = true;
+            //NONE OF THIS WILL WORK WITH THE LOCKER ATTACK
             if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
             {
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
@@ -23,7 +24,8 @@ namespace EnemyAI
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
             }
 
-            
+            //delete after sounds and everything have happened
+            Destroy(this.gameObject);
             //hearingCollider.radius = hearingRadius;
 
         }
