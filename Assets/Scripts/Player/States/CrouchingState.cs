@@ -91,6 +91,7 @@ namespace Player
                     {
                         hit.collider.gameObject.SetActive(false);
                         player.keycardCount += 1;
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
@@ -100,6 +101,7 @@ namespace Player
                     {
                         KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
                         keycardInput.SpawnCard();
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
             }
