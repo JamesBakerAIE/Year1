@@ -6,6 +6,6 @@ public class CreditsBackToMainMenu : MonoBehaviour
 {
     public void ReturnToMenuAfterCredits()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Sprint 3 Main Menu");
     }
 }

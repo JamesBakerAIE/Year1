@@ -28,6 +28,14 @@ namespace EnemyAI
 
         GameObject attackRange;
 
+        public bool hasSniffed = false;
+
+
+        public float timeAgitated = 5;
+        public float timeElapsed = 0;
+
+        Vector3 lockerRotation = Vector3.zero;
+
         private void Start()
         {
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
@@ -70,7 +78,6 @@ namespace EnemyAI
         }
 
 
-
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             //Vector3 tempTransform;
@@ -84,28 +91,48 @@ namespace EnemyAI
             }
 
             Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan);
-
+            Debug.Log(hidingSpotsToSearch[0].gameObject.name);
             //if close to the locker, set location as the next hiding spot
             if (Vector3.Distance(this.transform.position, lockerDestination) < 1)
             {
                 isSearching = true;
                 //closestHidingSpot = 100000f;
-                hidingSpotsToSearch[0].GetComponent<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
-                if (hidingSpotsToSearch[0].GetComponent<HideSpot>().hasPlayer == true)
+                //hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
+                if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer == true)
                     foundPlayer = true;
 
-                hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
-                Debug.Log("Searched locker");
-
-                hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
+                if (timeElapsed >= timeAgitated)
                 {
-                    var dist1 = Vector3.Distance(transform.position, t1.position);
-                    var dist2 = Vector3.Distance(transform.position, t2.position);
-                    return dist1.CompareTo(dist2);
-                });
+                    timeElapsed = 0;
+                    FindObjectOfType<Enemy>().animator.SetBool("Sniffing", false);
+
+                    if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer)
+                    {
+                        hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().AnimateAttack();
+                        Destroy(this.gameObject);
+                    }
+
+                    hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
+                    Debug.Log("Searched locker");
+
+                    hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
+                    {
+                        var dist1 = Vector3.Distance(transform.position, t1.position);
+                        var dist2 = Vector3.Distance(transform.position, t2.position);
+                        return dist1.CompareTo(dist2);
+                    });
+                    lockerRotation = Vector3.zero;
+                    hasSniffed = true;
+                }
+                else
+                {
+                    FindObjectOfType<Enemy>().animator.SetBool("Sniffing", true);
+                    timeElapsed += Time.deltaTime;
+                    hasSniffed = false;
+                    lockerRotation = hidingSpotsToSearch[0].rotation.eulerAngles;
+                }
 
                 lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
-
             }
 
                 return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
@@ -122,9 +149,8 @@ namespace EnemyAI
                 {
                     //checks if it should be added to the hidingSpotSearchList
                     float check = Random.Range(0, 100);
-                    float testCheck = hideSpotTransform.GetComponent<HideSpot>().searchChance;
+                    float testCheck = hideSpotTransform.GetComponentInChildren<HideSpot>().searchChance;
                     //hideSpotTransform.GetComponent<HideSpot>().doorObject.material = hdingSpotMaterial;
-
                     if (check <= testCheck)
                     {
                         hidingSpotsToSearch.Add(hideSpotTransform);
@@ -142,6 +168,18 @@ namespace EnemyAI
             });
 
             lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+        }
+
+        public override Transform RotationUpdate()
+        {
+            if (lockerRotation != Vector3.zero)
+            {
+                return hidingSpotsToSearch[0];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override void Exit()
