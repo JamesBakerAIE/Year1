@@ -35,6 +35,7 @@ namespace EnemyAI
         public float timeElapsed = 0;
 
         Vector3 lockerRotation = Vector3.zero;
+        public Vector3 lockerOffset;
 
         private void Start()
         {
@@ -132,10 +133,13 @@ namespace EnemyAI
                     lockerRotation = hidingSpotsToSearch[0].rotation.eulerAngles;
                 }
 
-                lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+                if (hidingSpotsToSearch.Count > 0)
+                {
+                    lockerDestination = (hidingSpotsToSearch[0].position + lockerOffset) + hidingSpotsToSearch[0].forward * distanceFromLocker;
+                }
             }
 
-                return hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * 2;
+            return lockerDestination;
         }
 
         public void CheckHidingSpots()
@@ -167,7 +171,7 @@ namespace EnemyAI
                 return dist1.CompareTo(dist2);
             });
 
-            lockerDestination = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
+            lockerDestination = (hidingSpotsToSearch[0].position + lockerOffset) + hidingSpotsToSearch[0].forward * distanceFromLocker;
         }
 
         public override Transform RotationUpdate()
