@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Player;
+using Managers.UIManager;
 
 namespace Puzzle
 {
@@ -14,14 +15,20 @@ namespace Puzzle
 
         private PlayerController player;
 
+
+        public GameObject keyPositionObject;
+
+        public GameObject door = null;
+
+        public UIManager uiManager;
+
         private void Start()
         {
             keycardPuzzle = FindObjectOfType<KeycardPuzzle>();
             player = FindObjectOfType<PlayerController>();
+            uiManager = FindObjectOfType<UIManager>();
         }
-        public GameObject keyPositionObject;
 
-        public GameObject door = null;
 
         // Update is called once per frame
         void Update()
@@ -29,6 +36,7 @@ namespace Puzzle
             if (keycardPuzzle.keycardInsertedCount >= 2 && door.activeInHierarchy)
             {
                 door.SetActive(false);
+                uiManager.ChangeAccessKeyText();
             }
         }
 

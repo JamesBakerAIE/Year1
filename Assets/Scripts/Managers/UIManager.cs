@@ -22,12 +22,19 @@ namespace Managers.UIManager
         //Main Menu
         public GameObject mainMenu;
 
+        public GameObject objectivesMenu;
+
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
 
         Resolution[] resolutions;
         public Dropdown resolutionDropdown;
+
+        public TextMeshProUGUI accesskeyText;
+        public TextMeshProUGUI eggText;
+
+
 
         public void Start()
         {
@@ -84,6 +91,11 @@ namespace Managers.UIManager
                         Cursor.lockState = CursorLockMode.Confined;
                     }
                 }
+            }
+
+            if(Input.GetKeyDown(KeyCode.M))
+            {
+                objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
             }
 
         }
@@ -146,6 +158,18 @@ namespace Managers.UIManager
             GameIsOver = true;
             //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
+        }
+
+        public void ChangeAccessKeyText()
+        {
+            accesskeyText.fontStyle = FontStyles.Strikethrough;
+            accesskeyText.color = Color.grey;
+        }
+
+        public void ChangeEggText()
+        {
+            eggText.fontStyle = FontStyles.Strikethrough;
+            eggText.color = Color.grey;
         }
 
         public void QuitGame()
