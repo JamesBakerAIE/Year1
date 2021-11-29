@@ -28,6 +28,11 @@ namespace EnemyAI
             return Vector3.zero;
         }
 
+        public virtual Transform RotationUpdate()
+        {
+            return null;
+        }
+
         //late update
         public virtual float GetSpeed()
         {

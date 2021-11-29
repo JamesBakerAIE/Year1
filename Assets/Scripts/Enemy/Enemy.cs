@@ -29,6 +29,11 @@ namespace EnemyAI
             Debug.Log(stateMachine.CurrentState.ToString());
             //Updates the enemy's destination based on the current state's logic
             enemyAgent.destination = stateMachine.CurrentState.DestinationUpdate(this.transform.position);
+            if(stateMachine.CurrentState.RotationUpdate() != null)
+            {
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, stateMachine.CurrentState.RotationUpdate().rotation, 10* 15 * Time.deltaTime);
+            }
+
             enemyAgent.speed = stateMachine.CurrentState.GetSpeed();
             animator.SetBool("Running", stateMachine.CurrentState.isRunning);
             animator.SetBool("Searching", stateMachine.CurrentState.isSearching);
