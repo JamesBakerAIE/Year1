@@ -17,6 +17,7 @@ namespace Player
         private float endValue = 0f;    
         public CrouchingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
+
         }
 
         public override void Enter()
@@ -48,6 +49,24 @@ namespace Player
                 mouseX = Input.GetAxisRaw("Mouse X");
                 mouseY = Input.GetAxisRaw("Mouse Y");
                 interact = Input.GetButtonDown("Interact");
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+                {
+                    player.playerAnimator.SetBool("Walking", true);
+                    player.playerAnimator.SetFloat("Speed", 1.5f);
+
+                    player.leftArmAnimator.SetBool("Walking", true);
+                    player.leftArmAnimator.SetFloat("Speed", 1.5f);
+                }
+                else
+                {
+                    player.playerAnimator.SetBool("Walking", false);
+                    player.playerAnimator.SetFloat("Speed", 0);
+
+                    player.leftArmAnimator.SetBool("Walking", false);
+                    player.leftArmAnimator.SetFloat("Speed", 0);
+
+                }
             }
 
         }

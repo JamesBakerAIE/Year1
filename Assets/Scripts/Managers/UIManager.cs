@@ -22,12 +22,24 @@ namespace Managers.UIManager
         //Main Menu
         public GameObject mainMenu;
 
+        public GameObject objectivesMenu;
+
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
 
         Resolution[] resolutions;
         public Dropdown resolutionDropdown;
+       
+        public TextMeshProUGUI dockingBayExitText;
+        public TextMeshProUGUI genomeFoundText;
+        public TextMeshProUGUI accesskeyText;
+        public TextMeshProUGUI codeText;
+        public TextMeshProUGUI eggText;
+        public TextMeshProUGUI containmentRoomText;
+        public TextMeshProUGUI dockingBayDoorText;
+
+
 
         public void Start()
         {
@@ -84,6 +96,11 @@ namespace Managers.UIManager
                         Cursor.lockState = CursorLockMode.Confined;
                     }
                 }
+            }
+
+            if(Input.GetKeyDown(KeyCode.M))
+            {
+                objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
             }
 
         }
@@ -146,6 +163,51 @@ namespace Managers.UIManager
             GameIsOver = true;
             //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
+        }
+
+
+
+        public void DockingBayExitFound()
+        {
+            dockingBayExitText.fontStyle = FontStyles.Strikethrough;
+            dockingBayExitText.color = Color.grey;
+        }
+
+        public void GenomeFound()
+        {
+            genomeFoundText.fontStyle = FontStyles.Strikethrough;
+            genomeFoundText.color = Color.grey;
+        }
+
+        public void ChangeAccessKeyText()
+        {
+            accesskeyText.fontStyle = FontStyles.Strikethrough;
+            accesskeyText.color = Color.grey;
+        }
+
+        public void CodeFound()
+        {
+            codeText.fontStyle = FontStyles.Strikethrough;
+            codeText.color = Color.grey;
+        }
+
+
+        public void ChangeEggText()
+        {
+            eggText.fontStyle = FontStyles.Strikethrough;
+            eggText.color = Color.grey;
+        }
+
+        public void ContainmentRoomFound()
+        {
+            containmentRoomText.fontStyle = FontStyles.Strikethrough;
+            containmentRoomText.color = Color.grey;
+        }
+
+        public void DockingDayDoorOpened()
+        {
+            dockingBayDoorText.fontStyle = FontStyles.Strikethrough;
+            dockingBayDoorText.color = Color.grey;
         }
 
         public void QuitGame()
