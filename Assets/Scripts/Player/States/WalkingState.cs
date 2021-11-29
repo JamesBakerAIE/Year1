@@ -109,6 +109,7 @@ namespace Player
                     {
                         player.result = hit;
                         stateMachine.ChangeState(player.hidingState);
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
@@ -120,6 +121,7 @@ namespace Player
                     {
                         hit.collider.gameObject.SetActive(false);
                         player.keycardCount += 1;
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
@@ -129,6 +131,7 @@ namespace Player
                     {
                         KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
                         keycardInput.SpawnCard();
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
@@ -153,9 +156,34 @@ namespace Player
             {
                 player.currentSprintTime -= Time.deltaTime;
             }
+
+
+
+            Ray ray2 = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
+
+            if (Physics.Raycast(ray2, out hit, player.interactRange, player.hideSpotLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else if(Physics.Raycast(ray2, out hit, player.pickupDistance, player.keycardLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else if(Physics.Raycast(ray2, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else
+            {
+                player.interactUI.SetActive(false);
+
+            }
+
+
         }
-        
-        
+
+
+
         public override void LateLogicUpdate()
         {
             base.LateLogicUpdate();

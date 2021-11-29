@@ -61,6 +61,9 @@ namespace Player
         public int keycardCount = 0;
 
 
+        [Header("Player UI")]
+        public GameObject interactUI = null;
+
 
         [HideInInspector] public RaycastHit result;
 
