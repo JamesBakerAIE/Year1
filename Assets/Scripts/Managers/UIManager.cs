@@ -10,9 +10,10 @@ namespace Managers.UIManager
 {
     public class UIManager : MonoBehaviour
     {
+        public Camera mainCamera;
         //PauseMenu
         public static bool GameIsPaused = false;
-        public static bool GameIsOver = false;
+        public bool GameIsOver = false;
         public GameObject pauseMenuUI;
         public GameObject deathMenu;
 
@@ -25,6 +26,11 @@ namespace Managers.UIManager
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
+
+        public float timeAgitated = 5;
+        public float timeElapsed = 0;
+        public float FOVZoom = 90;
+
 
         Resolution[] resolutions;
         public Dropdown resolutionDropdown;
@@ -86,6 +92,27 @@ namespace Managers.UIManager
                 }
             }
 
+            if(GameIsOver == true)
+            {
+                if (timeElapsed >= timeAgitated)
+                {
+                    timeElapsed = 0;
+                    Death();
+                }
+                else
+                {
+                    timeElapsed += Time.deltaTime;
+                }
+
+                if (FOVZoom > 60 && timeElapsed > timeAgitated / 2)
+                {
+                    FOVZoom -= timeElapsed * 5;
+                    mainCamera.fieldOfView = FOVZoom;
+                }
+
+
+            }
+
         }
         public void Resume()
         {
@@ -143,7 +170,6 @@ namespace Managers.UIManager
             optionsMenuUI.SetActive(false);
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
-            GameIsOver = true;
             //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
         }
