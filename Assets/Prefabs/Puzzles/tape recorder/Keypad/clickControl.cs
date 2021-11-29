@@ -21,10 +21,15 @@ public class clickControl : MonoBehaviour
     private bool complete;
 
     private UIManager uiManager;
+    private AllPuzzlesDone puzzlesDone;
+
+
     // Start is called before the first frame update
     void Start()
     {
         uiManager = FindObjectOfType<UIManager>();
+        puzzlesDone = FindObjectOfType<AllPuzzlesDone>();
+
     }
 
     // Update is called once per frame
@@ -43,7 +48,11 @@ public class clickControl : MonoBehaviour
                 computerPrefab.SetActive(false);
                 computerPuzzle.SetActive(true);
                 endGame.SetActive(true);
+
+
                 uiManager.ChangeEggText();
+                puzzlesDone.codePuzzleDone = true;
+
             }
             else
             {
