@@ -29,14 +29,16 @@ namespace EnemyAI
             Debug.Log(stateMachine.CurrentState.ToString());
             //Updates the enemy's destination based on the current state's logic
             enemyAgent.destination = stateMachine.CurrentState.DestinationUpdate(this.transform.position);
-            if(stateMachine.CurrentState.RotationUpdate() != null)
+            if(stateMachine.CurrentState.RotationUpdate() != Vector3.zero)
             {
-                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, stateMachine.CurrentState.RotationUpdate().rotation, 10* 15 * Time.deltaTime);
+                this.transform.LookAt(stateMachine.CurrentState.RotationUpdate());
+                //this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, stateMachine.CurrentState.RotationUpdate().rotation, 10* 15 * Time.deltaTime);
             }
 
             enemyAgent.speed = stateMachine.CurrentState.GetSpeed();
             animator.SetBool("Running", stateMachine.CurrentState.isRunning);
             animator.SetBool("Searching", stateMachine.CurrentState.isSearching);
+            animator.SetBool("Attacking", stateMachine.CurrentState.isAttacking);
             State newState = null;
             //check if any transition conditions are met
             foreach (Transition transition in stateMachine.CurrentState.transitions)

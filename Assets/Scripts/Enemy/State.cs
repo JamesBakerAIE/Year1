@@ -12,6 +12,7 @@ namespace EnemyAI
         public  AudioClip enemySound;
         public bool isRunning = false;
         public bool isSearching = false;
+        public bool isAttacking = false;
 
         //[HideInInspector] public SphereCollider hearingCollider;
 
@@ -28,9 +29,9 @@ namespace EnemyAI
             return Vector3.zero;
         }
 
-        public virtual Transform RotationUpdate()
+        public virtual Vector3 RotationUpdate()
         {
-            return null;
+            return Vector3.zero;
         }
 
         //late update
