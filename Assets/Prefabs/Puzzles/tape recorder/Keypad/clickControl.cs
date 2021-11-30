@@ -47,7 +47,7 @@ public class clickControl : MonoBehaviour
                 hitBox1.SetActive(true);
                 computerPuzzle.SetActive(false);
                 computerPrefab.SetActive(true);
-                //endGame.SetActive(true);
+                endGame.SetActive(true);
 
 
                 uiManager.ChangeEggText();
