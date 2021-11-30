@@ -115,10 +115,10 @@ namespace Managers.UIManager
                     timeElapsed += Time.deltaTime;
                 }
 
-                if (FOVZoom > 60 && timeElapsed > timeTillDeath / 2)
+                if (mainCamera.fieldOfView > 60 && timeElapsed > timeTillDeath / 2)
                 {
                     FOVZoom += timeElapsed * 5;
-                    mainCamera.fieldOfView = FOVZoom;
+                    mainCamera.fieldOfView -= FOVZoom;
                 }
             }
 
@@ -181,6 +181,7 @@ namespace Managers.UIManager
 
         public void Death()
         {
+            FOVZoom = 90;
             optionsMenuUI.SetActive(false);
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
