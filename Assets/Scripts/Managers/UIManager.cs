@@ -24,6 +24,7 @@ namespace Managers.UIManager
         public GameObject mainMenu;
 
         public GameObject objectivesMenu;
+        public GameObject objectivesText;
 
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
@@ -125,6 +126,7 @@ namespace Managers.UIManager
             if(Input.GetKeyDown(KeyCode.M))
             {
                 objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
+                objectivesText.SetActive(!objectivesText.activeInHierarchy);
             }
 
         }
