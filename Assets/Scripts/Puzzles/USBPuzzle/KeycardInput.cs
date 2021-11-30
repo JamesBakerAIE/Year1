@@ -20,6 +20,8 @@ namespace Puzzle
 
         public GameObject door = null;
 
+        private bool hasBeenInserted = false;
+
         public UIManager uiManager;
         private AllPuzzlesDone puzzlesDone;
 
@@ -45,11 +47,15 @@ namespace Puzzle
 
         public void SpawnCard()
         {
-            Vector3 pos = new Vector3(keyPositionObject.transform.position.x, keyPositionObject.transform.position.y, keyPositionObject.transform.position.z);
+            if(hasBeenInserted == false)
+            {
+                Vector3 pos = new Vector3(keyPositionObject.transform.position.x, keyPositionObject.transform.position.y, keyPositionObject.transform.position.z);
 
-            keycardNew = Instantiate(keycardPrefab, pos, keyPositionObject.transform.rotation);
-            keycardPuzzle.keycardInsertedCount++;
-            player.keycardCount -= 1;
+                keycardNew = Instantiate(keycardPrefab, pos, keyPositionObject.transform.rotation);
+                keycardPuzzle.keycardInsertedCount++;
+                player.keycardCount -= 1;
+            }
+
         }
     }
 

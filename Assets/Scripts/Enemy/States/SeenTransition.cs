@@ -88,7 +88,7 @@ namespace EnemyAI
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
             {
                 //Player is in direct sight to the enemy
-                if (hit.collider.tag == "Player" && parentTransition.inFOV)
+                if (hit.collider.tag == "Player" && parentTransition.inFOV || hit.collider.tag == "Player" && parentTransition.inAttack)
                 {
 
                     //In attack range

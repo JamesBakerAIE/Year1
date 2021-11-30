@@ -25,7 +25,12 @@ namespace EnemyAI
             }
 
             //delete after sounds and everything have happened
-            Destroy(this.gameObject);
+            if (FindObjectOfType<SearchState>().hasSniffed == true)
+            {
+                Destroy(this.gameObject);
+            }
+
+            Debug.Log("Player is dead");
             //hearingCollider.radius = hearingRadius;
 
         }

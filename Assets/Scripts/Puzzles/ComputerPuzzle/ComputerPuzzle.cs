@@ -30,7 +30,12 @@ namespace Puzzle
         public override void OnComplete()
         {
             door.SetActive(false);
-            puzzlesDone.computerPuzzleDone = true;
+
+            if(gameObject.CompareTag("Main Computer"))
+            {
+                puzzlesDone.computerPuzzleDone = true;
+            }
+
         }
     }
 
