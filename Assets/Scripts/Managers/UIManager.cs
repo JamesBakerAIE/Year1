@@ -195,44 +195,44 @@ namespace Managers.UIManager
 
         public void DockingBayExitFound()
         {
-            dockingBayExitText.fontStyle = FontStyles.Strikethrough;
+            dockingBayExitText.fontStyle |= FontStyles.Strikethrough;
             dockingBayExitText.color = Color.grey;
         }
 
         public void GenomeFound()
         {
-            genomeFoundText.fontStyle = FontStyles.Strikethrough;
+            genomeFoundText.fontStyle |= FontStyles.Strikethrough;
             genomeFoundText.color = Color.grey;
         }
 
         public void ChangeAccessKeyText()
         {
-            accesskeyText.fontStyle = FontStyles.Strikethrough;
+            accesskeyText.fontStyle |= FontStyles.Strikethrough;
             accesskeyText.color = Color.grey;
         }
 
         public void CodeFound()
         {
-            codeText.fontStyle = FontStyles.Strikethrough;
+            codeText.fontStyle |= FontStyles.Strikethrough;
             codeText.color = Color.grey;
         }
 
 
         public void ChangeEggText()
         {
-            eggText.fontStyle = FontStyles.Strikethrough;
+            eggText.fontStyle |= FontStyles.Strikethrough;
             eggText.color = Color.grey;
         }
 
         public void ContainmentRoomFound()
         {
-            containmentRoomText.fontStyle = FontStyles.Strikethrough;
+            containmentRoomText.fontStyle |= FontStyles.Strikethrough;
             containmentRoomText.color = Color.grey;
         }
 
         public void DockingDayDoorOpened()
         {
-            dockingBayDoorText.fontStyle = FontStyles.Strikethrough;
+            dockingBayDoorText.fontStyle |= FontStyles.Strikethrough;
             dockingBayDoorText.color = Color.grey;
         }
 
