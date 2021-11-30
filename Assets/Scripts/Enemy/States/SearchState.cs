@@ -37,6 +37,8 @@ namespace EnemyAI
         Vector3 lockerRotation = Vector3.zero;
         public Vector3 lockerOffset;
 
+        public Transform foundPlayerLocker = null;
+
         private void Start()
         {
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
@@ -52,6 +54,10 @@ namespace EnemyAI
         {
             attackRange.SetActive(false);
             RaycastHit hit;
+
+            if (foundPlayerLocker != null)
+                return;
+
             //Gets hiding spots, and resets hiding spots
             if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
@@ -85,28 +91,44 @@ namespace EnemyAI
             //if (hidingSpotsToSearch.Count > -1)
             //    tempTransform = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
             //once all hiding spots that it wants to search have been searched, change state to patrolling
-            if (hidingSpotsToSearch.Count == 0)
+            if(foundPlayerLocker != null)
+            {
+                lockerDestination = (foundPlayerLocker.position + lockerOffset) + foundPlayerLocker.forward * distanceFromLocker;
+
+
+                Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan, 100);
+                Debug.Log("Found player locker");
+            }
+            if (hidingSpotsToSearch.Count == 0 && foundPlayerLocker == null)
             {
                 this.GetComponent<Enemy>().stateMachine.ChangeState(this.GetComponent<PatrolState>());
                 return this.transform.position;
             }
 
             Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan);
-            Debug.Log(hidingSpotsToSearch[0].gameObject.name);
+            //Debug.Log(hidingSpotsToSearch[0].gameObject.name);
             //if close to the locker, set location as the next hiding spot
             if (Vector3.Distance(this.transform.position, lockerDestination) < 1)
             {
                 isSearching = true;
+
+                if (foundPlayerLocker != null)
+                {
+                    foundPlayer = true;
+                    foundPlayerLocker.GetComponentInChildren<HideSpot>().AnimateAttack();
+                    return lockerDestination;
+                }
                 //closestHidingSpot = 100000f;
                 //hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
-                if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer == true)
-                    foundPlayer = true;
+                //if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer == true)
+                //    foundPlayer = true;
 
-                if (timeElapsed >= timeAgitated)
+                else if (timeElapsed >= timeAgitated)
                 {
                     FindObjectOfType<Enemy>().animator.SetBool("Sniffing", false);
                     if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer)
                     {
+                        foundPlayer = true;
                         hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().AnimateAttack();
                     }
 
@@ -121,6 +143,7 @@ namespace EnemyAI
                     });
                     lockerRotation = Vector3.zero;
                     hasSniffed = true;
+                    timeElapsed = 0;
                 }
                 else
                 {
@@ -133,6 +156,7 @@ namespace EnemyAI
                 if (hidingSpotsToSearch.Count > 0)
                 {
                     lockerDestination = (hidingSpotsToSearch[0].position + lockerOffset) + hidingSpotsToSearch[0].forward * distanceFromLocker;
+                    //timeElapsed = 0;
                 }
             }
 
@@ -175,7 +199,8 @@ namespace EnemyAI
         {
             if (lockerRotation != Vector3.zero)
             {
-                return playerPosition.position;
+                //look at child with hideyspot
+                return hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().transform.position;
             }
             else
             {
