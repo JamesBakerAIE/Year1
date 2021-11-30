@@ -19,8 +19,10 @@ public class Timer : MonoBehaviour
     private TextMeshProUGUI secondSecond;
 
     private UIManager uiManager;
+
+    [HideInInspector] public bool canStart = false;
     // Start is called before the first frame update
-    void Start()
+    public void StartTimer()
     {
         uiManager = FindObjectOfType<UIManager>();
         ResetTimer();
@@ -29,15 +31,19 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer > 0)
+        if(canStart == true)
         {
-            timer -= Time.deltaTime;
-            UpdateTimerDisplay(timer);
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                UpdateTimerDisplay(timer);
+            }
+            else
+            {
+                Death();
+            }
         }
-        else
-        {
-            Death();
-        }
+
     }
     private void ResetTimer()
     {
