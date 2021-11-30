@@ -32,8 +32,9 @@ namespace EnemyAI
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
-            if (FindObjectOfType<SearchState>().foundPlayer == true && FindObjectOfType<SearchState>().hasSniffed == true)
+            if (FindObjectOfType<SearchState>().foundPlayer == true)
                 return currentState = parentTransition.attackState;
+
             return currentState;
         }
 

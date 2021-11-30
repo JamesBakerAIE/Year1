@@ -26,7 +26,7 @@ namespace EnemyAI
             }
 
             //delete after sounds and everything have happened
-            if (FindObjectOfType<SearchState>().hasSniffed == true)
+            if (FindObjectOfType<SearchState>().foundPlayer)
             {
                 Destroy(this.gameObject);
             }

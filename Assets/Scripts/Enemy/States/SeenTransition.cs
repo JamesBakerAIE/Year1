@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player;
 
 namespace EnemyAI
 {
@@ -18,6 +19,7 @@ namespace EnemyAI
         }
         public override void Enter()
         {
+            hitPlayerLocker = false;
             //UPDATING ENTER AND EXIT FOR STATES AND TRANSITIONS
         }
         public override void Exit()
@@ -27,6 +29,9 @@ namespace EnemyAI
 
         State selectedState;
         readonly List<Ray> rays;
+
+        bool hitPlayerLocker = false;
+
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {
             inHearingRange = parentTransition.inHearingRange;
@@ -64,7 +69,10 @@ namespace EnemyAI
                 //}
             }
 
-
+            if (hitPlayerLocker && FindObjectOfType<Enemy>().stateMachine.CurrentState != searchState)
+            {
+                return searchState;
+            }
 
             //Last time this was called it was in field of view, now it isn't so become agitated
             if (parentTransition.inDirectFOV == false && wasInFOV == true /* || inHearingRange == true */)
@@ -109,6 +117,28 @@ namespace EnemyAI
 
                     }
 
+                }
+
+                if(hit.collider.tag == "HideySpot" && FindObjectOfType<Enemy>().stateMachine.CurrentState == chaseState || hit.collider.tag == "HideySpot" && FindObjectOfType<Enemy>().stateMachine.CurrentState == agitatedState)
+                {
+                    if (hit.collider.GetComponentInChildren<HideSpot>() != null)
+                    {
+                        if (hit.collider.GetComponentInChildren<HideSpot>().hasPlayer == true)
+                        {
+                            hitPlayerLocker = true;
+                            searchState.foundPlayerLocker = hit.collider.transform;
+                            return false;
+                        }
+                    }
+                    else if (hit.collider.GetComponentInParent<HideSpot>() != null)
+                    {
+                       if (hit.collider.GetComponentInParent<HideSpot>().hasPlayer == true)
+                        {
+                            hitPlayerLocker = true;
+                            searchState.foundPlayerLocker = hit.collider.transform.parent;
+                            return false;
+                        }
+                    }
                 }
                 Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
                 //Debug.Log(hit.collider.name);
