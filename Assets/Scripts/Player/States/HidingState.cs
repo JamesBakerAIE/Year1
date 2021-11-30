@@ -36,6 +36,7 @@ namespace Player
 
         public override void Enter()
         {
+            player.playerAnimator.SetBool("Walking", false);
             RaycastHit hit;
             //Gets hiding spots, and resets hiding spots
 
