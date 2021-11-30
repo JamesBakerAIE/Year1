@@ -126,7 +126,7 @@ namespace Managers.UIManager
             if(Input.GetKeyDown(KeyCode.M))
             {
                 objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
-                objectivesText.SetActive(!objectivesText.activeInHierarchy);
+                objectivesText.SetActive(false);
             }
 
         }
