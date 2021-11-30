@@ -60,7 +60,7 @@ namespace Managers.UIManager
                 {
                     string option = resolutions[i].width + " x " + resolutions[i].height;
                     options.Add(option);
-                    if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
                     {
                         currentResolutionIndex = i;
                     }
@@ -69,9 +69,6 @@ namespace Managers.UIManager
                 resolutionDropdown.value = currentResolutionIndex;
                 resolutionDropdown.RefreshShownValue();
             }
-
-
-
         }
 
         public void SetResolution(int resolutionIndex)
