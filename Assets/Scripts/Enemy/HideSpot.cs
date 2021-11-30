@@ -24,7 +24,7 @@ namespace Player
                     doorObject = gameObject.GetComponent<Renderer>();
             }
 
-            enemy.SetActive(false);
+            //enemy.SetActive(false);
         }
 
         public void AnimateAttack()

@@ -104,13 +104,10 @@ namespace EnemyAI
 
                 if (timeElapsed >= timeAgitated)
                 {
-                    timeElapsed = 0;
                     FindObjectOfType<Enemy>().animator.SetBool("Sniffing", false);
-
                     if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer)
                     {
                         hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().AnimateAttack();
-                        Destroy(this.gameObject);
                     }
 
                     hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
