@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Managers.UIManager;
+using EnemyAI;
 namespace Player
 {
     public class PlayerController : MonoBehaviour
@@ -13,6 +15,7 @@ namespace Player
         [HideInInspector] public CrouchingState crouchingState = null;
         [HideInInspector] public HidingState hidingState = null;
         [HideInInspector] public PuzzleState puzzleState = null;
+        [HideInInspector] public DeadState deadState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
@@ -88,6 +91,7 @@ namespace Player
             crouchingState = new CrouchingState(this, movementStateMachine);
             hidingState = new HidingState(this, movementStateMachine);
             puzzleState = new PuzzleState(this, movementStateMachine);
+            deadState = new DeadState(this, movementStateMachine);
 
             movementStateMachine.Initialize(walkingState);
         }
@@ -103,6 +107,13 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
+
+            //When the player is dead
+            if (FindObjectOfType<UIManager>().GameIsOver)
+            {
+                movementStateMachine.Initialize(deadState);
+                this.transform.LookAt(FindObjectOfType<Enemy>().transform.position);
+            }
 
             currentSprintTime = Mathf.Clamp(currentSprintTime, 0, maxSprintTime);
         }
