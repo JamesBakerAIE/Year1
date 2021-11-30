@@ -171,15 +171,15 @@ namespace EnemyAI
             lockerDestination = (hidingSpotsToSearch[0].position + lockerOffset) + hidingSpotsToSearch[0].forward * distanceFromLocker;
         }
 
-        public override Transform RotationUpdate()
+        public override Vector3 RotationUpdate()
         {
             if (lockerRotation != Vector3.zero)
             {
-                return hidingSpotsToSearch[0];
+                return playerPosition.position;
             }
             else
             {
-                return null;
+                return Vector3.zero;
             }
         }
 

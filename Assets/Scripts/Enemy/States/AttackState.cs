@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Managers.UIManager;
+using Player;
 
 namespace EnemyAI
 {
@@ -31,8 +32,16 @@ namespace EnemyAI
             }
 
             Debug.Log("Player is dead");
+            isAttacking = true;
             //hearingCollider.radius = hearingRadius;
 
+        }
+
+        public override Vector3 RotationUpdate()
+        {
+            Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
+            return playerPosition;
+ 
         }
         public override void Exit()
         {
