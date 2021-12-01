@@ -43,6 +43,8 @@ namespace EnemyAI
             //check if any transition conditions are met
             foreach (Transition transition in stateMachine.CurrentState.transitions)
             {
+                Debug.Log("First transition: " + stateMachine.CurrentState.transitions);
+                Debug.Log("Current Transition: " + transition);
                 newState = transition.CheckTransition(this.transform.position, playerPosition.position);
                 if(newState != null || newState == stateMachine.CurrentState)
                 {
