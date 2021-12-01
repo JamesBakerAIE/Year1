@@ -6,6 +6,7 @@ public class ToggleMap : MonoBehaviour
 {
     public GameObject on;
     public GameObject off;
+    public GameObject m;
     
     private bool isOn;
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class ToggleMap : MonoBehaviour
                 on.SetActive(true);
                 off.SetActive(false);
             }
+            m.SetActive(false);
         }
         isOn = !isOn;
     }

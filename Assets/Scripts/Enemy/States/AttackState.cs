@@ -2,29 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Managers.UIManager;
+using Player;
 
 namespace EnemyAI
 {
     public class AttackState : State
     {
-
         private void Start()
         {
-            hearingCollider = GetComponentInChildren<SphereCollider>();
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
         // Start is called before the first frame update
         public override void Enter()
         {
-            FindObjectOfType<UIManager>().Death();
+            FindObjectOfType<UIManager>().GameIsOver = true;
+            //NONE OF THIS WILL WORK WITH THE LOCKER ATTACK
             if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
             {
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
                 GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
             }
-            hearingCollider.radius = hearingRadius;
 
+            //delete after sounds and everything have happened
+            if (FindObjectOfType<SearchState>().foundPlayer)
+            {
+                Destroy(this.gameObject);
+            }
+
+            Debug.Log("Player is dead");
+            isAttacking = true;
+            //hearingCollider.radius = hearingRadius;
+
+        }
+
+        public override Vector3 RotationUpdate()
+        {
+            Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
+            return playerPosition;
+ 
         }
         public override void Exit()
         {

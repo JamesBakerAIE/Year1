@@ -10,8 +10,11 @@ namespace EnemyAI
         public float movementSpeed;
         public float hearingRadius;
         public  AudioClip enemySound;
+        public bool isRunning = false;
+        public bool isSearching = false;
+        public bool isAttacking = false;
 
-        [HideInInspector] public SphereCollider hearingCollider;
+        //[HideInInspector] public SphereCollider hearingCollider;
 
         //called when first switched to state
         public virtual void Enter()
@@ -22,6 +25,11 @@ namespace EnemyAI
 
         //normal update
         public virtual Vector3 DestinationUpdate(Vector3 enemyPosition)
+        {
+            return Vector3.zero;
+        }
+
+        public virtual Vector3 RotationUpdate()
         {
             return Vector3.zero;
         }

@@ -12,9 +12,10 @@ namespace Player
         private bool crouch;
         private bool sprint;
         public bool interact = false;
+        public bool holdingInteract = false;
         private List<Collider> colliders = new List<Collider>();
 
-
+        private IncreaseDownload increaseDownload = null;
 
         public RaycastHit hit;
 
@@ -23,11 +24,7 @@ namespace Player
         public WalkingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
-
-
         }
-
-
 
         public override void Enter()
         {
@@ -56,6 +53,25 @@ namespace Player
 
 
                 interact = Input.GetButtonDown("Interact");
+
+                holdingInteract = Input.GetButton("Interact");
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+                {
+                    player.playerAnimator.SetBool("Walking", true);
+                    player.playerAnimator.SetFloat("Speed", 1);
+
+                    player.leftArmAnimator.SetBool("Walking", true);
+                    player.leftArmAnimator.SetFloat("Speed", 1);
+                }
+                else
+                {
+                    player.playerAnimator.SetBool("Walking", false);
+                    //player.playerAnimator.SetFloat("Speed", 0);
+                    
+                    player.leftArmAnimator.SetBool("Walking", false);
+                }
+
             }
 
 
@@ -93,38 +109,77 @@ namespace Player
                     {
                         player.result = hit;
                         stateMachine.ChangeState(player.hidingState);
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
-
-
-
-
                 }
 
 
 
-                if (Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardLayerMask))
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
                 {
                     if (hit.collider.isTrigger)
                     {
                         hit.collider.gameObject.SetActive(false);
                         player.keycardCount += 1;
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
-
-
-                if (Physics.SphereCast(ray, player.pickupRadius, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
                     {
                         KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
                         keycardInput.SpawnCard();
+                        player.leftArmAnimator.SetBool("Grabbing", true);
                     }
                 }
 
+            }
+            else if (holdingInteract)
+            {
+                Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
+
+                Collider[] hitColliders = Physics.OverlapSphere(ray.origin, player.pickupRadius, player.computerLayerMask.value);
+
+                if (hitColliders.Length > 0)
+                {
+                    
+                    increaseDownload = hitColliders[0].GetComponentInChildren<IncreaseDownload>();
+
+                    increaseDownload.Increase();
+                }   
+            }
+
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
+
+
+
+            Ray ray2 = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
+
+            if (Physics.Raycast(ray2, out hit, player.interactRange, player.hideSpotLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else if(Physics.Raycast(ray2, out hit, player.pickupDistance, player.keycardLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else if(Physics.Raycast(ray2, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+            {
+                player.interactUI.SetActive(true);
+            }
+            else
+            {
+                player.interactUI.SetActive(false);
 
             }
+
+
         }
 
 
@@ -166,9 +221,6 @@ namespace Player
 
 
             // Normalized movement
-
-
-
             Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
             inputDir.Normalize();
 
@@ -181,9 +233,6 @@ namespace Player
 
 
             // Apply gravity
-
-
-
             player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
 
 

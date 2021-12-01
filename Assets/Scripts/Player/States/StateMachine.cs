@@ -6,7 +6,7 @@ namespace Player
 {
     public class StateMachine : MonoBehaviour
     {
-        public State CurrentState { get; private set; }
+        public State CurrentState;
         public void Initialize(State startingState)
         {
             CurrentState = startingState;

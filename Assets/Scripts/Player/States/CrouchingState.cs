@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Puzzle;
 
 namespace Player
 {
@@ -9,11 +10,14 @@ namespace Player
     {
         private bool crouchHeld;
         private bool belowCeiling;
+        public bool interact = false;
 
+        public RaycastHit hit;
         private float startValue = 0.599f;
         private float endValue = 0f;    
         public CrouchingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
+
         }
 
         public override void Enter()
@@ -44,6 +48,25 @@ namespace Player
                 crouchHeld = Input.GetButton("Crouch");
                 mouseX = Input.GetAxisRaw("Mouse X");
                 mouseY = Input.GetAxisRaw("Mouse Y");
+                interact = Input.GetButtonDown("Interact");
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+                {
+                    player.playerAnimator.SetBool("Walking", true);
+                    player.playerAnimator.SetFloat("Speed", 1.5f);
+
+                    player.leftArmAnimator.SetBool("Walking", true);
+                    player.leftArmAnimator.SetFloat("Speed", 1.5f);
+                }
+                else
+                {
+                    player.playerAnimator.SetBool("Walking", false);
+                    player.playerAnimator.SetFloat("Speed", 0);
+
+                    player.leftArmAnimator.SetBool("Walking", false);
+                    player.leftArmAnimator.SetFloat("Speed", 0);
+
+                }
             }
 
         }
@@ -52,6 +75,36 @@ namespace Player
         {
             base.LogicUpdate();
             Crouch();
+
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
+
+            if(interact)
+            {
+                Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
+
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
+                {
+                    if (hit.collider.isTrigger)
+                    {
+                        hit.collider.gameObject.SetActive(false);
+                        player.keycardCount += 1;
+                        player.leftArmAnimator.SetBool("Grabbing", true);
+                    }
+                }
+
+                if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
+                {
+                    if (player.keycardCount >= 1)
+                    {
+                        KeycardInput keycardInput = hit.collider.gameObject.GetComponent<KeycardInput>();
+                        keycardInput.SpawnCard();
+                        player.leftArmAnimator.SetBool("Grabbing", true);
+                    }
+                }
+            }
         }
 
         public override void LateLogicUpdate()

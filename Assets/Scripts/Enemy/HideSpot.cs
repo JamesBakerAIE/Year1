@@ -12,6 +12,9 @@ namespace Player
         public bool searched = false;
         public bool hasPlayer = false;
         public Renderer doorObject;
+        public GameObject enemy;
+        public Animator attackAnimator;
+        //Locker
 
         private void Start()
         {
@@ -20,6 +23,14 @@ namespace Player
                 if (gameObject.tag == "Locker")
                     doorObject = gameObject.GetComponent<Renderer>();
             }
+
+            //enemy.SetActive(false);
+        }
+
+        public void AnimateAttack()
+        {
+            enemy.SetActive(true);
+            attackAnimator.SetBool("IsSearching", true);
         }
     }
 

@@ -32,6 +32,24 @@ namespace Player
                 mouseY = Input.GetAxisRaw("Mouse Y");
 
                 interact = Input.GetButtonDown("Interact");
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+                {
+                    player.playerAnimator.SetBool("Walking", true);
+                    player.playerAnimator.SetFloat("Speed", 4);
+
+                    player.leftArmAnimator.SetBool("Walking", true);
+                    player.leftArmAnimator.SetFloat("Speed", 4);
+
+                }
+                else
+                {
+                    player.playerAnimator.SetBool("Walking", false);
+                    player.playerAnimator.SetFloat("Speed", 0);
+
+                    player.leftArmAnimator.SetBool("Walking", false);
+                    player.leftArmAnimator.SetFloat("Speed", 0);
+                }
             }
             walk = Input.GetButtonUp("Sprint");
 
@@ -60,6 +78,8 @@ namespace Player
 
                 }
             }
+
+            player.currentSprintTime += Time.deltaTime;
         }
 
         public override void LateLogicUpdate()
@@ -78,23 +98,32 @@ namespace Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
-            if(player.controller.isGrounded && player.velocity.y < 0)
+
+            if(player.currentSprintTime < player.maxSprintTime)
             {
-                player.velocity.y = -2f;
+                // Check if player is grounded then set velocity to -2f (this gives the velocity time to reset)
+                if (player.controller.isGrounded && player.velocity.y < 0)
+                {
+                    player.velocity.y = -2f;
+                }
+
+                // Normalized movement
+                Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
+                inputDir.Normalize();
+
+                Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
+                player.controller.Move(move * Time.deltaTime);
+
+                // Apply gravity
+                player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
+
+                player.controller.Move(player.velocity * Time.deltaTime);
             }
-
-            // Normalized movement
-            Vector2 inputDir = new Vector2(horizontalInput, verticalInput);
-            inputDir.Normalize();
-
-            Vector3 move = (player.transform.forward * inputDir.y + player.transform.right * inputDir.x) * speed;
-            player.controller.Move(move * Time.deltaTime);
-
-            // Apply gravity
-            player.velocity.y += Physics.gravity.y * player.gravityMultiplier * Time.deltaTime;
-
-            player.controller.Move(player.velocity * Time.deltaTime);
+            else
+            {
+                stateMachine.ChangeState(player.walkingState);
+            }
+           
         }
 
         public override void Exit()

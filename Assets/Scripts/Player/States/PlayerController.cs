@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Managers.UIManager;
+using EnemyAI;
 namespace Player
 {
     public class PlayerController : MonoBehaviour
@@ -13,12 +15,15 @@ namespace Player
         [HideInInspector] public CrouchingState crouchingState = null;
         [HideInInspector] public HidingState hidingState = null;
         [HideInInspector] public PuzzleState puzzleState = null;
+        [HideInInspector] public DeadState deadState = null;
 
         [Header("Player Movement")]
         public CharacterController controller = null;
         public float walkSpeed = 0f;
         public float sprintSpeed = 0f;
         public float crouchSpeed = 0f;
+        public float maxSprintTime = 0f;
+        [HideInInspector] public float currentSprintTime = 0f;
         public float gravityMultiplier = 0f;
         public float cameraCrouchDistance = 0.5f;
         public float crouchRaycastHeight = 0.85f;
@@ -27,7 +32,8 @@ namespace Player
         [HideInInspector] public Vector3 velocity = Vector3.zero;
         [HideInInspector] public float playerCrouchColliderHeight = 0f;
         [HideInInspector] public Vector3 playerColliderNormalSize = Vector3.zero;
-        [SerializeField] private Animator playerAnimator = null;
+        public Animator playerAnimator = null;
+        public Animator leftArmAnimator = null;
 
         [Header("Player Looking")]
         public Transform playerCamera = null;
@@ -40,6 +46,7 @@ namespace Player
         public float exitLockerTime = 0.0f;
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
+        public float lockerHeightOffset = 0;
 
 
         [Header("Player Puzzles")]
@@ -52,9 +59,13 @@ namespace Player
 
         public LayerMask keycardLayerMask = 0;
         public LayerMask keycardHolderLayerMask = 0;
+        public LayerMask computerLayerMask = 0;
 
         public int keycardCount = 0;
 
+
+        [Header("Player UI")]
+        public GameObject interactUI = null;
 
 
         [HideInInspector] public RaycastHit result;
@@ -70,7 +81,7 @@ namespace Player
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked; 
+            Cursor.lockState = CursorLockMode.Locked;
 
             // Creating state machines and the states themselves
             movementStateMachine = new StateMachine();
@@ -80,12 +91,9 @@ namespace Player
             crouchingState = new CrouchingState(this, movementStateMachine);
             hidingState = new HidingState(this, movementStateMachine);
             puzzleState = new PuzzleState(this, movementStateMachine);
-
-
+            deadState = new DeadState(this, movementStateMachine);
 
             movementStateMachine.Initialize(walkingState);
-
-            QualitySettings.vSyncCount = 0;
         }
 
 
@@ -99,6 +107,15 @@ namespace Player
             movementStateMachine.CurrentState.HandleInput();
 
             movementStateMachine.CurrentState.LogicUpdate();
+
+            //When the player is dead
+            if (FindObjectOfType<UIManager>().GameIsOver)
+            {
+                movementStateMachine.Initialize(deadState);
+                this.transform.LookAt(FindObjectOfType<Enemy>().transform.position);
+            }
+
+            currentSprintTime = Mathf.Clamp(currentSprintTime, 0, maxSprintTime);
         }
 
         private void LateUpdate()

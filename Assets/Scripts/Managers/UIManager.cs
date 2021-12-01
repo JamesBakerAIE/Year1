@@ -10,9 +10,10 @@ namespace Managers.UIManager
 {
     public class UIManager : MonoBehaviour
     {
+        public Camera mainCamera;
         //PauseMenu
         public static bool GameIsPaused = false;
-        public static bool GameIsOver = false;
+        public bool GameIsOver = false;
         public GameObject pauseMenuUI;
         public GameObject deathMenu;
 
@@ -22,12 +23,30 @@ namespace Managers.UIManager
         //Main Menu
         public GameObject mainMenu;
 
+        public GameObject objectivesMenu;
+        public GameObject objectivesText;
+
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
 
+        //Game Over UI
+        public float timeTillDeath;
+        public float timeElapsed;
+        public float FOVZoom;
+
         Resolution[] resolutions;
-        public TMP_Dropdown resolutionDropdown;
+        public Dropdown resolutionDropdown;
+       
+        public TextMeshProUGUI dockingBayExitText;
+        public TextMeshProUGUI genomeFoundText;
+        public TextMeshProUGUI accesskeyText;
+        public TextMeshProUGUI codeText;
+        public TextMeshProUGUI eggText;
+        public TextMeshProUGUI containmentRoomText;
+        public TextMeshProUGUI dockingBayDoorText;
+
+
 
         public void Start()
         {
@@ -41,7 +60,7 @@ namespace Managers.UIManager
                 {
                     string option = resolutions[i].width + " x " + resolutions[i].height;
                     options.Add(option);
-                    if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
                     {
                         currentResolutionIndex = i;
                     }
@@ -50,9 +69,6 @@ namespace Managers.UIManager
                 resolutionDropdown.value = currentResolutionIndex;
                 resolutionDropdown.RefreshShownValue();
             }
-
-
-
         }
 
         public void SetResolution(int resolutionIndex)
@@ -84,6 +100,30 @@ namespace Managers.UIManager
                         Cursor.lockState = CursorLockMode.Confined;
                     }
                 }
+            }
+
+            if(GameIsOver == true)
+            {
+                if (timeElapsed >= timeTillDeath)
+                {
+                    Death();
+                }
+                else
+                {
+                    timeElapsed += Time.deltaTime;
+                }
+
+                if (mainCamera.fieldOfView > 60 && timeElapsed > timeTillDeath / 2)
+                {
+                    FOVZoom += timeElapsed * 5;
+                    mainCamera.fieldOfView -= FOVZoom;
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.M))
+            {
+                objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
+                objectivesText.SetActive(false);
             }
 
         }
@@ -140,12 +180,57 @@ namespace Managers.UIManager
 
         public void Death()
         {
+            FOVZoom = 90;
             optionsMenuUI.SetActive(false);
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
-            GameIsOver = true;
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             mainGameSceneName = SceneManager.GetActiveScene().name;
+        }
+
+
+
+        public void DockingBayExitFound()
+        {
+            dockingBayExitText.fontStyle |= FontStyles.Strikethrough;
+            dockingBayExitText.color = Color.grey;
+        }
+
+        public void GenomeFound()
+        {
+            genomeFoundText.fontStyle |= FontStyles.Strikethrough;
+            genomeFoundText.color = Color.grey;
+        }
+
+        public void ChangeAccessKeyText()
+        {
+            accesskeyText.fontStyle |= FontStyles.Strikethrough;
+            accesskeyText.color = Color.grey;
+        }
+
+        public void CodeFound()
+        {
+            codeText.fontStyle |= FontStyles.Strikethrough;
+            codeText.color = Color.grey;
+        }
+
+
+        public void ChangeEggText()
+        {
+            eggText.fontStyle |= FontStyles.Strikethrough;
+            eggText.color = Color.grey;
+        }
+
+        public void ContainmentRoomFound()
+        {
+            containmentRoomText.fontStyle |= FontStyles.Strikethrough;
+            containmentRoomText.color = Color.grey;
+        }
+
+        public void DockingDayDoorOpened()
+        {
+            dockingBayDoorText.fontStyle |= FontStyles.Strikethrough;
+            dockingBayDoorText.color = Color.grey;
         }
 
         public void QuitGame()

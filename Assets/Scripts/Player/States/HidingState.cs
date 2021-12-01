@@ -36,6 +36,7 @@ namespace Player
 
         public override void Enter()
         {
+            player.playerAnimator.SetBool("Walking", false);
             RaycastHit hit;
             //Gets hiding spots, and resets hiding spots
 
@@ -86,7 +87,7 @@ namespace Player
 
 
 
-            if (interact && enteringLocker == false && lookToFrontOfLocker)
+            if (interact && enteringLocker == false)
             {
                 leavingLocker = true;
                 lockerInsideOf.hasPlayer = false;
@@ -119,15 +120,12 @@ namespace Player
                 {
                     stateMachine.ChangeState(player.walkingState);
                 }
-
-
-
             }
 
-
-
-
-
+            if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
+            {
+                player.currentSprintTime -= Time.deltaTime;
+            }
         }
 
 
@@ -143,7 +141,7 @@ namespace Player
         {
             base.PhysicsUpdate();
             Vector3 target = new Vector3(player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.x,
-            player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y,
+            player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y - player.lockerHeightOffset,
             player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.z);
 
 
@@ -177,20 +175,6 @@ namespace Player
             {
                 enteringLocker = false;
             }
-
-
-
-            if (player.transform.rotation.x == lookTransform.rotation.x && player.transform.rotation.z == lookTransform.rotation.z)
-            {
-                lookToFrontOfLocker = true;
-            }
-            else
-            {
-                lookToFrontOfLocker = false;
-            }
-
-
-
 
         }
 

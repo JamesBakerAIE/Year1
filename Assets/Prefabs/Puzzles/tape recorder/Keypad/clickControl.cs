@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers.UIManager;
 
 public class clickControl : MonoBehaviour
 {
@@ -8,14 +9,26 @@ public class clickControl : MonoBehaviour
     public static string playerCode = "";
     public GameObject door;
     public GameObject door2;
+    public GameObject hitBox;
+    public GameObject hitBox1;
+    public GameObject computerPuzzle;
+    public GameObject computerPrefab;
+    public GameObject endGame;
 
     public static string didclick = "n";
 
     public static int totalDigits = 0;
     private bool complete;
+
+    private UIManager uiManager;
+    private AllPuzzlesDone puzzlesDone;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = FindObjectOfType<UIManager>();
+        puzzlesDone = FindObjectOfType<AllPuzzlesDone>();
 
     }
 
@@ -30,6 +43,16 @@ public class clickControl : MonoBehaviour
                 door.SetActive(false);
                 door2.SetActive(false);
                 Debug.Log("Correct");
+                hitBox.SetActive(true);
+                hitBox1.SetActive(true);
+                computerPuzzle.SetActive(false);
+                computerPrefab.SetActive(true);
+                endGame.SetActive(true);
+
+
+                uiManager.ChangeEggText();
+                puzzlesDone.codePuzzleDone = true;
+
             }
             else
             {
