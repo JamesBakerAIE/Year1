@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Managers.UIManager;
+using Player;
 
 namespace EnemyAI
 {
@@ -25,9 +26,22 @@ namespace EnemyAI
             }
 
             //delete after sounds and everything have happened
-            Destroy(this.gameObject);
+            if (FindObjectOfType<SearchState>().foundPlayer)
+            {
+                Destroy(this.gameObject);
+            }
+
+            Debug.Log("Player is dead");
+            isAttacking = true;
             //hearingCollider.radius = hearingRadius;
 
+        }
+
+        public override Vector3 RotationUpdate()
+        {
+            Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
+            return playerPosition;
+ 
         }
         public override void Exit()
         {

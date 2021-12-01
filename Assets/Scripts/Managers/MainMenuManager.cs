@@ -16,6 +16,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject pressAnyKeyText;
 
     public MainMenuEvent mainMenuEventObject;
+    public MainMenuLightEvent mainMenuLightEvent;
 
 
     public float cameraSpeed;
@@ -50,8 +51,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void SoundMenu(float speed)
     {
+        mainMenuLightEvent.StartEvent();
         cameraSpeed = speed;
         destination = soundArea;
+        
     }
 
     public void ResolutionMenu(float speed)

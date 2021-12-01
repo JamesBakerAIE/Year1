@@ -24,6 +24,7 @@ namespace Managers.UIManager
         public GameObject mainMenu;
 
         public GameObject objectivesMenu;
+        public GameObject objectivesText;
 
         // MainMenu Scene
         [SerializeField] private string mainMenuSceneName = string.Empty;
@@ -59,7 +60,7 @@ namespace Managers.UIManager
                 {
                     string option = resolutions[i].width + " x " + resolutions[i].height;
                     options.Add(option);
-                    if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
                     {
                         currentResolutionIndex = i;
                     }
@@ -68,9 +69,6 @@ namespace Managers.UIManager
                 resolutionDropdown.value = currentResolutionIndex;
                 resolutionDropdown.RefreshShownValue();
             }
-
-
-
         }
 
         public void SetResolution(int resolutionIndex)
@@ -115,16 +113,17 @@ namespace Managers.UIManager
                     timeElapsed += Time.deltaTime;
                 }
 
-                if (FOVZoom > 60 && timeElapsed > timeTillDeath / 2)
+                if (mainCamera.fieldOfView > 60 && timeElapsed > timeTillDeath / 2)
                 {
                     FOVZoom += timeElapsed * 5;
-                    mainCamera.fieldOfView = FOVZoom;
+                    mainCamera.fieldOfView -= FOVZoom;
                 }
             }
 
             if(Input.GetKeyDown(KeyCode.M))
             {
                 objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
+                objectivesText.SetActive(false);
             }
 
         }
@@ -181,6 +180,7 @@ namespace Managers.UIManager
 
         public void Death()
         {
+            FOVZoom = 90;
             optionsMenuUI.SetActive(false);
             deathMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
@@ -192,44 +192,44 @@ namespace Managers.UIManager
 
         public void DockingBayExitFound()
         {
-            dockingBayExitText.fontStyle = FontStyles.Strikethrough;
+            dockingBayExitText.fontStyle |= FontStyles.Strikethrough;
             dockingBayExitText.color = Color.grey;
         }
 
         public void GenomeFound()
         {
-            genomeFoundText.fontStyle = FontStyles.Strikethrough;
+            genomeFoundText.fontStyle |= FontStyles.Strikethrough;
             genomeFoundText.color = Color.grey;
         }
 
         public void ChangeAccessKeyText()
         {
-            accesskeyText.fontStyle = FontStyles.Strikethrough;
+            accesskeyText.fontStyle |= FontStyles.Strikethrough;
             accesskeyText.color = Color.grey;
         }
 
         public void CodeFound()
         {
-            codeText.fontStyle = FontStyles.Strikethrough;
+            codeText.fontStyle |= FontStyles.Strikethrough;
             codeText.color = Color.grey;
         }
 
 
         public void ChangeEggText()
         {
-            eggText.fontStyle = FontStyles.Strikethrough;
+            eggText.fontStyle |= FontStyles.Strikethrough;
             eggText.color = Color.grey;
         }
 
         public void ContainmentRoomFound()
         {
-            containmentRoomText.fontStyle = FontStyles.Strikethrough;
+            containmentRoomText.fontStyle |= FontStyles.Strikethrough;
             containmentRoomText.color = Color.grey;
         }
 
         public void DockingDayDoorOpened()
         {
-            dockingBayDoorText.fontStyle = FontStyles.Strikethrough;
+            dockingBayDoorText.fontStyle |= FontStyles.Strikethrough;
             dockingBayDoorText.color = Color.grey;
         }
 

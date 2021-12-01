@@ -45,8 +45,8 @@ public class clickControl : MonoBehaviour
                 Debug.Log("Correct");
                 hitBox.SetActive(true);
                 hitBox1.SetActive(true);
-                computerPrefab.SetActive(false);
-                computerPuzzle.SetActive(true);
+                computerPuzzle.SetActive(false);
+                computerPrefab.SetActive(true);
                 endGame.SetActive(true);
 
 
