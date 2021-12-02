@@ -45,7 +45,7 @@ public class MainMenuManager : MonoBehaviour
 
         if(this.transform.position == loadSceneArea.transform.position)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 
