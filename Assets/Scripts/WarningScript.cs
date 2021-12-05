@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WarningScene : MonoBehaviour
+public class WarningScript : MonoBehaviour
 {
    
     void Start()
@@ -16,7 +16,7 @@ public class WarningScene : MonoBehaviour
     {
 
         yield return new WaitForSeconds(waitbySecs);
-        Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
     }
 }
   
