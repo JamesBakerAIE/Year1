@@ -54,6 +54,7 @@ namespace Puzzle
                 keycardNew = Instantiate(keycardPrefab, pos, keyPositionObject.transform.rotation);
                 keycardPuzzle.keycardInsertedCount++;
                 player.keycardCount -= 1;
+                hasBeenInserted = true;
             }
 
         }
