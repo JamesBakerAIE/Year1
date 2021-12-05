@@ -45,13 +45,13 @@ public class MainMenuManager : MonoBehaviour
 
         if(this.transform.position == loadSceneArea.transform.position)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 
     public void SoundMenu(float speed)
     {
-        mainMenuLightEvent.StartEvent();
+        //mainMenuLightEvent.StartEvent();
         cameraSpeed = speed;
         destination = soundArea;
         
