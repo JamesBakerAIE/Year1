@@ -51,7 +51,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SoundMenu(float speed)
     {
-        mainMenuLightEvent.StartEvent();
+        //mainMenuLightEvent.StartEvent();
         cameraSpeed = speed;
         destination = soundArea;
         
