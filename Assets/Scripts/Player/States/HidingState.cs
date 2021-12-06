@@ -22,6 +22,9 @@ namespace Player
         private bool leavingLocker = false;
         private bool lookToFrontOfLocker = false;
 
+        private float oldIntensity = 0.0f;
+        private float newIntensity = 0.0f;
+
 
 
         public HideSpot lockerInsideOf = null;
@@ -38,9 +41,10 @@ namespace Player
         {
             player.playerAnimator.SetBool("Walking", false);
             RaycastHit hit;
-            //Gets hiding spots, and resets hiding spots
 
+            oldIntensity = player.flashLight.intensity;
 
+            player.flashLight.intensity = 0.0f;
 
             Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
@@ -183,6 +187,7 @@ namespace Player
         public override void Exit()
         {
             base.Exit();
+            player.flashLight.intensity = oldIntensity;
         }
 
 
