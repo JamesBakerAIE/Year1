@@ -109,7 +109,7 @@ namespace Player
 
             movementStateMachine.CurrentState.LogicUpdate();
 
-            //When the player is dead
+            // When the player is dead
             if (FindObjectOfType<UIManager>().GameIsOver)
             {
                 movementStateMachine.Initialize(deadState);

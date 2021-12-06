@@ -50,6 +50,8 @@ namespace Player
                 mouseY = Input.GetAxisRaw("Mouse Y");
                 interact = Input.GetButtonDown("Interact");
 
+
+                // Play walking animations
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
                     player.playerAnimator.SetBool("Walking", true);
@@ -83,6 +85,7 @@ namespace Player
 
             if(interact)
             {
+                // Interact raycast
                 Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
                 if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
@@ -95,6 +98,7 @@ namespace Player
                     }
                 }
 
+                // Interact raycast for keycard Input
                 if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
@@ -112,7 +116,6 @@ namespace Player
             base.LateLogicUpdate();
             
             // Mouse looking
-
             Vector2 mouseDelta = new Vector2(mouseX, mouseY);
             player.cameraPitch -= mouseDelta.y * player.mouseSensitivity;
             player.cameraPitch = Mathf.Clamp(player.cameraPitch, -90f, 90f);
@@ -178,6 +181,7 @@ namespace Player
             {
                 if (!(crouchHeld || belowCeiling))
                 {
+                    // Reset player's height and enter walkingState
                     stateMachine.ChangeState(player.walkingState);
                     Vector3 newHeight = new Vector3(player.controller.bounds.size.x, player.controller.bounds.size.y * 2, player.controller.bounds.size.z);
                     player.controller.height = newHeight.y;

@@ -38,24 +38,19 @@ namespace Player
             verticalInput = Input.GetAxisRaw("Vertical");
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
-
-
             crouch = Input.GetButtonDown("Crouch");
             sprint = Input.GetButtonDown("Sprint");
-
-
 
             if (Time.timeScale != 0)
             {
                 mouseX = Input.GetAxisRaw("Mouse X");
                 mouseY = Input.GetAxisRaw("Mouse Y");
 
-
-
                 interact = Input.GetButtonDown("Interact");
 
                 holdingInteract = Input.GetButton("Interact");
 
+                // Play walking animations
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
                     player.playerAnimator.SetBool("Walking", true);
@@ -75,7 +70,7 @@ namespace Player
             }
 
 
-
+            // Disable mouse while paused
             if (Time.timeScale == 0)
             {
                 mouseX = 0;
@@ -88,6 +83,8 @@ namespace Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            // Change state based on HandleInput()
             if (crouch)
             {
                 stateMachine.ChangeState(player.crouchingState);
@@ -98,10 +95,8 @@ namespace Player
             }
             else if (interact)
             {
+                // Interact with locker & change state to hidingState
                 Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
-
-
-
 
                 if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
                 {
@@ -114,7 +109,7 @@ namespace Player
                 }
 
 
-
+                // Pickup keycard
                 if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardLayerMask))
                 {
                     if (hit.collider.isTrigger)
@@ -125,6 +120,7 @@ namespace Player
                     }
                 }
 
+                // Insert keycard into keycard holder
                 if (Physics.Raycast(ray, out hit, player.pickupDistance, player.keycardHolderLayerMask))
                 {
                     if (player.keycardCount >= 1)
@@ -138,6 +134,7 @@ namespace Player
             }
             else if (holdingInteract)
             {
+                // Increase download on computer puzzle
                 Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
 
@@ -152,6 +149,7 @@ namespace Player
                 }   
             }
 
+            // Recharge stamina
             if (player.currentSprintTime <= player.maxSprintTime && player.currentSprintTime > 0)
             {
                 player.currentSprintTime -= Time.deltaTime;
@@ -161,6 +159,8 @@ namespace Player
 
             Ray ray2 = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
+
+            // When looking at an interactable item, show an image at the center of the screen
             if (Physics.Raycast(ray2, out hit, player.interactRange, player.hideSpotLayerMask))
             {
                 player.interactUI.SetActive(true);
@@ -191,9 +191,6 @@ namespace Player
 
 
             // Mouse looking
-
-
-
             Vector2 mouseDelta = new Vector2(mouseX, mouseY);
             player.cameraPitch -= mouseDelta.y * player.mouseSensitivity;
             player.cameraPitch = Mathf.Clamp(player.cameraPitch, -90f, 90f);
