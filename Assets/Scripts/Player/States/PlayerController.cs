@@ -47,6 +47,7 @@ namespace Player
         public LayerMask hideSpotLayerMask = 0;
         public float lockerExitDistance = 0;
         public float lockerHeightOffset = 0;
+        public Light flashLight = null;
 
 
         [Header("Player Puzzles")]
