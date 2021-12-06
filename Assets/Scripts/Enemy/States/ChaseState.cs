@@ -7,26 +7,40 @@ namespace EnemyAI
 {
     public class ChaseState : State
     {
-        Transform player;
 
-        SeenTransition seenTransition;
         private void Start()
         {
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
-            transitions.Add(seenTransition);
+            enemyAudio = GetComponent<AudioSource>();
+            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
-            player = GameObject.FindObjectOfType<PlayerController>().gameObject.transform;
+            enemyStateMachine = FindObjectOfType<StateMachine>();
+
+
+            patrolState = GetComponent<PatrolState>();
+            searchState = GetComponent<SearchState>();
+            agitatedState = GetComponent<AgitatedState>();
+            chaseState = GetComponent<ChaseState>();
+            attackState = GetComponent<AttackState>();
+
+            //Transitions
+            seenTransition = GetComponent<SeenTransition>();
+            lockerTransition = GetComponent<LockerTransition>();
+            timerTransition = GetComponent<TimerTransition>();
+
+            attackRange = FindObjectOfType<AttackRange>().gameObject;
+
+            transitions.Add(seenTransition);
             //hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
 
         public override void Enter()
         {
-            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            if (enemyAudio.clip != enemySound)
             {
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+                enemyAudio.clip = enemySound;
+                enemyAudio.Play();
+                enemyAudio.loop = true;
             }
             //hearingCollider.radius = hearingRadius;
             isRunning = true;
@@ -44,7 +58,7 @@ namespace EnemyAI
         // Update is called once per frame
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
-            return player.position;
+            return playerPosition.position;
         }
     }
 }

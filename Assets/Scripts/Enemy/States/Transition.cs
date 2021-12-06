@@ -19,6 +19,7 @@ namespace EnemyAI
         [HideInInspector] public AgitatedState agitatedState;
         [HideInInspector] public SearchState searchState;
 
+
         private void Awake()
         {
             chaseState = GameObject.FindObjectOfType<ChaseState>();

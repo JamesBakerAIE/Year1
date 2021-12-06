@@ -11,12 +11,6 @@ namespace EnemyAI
         GameObject room;
         Room roomScript;
         // Start is called before the first frame update
-        Transform playerPosition;
-        SeenTransition seenTransition;
-        LockerTransition lockerTransition;
-
-        public Material selectedHidingSpotMaterial;
-        public Material hdingSpotMaterial;
 
         public float maxDistanceFromHideSpot;
 
@@ -25,8 +19,6 @@ namespace EnemyAI
         Vector3 lockerDestination;
 
         public bool foundPlayer;
-
-        GameObject attackRange;
 
         public bool hasSniffed = false;
 
@@ -41,14 +33,27 @@ namespace EnemyAI
 
         private void Start()
         {
+            enemyAudio = GetComponent<AudioSource>();
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
-            lockerTransition = GameObject.FindObjectOfType<LockerTransition>();
+            enemyStateMachine = FindObjectOfType<StateMachine>();
+
+
+            patrolState = GetComponent<PatrolState>();
+            searchState = GetComponent<SearchState>();
+            agitatedState = GetComponent<AgitatedState>();
+            chaseState = GetComponent<ChaseState>();
+            attackState = GetComponent<AttackState>();
+
+            //Transitions
+            seenTransition = GetComponent<SeenTransition>();
+            lockerTransition = GetComponent<LockerTransition>();
+            timerTransition = GetComponent<TimerTransition>();
+
+            attackRange = FindObjectOfType<AttackRange>().gameObject;
             //hearingCollider = GetComponentInChildren<SphereCollider>();
             transitions.Add(seenTransition);
             transitions.Add(lockerTransition);
-            attackRange = FindObjectOfType<AttackRange>().gameObject;
         }
         public override void Enter()
         {
@@ -67,11 +72,11 @@ namespace EnemyAI
                 CheckHidingSpots();
             }
             foundPlayer = false;
-            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            if (enemyAudio.clip != enemySound)
             {
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+                enemyAudio.clip = enemySound;
+                enemyAudio.Play();
+                enemyAudio.loop = true;
             }
             isRunning = false;
             //hearingCollider.radius = hearingRadius;
@@ -101,7 +106,7 @@ namespace EnemyAI
             }
             if (hidingSpotsToSearch.Count == 0 && foundPlayerLocker == null)
             {
-                this.GetComponent<Enemy>().stateMachine.ChangeState(this.GetComponent<PatrolState>());
+                enemyStateMachine.ChangeState(patrolState);
                 return this.transform.position;
             }
 

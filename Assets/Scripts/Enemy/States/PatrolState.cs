@@ -26,24 +26,41 @@ namespace EnemyAI
 
         Transform currentWayPoint;
 
-        SeenTransition seenTransition;
-
         public bool seenPlayer = false;
         private void Start()
         {
-            seenTransition = GameObject.FindObjectOfType<SeenTransition>();
+            enemyAudio = GetComponent<AudioSource>();
+            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
+
+            enemyStateMachine = FindObjectOfType<StateMachine>();
+
+
+            patrolState = GetComponent<PatrolState>();
+            searchState = GetComponent<SearchState>();
+            agitatedState = GetComponent<AgitatedState>();
+            chaseState = GetComponent<ChaseState>();
+            attackState = GetComponent<AttackState>();
+
+            //Transitions
+            seenTransition = GetComponent<SeenTransition>();
+            lockerTransition = GetComponent<LockerTransition>();
+            timerTransition = GetComponent<TimerTransition>();
+
+            attackRange = FindObjectOfType<AttackRange>().gameObject;
+
             transitions.Add(seenTransition);
+
             //hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
 
         public override void Enter()
         {
-            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            if (enemyAudio.clip != enemySound)
             {
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = true;
+                enemyAudio.clip = enemySound;
+                enemyAudio.Play();
+                enemyAudio.loop = true;
             }
             isRunning = false;
             //hearingCollider.radius = hearingRadius;

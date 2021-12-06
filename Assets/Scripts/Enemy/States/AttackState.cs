@@ -10,6 +10,25 @@ namespace EnemyAI
     {
         private void Start()
         {
+
+            enemyAudio = GetComponent<AudioSource>();
+            playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
+
+            enemyStateMachine = FindObjectOfType<StateMachine>();
+
+
+            patrolState = GetComponent<PatrolState>();
+            searchState = GetComponent<SearchState>();
+            agitatedState = GetComponent<AgitatedState>();
+            chaseState = GetComponent<ChaseState>();
+            attackState = GetComponent<AttackState>();
+
+            //Transitions
+            seenTransition = GetComponent<SeenTransition>();
+            lockerTransition = GetComponent<LockerTransition>();
+            timerTransition = GetComponent<TimerTransition>();
+
+            attackRange = FindObjectOfType<AttackRange>().gameObject;
             //hearingCollider = GetComponentInChildren<SphereCollider>();
 
         }
@@ -18,15 +37,15 @@ namespace EnemyAI
         {
             FindObjectOfType<UIManager>().GameIsOver = true;
             //NONE OF THIS WILL WORK WITH THE LOCKER ATTACK
-            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip != enemySound)
+            if (enemyAudio.clip != enemySound)
             {
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().clip = enemySound;
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().Play();
-                GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>().loop = false;
+                enemyAudio.clip = enemySound;
+                enemyAudio.Play();
+                enemyAudio.loop = false;
             }
 
             //delete after sounds and everything have happened
-            if (FindObjectOfType<SearchState>().foundPlayer)
+            if (searchState.foundPlayer)
             {
                 Destroy(this.gameObject);
             }
@@ -39,8 +58,7 @@ namespace EnemyAI
 
         public override Vector3 RotationUpdate()
         {
-            Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
-            return playerPosition;
+            return playerPosition.position;
  
         }
         public override void Exit()
@@ -52,11 +70,5 @@ namespace EnemyAI
         {
             return movementSpeed;
         }
-
-        // Update is called once per frame
-        //public override Vector3 UpdateAgent(Vector3 enemyPosition)
-        //{
-        //    return Vector3.zero;
-        //}
     }
 }
