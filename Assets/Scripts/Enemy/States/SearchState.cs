@@ -28,6 +28,7 @@ namespace EnemyAI
         public bool hasSniffed = false;
 
 
+        bool inLockerVicinity = false;
         public float timeSearching = 5;
         public float timeElapsed = 0;
 
@@ -128,12 +129,20 @@ namespace EnemyAI
 
                 if (foundPlayerLocker != null)
                 {
-                    foundPlayer = true;
-                    foundPlayerLocker.GetComponentInChildren<HideSpot>().AnimateAttack();
-                    return lockerDestination;
+                    if (foundPlayerLocker.GetComponentInChildren<HideSpot>().hasPlayer)
+                    {
+                        foundPlayer = true;
+                        foundPlayerLocker.GetComponentInChildren<HideSpot>().AnimateAttack();
+                        return lockerDestination;
+                    }
+                    else
+                    {
+                        foundPlayerLocker = null;
+                        CheckHidingSpots();
+                    }
                 }
                 //if time has run out for searching this locker
-                else if (timeElapsed >= timeSearching)
+                if (timeElapsed >= timeSearching && foundPlayerLocker == null)
                 {
                     FindObjectOfType<Enemy>().animator.SetBool("Sniffing", false);
                     if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer)
@@ -144,6 +153,8 @@ namespace EnemyAI
 
                     hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
                     Debug.Log("Searched locker");
+
+                    inLockerVicinity = false;
 
                     //find next closest locker
                     hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
@@ -162,6 +173,8 @@ namespace EnemyAI
                     FindObjectOfType<Enemy>().animator.SetBool("Sniffing", true);
                     timeElapsed += Time.deltaTime;
                     hasSniffed = false;
+                    inLockerVicinity = true;
+
                     lockerRotation = hidingSpotsToSearch[0].rotation.eulerAngles;
                 }
 
@@ -209,10 +222,13 @@ namespace EnemyAI
 
         public override Vector3 RotationUpdate()
         {
-            if (lockerRotation != Vector3.zero)
+            //if (lockerRotation != Vector3.zero)
+            //{
+            //currently not getting correct rotation for specific lockers
+            //look at child with hideyspot
+            if (inLockerVicinity)
             {
-                //currently not getting correct rotation in for specific lockers
-                //look at child with hideyspot
+                Vector3 newRotation = Vector3.RotateTowards(this.transform.position, hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().transform.position, 10000, 1000);
                 return hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().transform.position;
             }
             else
