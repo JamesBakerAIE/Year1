@@ -10,7 +10,14 @@ namespace EnemyAI
         //public Vector3 eyesOffset;
         //public Vector3 directionOffset;
         Transition parentTransition;
+
+        //Ignores items like waypoints and invisible colliders for puzzles and such
         LayerMask ignoreLayer;
+
+        State selectedState;
+        readonly List<Ray> rays;
+
+        bool hitPlayerLocker = false;
 
         private void Start()
         {
@@ -20,17 +27,11 @@ namespace EnemyAI
         public override void Enter()
         {
             hitPlayerLocker = false;
-            //UPDATING ENTER AND EXIT FOR STATES AND TRANSITIONS
         }
         public override void Exit()
         {
-            //UPDATING ENTER AND EXIT FOR STATES AND TRANSITIONS
         }
 
-        State selectedState;
-        readonly List<Ray> rays;
-
-        bool hitPlayerLocker = false;
 
         public override State CheckTransition(Vector3 enemyPositon, Vector3 playerPosition)
         {

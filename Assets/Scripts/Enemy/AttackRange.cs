@@ -18,7 +18,6 @@ namespace EnemyAI
         {
             if (other.gameObject.tag == "Player")
             {
-                //FindObjectOfType<SearchState>().foundPlayer = true;
                 transition.inAttack = true;
             }
 
@@ -27,7 +26,6 @@ namespace EnemyAI
         {
             if (other.gameObject.tag == "Player")
             {
-                //FindObjectOfType<SearchState>().foundPlayer = false;
                 transition.inAttack = false;
             }
         }
