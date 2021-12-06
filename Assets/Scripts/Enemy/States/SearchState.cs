@@ -211,6 +211,7 @@ namespace EnemyAI
         {
             if (lockerRotation != Vector3.zero)
             {
+                //currently not getting correct rotation in for specific lockers
                 //look at child with hideyspot
                 return hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().transform.position;
             }
