@@ -120,7 +120,7 @@ namespace Managers.UIManager
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.M))
+            if(Input.GetKeyDown(KeyCode.Tab))
             {
                 objectivesMenu.SetActive(!objectivesMenu.activeInHierarchy);
                 objectivesText.SetActive(false);
