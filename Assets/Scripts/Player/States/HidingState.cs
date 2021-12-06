@@ -31,8 +31,6 @@ namespace Player
         public HidingState(PlayerController player, StateMachine stateMachine) : base(player, stateMachine)
         {
 
-
-
         }
 
 
@@ -48,9 +46,6 @@ namespace Player
 
             Ray ray = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.forward);
 
-
-
-
             if (Physics.Raycast(ray, out hit, player.interactRange, player.hideSpotLayerMask))
             {
                 if (hit.collider.isTrigger)
@@ -58,10 +53,6 @@ namespace Player
                     Debug.Log(hit.collider);
                     lockerInsideOf = hit.collider.GetComponentInParent<HideSpot>();
                 }
-
-
-
-
             }
 
 
@@ -111,7 +102,7 @@ namespace Player
                 leavingLocker = false;
 
 
-
+                // Change states based on input set in HandleInput()
                 if (crouch)
                 {
                     stateMachine.ChangeState(player.crouchingState);
@@ -144,31 +135,25 @@ namespace Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
+
+            // Set target to locker's position
             Vector3 target = new Vector3(player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.x,
             player.result.collider.GetComponentInParent<HideSpot>().gameObject.transform.position.y - player.lockerHeightOffset,
             player.result.collider.gameObject.GetComponentInParent<HideSpot>().gameObject.transform.position.z);
 
-
-
+            // Set lookTransform to position of the locker's trigger
             Transform lookTransform = player.result.collider.gameObject.transform;
-
-
 
             lookTransform.position = new Vector3(player.result.collider.gameObject.transform.position.x, player.gameObject.transform.position.y,
             player.result.collider.gameObject.transform.position.z);
 
 
-
+            // Move to the inside of the locker.
             if (leavingLocker == false)
             {
                 enteringLocker = true;
 
-
-
                 player.gameObject.transform.position = Vector3.MoveTowards(player.gameObject.transform.position, target, player.walkToLockerTime * Time.fixedDeltaTime);
-
-
-
 
                 player.transform.LookAt(lookTransform);
             }
