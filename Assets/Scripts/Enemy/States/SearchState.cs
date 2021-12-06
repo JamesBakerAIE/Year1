@@ -7,15 +7,20 @@ namespace EnemyAI
 {
     public class SearchState : State
     {
+        [Tooltip("Distance Offset From The Locker Door The Enemy Has to Be For Enemy To Search")]
         public float distanceFromLocker;
+
+        //Room
         GameObject room;
         Room roomScript;
         // Start is called before the first frame update
-
+        [Tooltip("Radius The Enemy Will Search Lockers")]
         public float maxDistanceFromHideSpot;
 
-        public List<Transform> hidingSpotsToSearch;
+        [Tooltip("List Of Hiding Spots The Enemy Is Going To Search")]
+        [SerializeField] protected List<Transform> hidingSpotsToSearch;
 
+        //Position the enemy goes to to search the locker
         Vector3 lockerDestination;
 
         public bool foundPlayer;
@@ -23,7 +28,7 @@ namespace EnemyAI
         public bool hasSniffed = false;
 
 
-        public float timeAgitated = 5;
+        public float timeSearching = 5;
         public float timeElapsed = 0;
 
         Vector3 lockerRotation = Vector3.zero;
@@ -32,6 +37,14 @@ namespace EnemyAI
         public Transform foundPlayerLocker = null;
 
         private void Start()
+        {
+            GetComponents();
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
+            transitions.Add(seenTransition);
+            transitions.Add(lockerTransition);
+        }
+
+        void GetComponents()
         {
             enemyAudio = GetComponent<AudioSource>();
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
@@ -51,10 +64,8 @@ namespace EnemyAI
             timerTransition = GetComponent<TimerTransition>();
 
             attackRange = FindObjectOfType<AttackRange>().gameObject;
-            //hearingCollider = GetComponentInChildren<SphereCollider>();
-            transitions.Add(seenTransition);
-            transitions.Add(lockerTransition);
         }
+
         public override void Enter()
         {
             attackRange.SetActive(false);
@@ -63,7 +74,7 @@ namespace EnemyAI
             if (foundPlayerLocker != null)
                 return;
 
-            //Gets hiding spots, and resets hiding spots
+            //Gets hiding spots, and resets hiding spots to search for this search
             if (Physics.Raycast(this.transform.position, -Vector3.up * 1000, out hit, Mathf.Infinity))
             {
                 room = hit.collider.gameObject.transform.parent.parent.gameObject;
@@ -92,10 +103,7 @@ namespace EnemyAI
 
         public override Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
-            //Vector3 tempTransform;
-            //if (hidingSpotsToSearch.Count > -1)
-            //    tempTransform = hidingSpotsToSearch[0].position + hidingSpotsToSearch[0].forward * distanceFromLocker;
-            //once all hiding spots that it wants to search have been searched, change state to patrolling
+            //if it saw the player enter a locker, search that locker
             if(foundPlayerLocker != null)
             {
                 lockerDestination = (foundPlayerLocker.position + lockerOffset) + foundPlayerLocker.forward * distanceFromLocker;
@@ -104,6 +112,7 @@ namespace EnemyAI
                 Debug.DrawLine(this.transform.position, lockerDestination, Color.cyan, 100);
                 Debug.Log("Found player locker");
             }
+            //if no more lockers to search, return to patrolling
             if (hidingSpotsToSearch.Count == 0 && foundPlayerLocker == null)
             {
                 enemyStateMachine.ChangeState(patrolState);
@@ -123,12 +132,8 @@ namespace EnemyAI
                     foundPlayerLocker.GetComponentInChildren<HideSpot>().AnimateAttack();
                     return lockerDestination;
                 }
-                //closestHidingSpot = 100000f;
-                //hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().doorObject.material = selectedHidingSpotMaterial;
-                //if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer == true)
-                //    foundPlayer = true;
-
-                else if (timeElapsed >= timeAgitated)
+                //if time has run out for searching this locker
+                else if (timeElapsed >= timeSearching)
                 {
                     FindObjectOfType<Enemy>().animator.SetBool("Sniffing", false);
                     if (hidingSpotsToSearch[0].GetComponentInChildren<HideSpot>().hasPlayer)
@@ -140,12 +145,14 @@ namespace EnemyAI
                     hidingSpotsToSearch.Remove(hidingSpotsToSearch[0]);
                     Debug.Log("Searched locker");
 
+                    //find next closest locker
                     hidingSpotsToSearch.Sort((Transform t1, Transform t2) =>
                     {
                         var dist1 = Vector3.Distance(transform.position, t1.position);
                         var dist2 = Vector3.Distance(transform.position, t2.position);
                         return dist1.CompareTo(dist2);
                     });
+
                     lockerRotation = Vector3.zero;
                     hasSniffed = true;
                     timeElapsed = 0;
@@ -177,7 +184,7 @@ namespace EnemyAI
 
                 if (hideSpotDistance < maxDistanceFromHideSpot)
                 {
-                    //checks if it should be added to the hidingSpotSearchList
+                    //checks if it should be added to the hidingSpotSearchList depending on the locker's search chance
                     float check = Random.Range(0, 100);
                     float testCheck = hideSpotTransform.GetComponentInChildren<HideSpot>().searchChance;
                     //hideSpotTransform.GetComponent<HideSpot>().doorObject.material = hdingSpotMaterial;

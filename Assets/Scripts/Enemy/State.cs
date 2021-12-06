@@ -7,34 +7,45 @@ namespace EnemyAI
 {
     public class State : MonoBehaviour
     {
+        [Tooltip("Transitions This State Has")]
         public List<Transition> transitions;
 
         public float movementSpeed;
-        public float hearingRadius;
-        public  AudioClip enemySound;
+        //public float hearingRadius;
+        [Tooltip("Sound To Play When Entering State")]
+        public AudioClip enemySound;
+
+        [Header("Current Status'")]
         public bool isRunning = false;
         public bool isSearching = false;
         public bool isAttacking = false;
-        public AudioSource enemyAudio;
-        public Transform playerPosition;
 
-        public StateMachine enemyStateMachine;
+        protected AudioSource enemyAudio;
+        protected Transform playerPosition;
 
-        public PatrolState patrolState;
-        public SearchState searchState;
-        public AgitatedState agitatedState;
-        public ChaseState chaseState;
-        public AttackState attackState;
+        //All the different states and transitions
+        protected StateMachine enemyStateMachine;
+        protected PatrolState patrolState;
+        protected SearchState searchState;
+        protected AgitatedState agitatedState;
+        protected ChaseState chaseState;
+        protected AttackState attackState;
 
-        public SeenTransition seenTransition;
-        public LockerTransition lockerTransition;
-        public TimerTransition timerTransition;
+        protected SeenTransition seenTransition;
+        protected LockerTransition lockerTransition;
+        protected TimerTransition timerTransition;
 
 
-        public GameObject attackRange;
+        protected GameObject attackRange;
 
         //[HideInInspector] public SphereCollider hearingCollider;
         public void Start()
+        {
+            //Initializing variables here for every state
+            GetComponents();
+        }
+
+        void GetComponents()
         {
             //Initializing variables here for every state
             enemyAudio = GetComponent<AudioSource>();
@@ -63,18 +74,19 @@ namespace EnemyAI
         }
 
 
-        //normal update
+        //Used to update the enemy AI's navmesh agent each frame
         public virtual Vector3 DestinationUpdate(Vector3 enemyPosition)
         {
             return Vector3.zero;
         }
 
+        //Used to update the enemny vAI's rotation in specific instances
         public virtual Vector3 RotationUpdate()
         {
             return Vector3.zero;
         }
 
-        //late update
+
         public virtual float GetSpeed()
         {
             return 0;

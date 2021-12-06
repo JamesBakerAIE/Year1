@@ -33,6 +33,8 @@ namespace Player
 
                 interact = Input.GetButtonDown("Interact");
 
+
+                // Play walking animatons at 4x speed.
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
                     player.playerAnimator.SetBool("Walking", true);
@@ -58,6 +60,8 @@ namespace Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            // Change state based on HandleInput()
             if (walk)
             {
                 stateMachine.ChangeState(player.walkingState);

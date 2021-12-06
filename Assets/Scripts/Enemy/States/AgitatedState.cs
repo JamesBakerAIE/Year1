@@ -9,6 +9,17 @@ namespace EnemyAI
 
         private void Start()
         {
+            GetComponents();
+
+            transitions.Add(timerTransition);
+            transitions.Add(seenTransition);
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
+
+
+        }
+
+        void GetComponents()
+        {
             enemyAudio = GetComponent<AudioSource>();
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
@@ -27,12 +38,6 @@ namespace EnemyAI
             timerTransition = GetComponent<TimerTransition>();
 
             attackRange = FindObjectOfType<AttackRange>().gameObject;
-
-            transitions.Add(timerTransition);
-            transitions.Add(seenTransition);
-            //hearingCollider = GetComponentInChildren<SphereCollider>();
-
-
         }
 
         public override void Enter()

@@ -10,7 +10,13 @@ namespace EnemyAI
     {
         private void Start()
         {
+            GetComponents();
+            //hearingCollider = GetComponentInChildren<SphereCollider>();
 
+        }
+
+        void GetComponents()
+        {
             enemyAudio = GetComponent<AudioSource>();
             playerPosition = GameObject.FindObjectOfType<PlayerController>().transform;
 
@@ -29,9 +35,8 @@ namespace EnemyAI
             timerTransition = GetComponent<TimerTransition>();
 
             attackRange = FindObjectOfType<AttackRange>().gameObject;
-            //hearingCollider = GetComponentInChildren<SphereCollider>();
-
         }
+
         // Start is called before the first frame update
         public override void Enter()
         {

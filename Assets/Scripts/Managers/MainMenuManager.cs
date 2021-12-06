@@ -29,8 +29,11 @@ public class MainMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Move the camera to the area it needs to be for the main menu
         camera.position = Vector3.MoveTowards(this.transform.position, destination.position, cameraSpeed * Time.deltaTime);
         camera.rotation = Quaternion.RotateTowards(this.transform.rotation, destination.rotation, cameraSpeed * 15 * Time.deltaTime);
+
+
         if (destination == startArea)
             if (Input.anyKey)
             {

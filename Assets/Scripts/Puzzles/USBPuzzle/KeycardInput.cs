@@ -47,6 +47,7 @@ namespace Puzzle
 
         public void SpawnCard()
         {
+            // Insert card into the keycard input
             if(hasBeenInserted == false)
             {
                 Vector3 pos = new Vector3(keyPositionObject.transform.position.x, keyPositionObject.transform.position.y, keyPositionObject.transform.position.z);
