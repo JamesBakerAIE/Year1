@@ -130,6 +130,9 @@ namespace EnemyAI
                 float wayPointDistance = Vector3.Distance(wayPointTransform.position, this.transform.position);
                 WayPoint wayPoint = wayPointTransform.GetComponent<WayPoint>();
 
+                if (wayPoint == null)
+                    return;
+
                 if (wayPoint.wayPointChance == 100)
                     requiredWayPoints++;
 

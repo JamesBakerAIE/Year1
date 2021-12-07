@@ -11,6 +11,7 @@ namespace Managers.UIManager
     public class UIManager : MonoBehaviour
     {
         public Camera mainCamera;
+        public AudioSource mainAudio;
         //PauseMenu
         public static bool GameIsPaused = false;
         public bool GameIsOver = false;
@@ -30,10 +31,11 @@ namespace Managers.UIManager
         [SerializeField] private string mainMenuSceneName = string.Empty;
         [SerializeField] private string mainGameSceneName = string.Empty;
 
-        //Game Over UI
+        //Game Over
         public float timeTillDeath;
         public float timeElapsed;
         public float FOVZoom;
+        public AudioClip monsterRoar;
 
         Resolution[] resolutions;
         public Dropdown resolutionDropdown;
@@ -106,6 +108,13 @@ namespace Managers.UIManager
             {
                 if (timeElapsed >= timeTillDeath)
                 {
+                    if (mainAudio.clip != monsterRoar)
+                    {
+                        mainAudio.clip = monsterRoar;
+                        mainAudio.volume = 0.4f;
+                        mainAudio.Play();
+                        mainAudio.loop = false;
+                    }
                     Death();
                 }
                 else
