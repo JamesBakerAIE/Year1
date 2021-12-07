@@ -4,7 +4,7 @@ using Managers.UIManager;
 
 public class Timer : MonoBehaviour
 {
-    private float timerDuration = 10 * 60f;
+    private float timerDuration = 15 * 60f;
 
     private float timer;
     [SerializeField]
