@@ -178,6 +178,7 @@ namespace Managers.UIManager
 
         public void ReturnToMenu()
         {
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadSceneAsync(mainMenuSceneName);
         }
 
