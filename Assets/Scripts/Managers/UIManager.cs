@@ -111,7 +111,7 @@ namespace Managers.UIManager
                     if (mainAudio.clip != monsterRoar)
                     {
                         mainAudio.clip = monsterRoar;
-                        mainAudio.volume = 0.4f;
+                        mainAudio.volume = 0.1f;
                         mainAudio.Play();
                         mainAudio.loop = false;
                     }
