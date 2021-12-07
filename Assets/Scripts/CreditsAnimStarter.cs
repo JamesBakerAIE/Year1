@@ -8,6 +8,7 @@ public class CreditsAnimStarter : MonoBehaviour
 
     public GameObject names;
     public GameObject title;
+    public AudioSource source;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +26,6 @@ public class CreditsAnimStarter : MonoBehaviour
         yield return new WaitForSeconds(delay);
         names.SetActive(true);
         title.SetActive(true);
+        source.enabled = true;
     }
 }
