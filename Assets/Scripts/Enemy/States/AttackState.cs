@@ -41,12 +41,9 @@ namespace EnemyAI
         public override void Enter()
         {
             FindObjectOfType<UIManager>().GameIsOver = true;
-            //NONE OF THIS WILL WORK WITH THE LOCKER ATTACK
             if (enemyAudio.clip != enemySound)
             {
-                enemyAudio.clip = enemySound;
-                enemyAudio.Play();
-                enemyAudio.loop = false;
+                enemyAudio.Stop();
             }
 
             //delete after sounds and everything have happened
